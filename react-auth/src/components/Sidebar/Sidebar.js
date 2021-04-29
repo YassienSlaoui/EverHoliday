@@ -46,7 +46,7 @@ function Sidebar({ color, image, routes,path ,path2,path3,path4}) {
           backgroundImage: "url(" + image + ")",
         }}
       />
-      <div className="sidebar-wrapper">
+      <div className="sidebar-wrapper" style={{overflow: "hidden"}}>
         <div className="logo d-flex align-items-center justify-content-start">
           <a
             
