@@ -1,0 +1,27 @@
+.table > thead > tr > th , td {
+    text-align: center!important;
+}
+.btnholiday{
+    width: 100%;
+}
+.btnholiday button{
+    float: right;
+}
+.table {
+    margin:10px;
+}
+.backdiv{
+    z-index: 2;
+    height: 26%;
+    width: 35%;
+    
+    position: absolute;
+    left: 33%;
+    top: 30%;
+    background-color: #fff;
+}
+.img1{
+    height: 60px;
+    width: 60px;
+    margin-left: 20px;
+}

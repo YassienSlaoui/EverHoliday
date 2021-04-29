@@ -1,0 +1,27 @@
+.body {
+  background-image: url("bg1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.propre-container {
+  position: relative;
+  padding-top: 30%;
+
+  transform: perspective(5px) translateY(-20%);
+  margin: 0 auto;
+  width: 30%;
+  height: 100%;
+}
+.element-margin {
+  padding-top: 20px;
+}
+.app-name {
+  color: #93a603;
+}
+img {
+  width: max-content;
+  height: 100px;
+}
