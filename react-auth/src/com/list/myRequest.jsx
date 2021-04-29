@@ -136,8 +136,8 @@ class myRequest extends Component {
                 </div>
             
                <div className="backdiv">
-                   <h5>Request details</h5>
-                   <Row>
+                   
+                   <Row style={{margin:"10px"}}>
                         <Col md="4">
                             <img src={require("assets/img/default-avatar.png").default} className="img1" alt=""/>
                             <p>Yassine Slaoui</p>
@@ -150,8 +150,8 @@ class myRequest extends Component {
 
                         </Col>
                         <Col>
-                        <button style={{marginLeft: "10px", float:"right"}}  className="btn btn-danger">X </button>
-                           <button style={{marginLeft: "10px",float:"right"}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button> 
+                        <button style={{marginLeft: "10px", float:"right",border:"none"}}  className="btn btn-danger">Refuse</button>
+                           <button style={{marginLeft: "10px",float:"right",border:"none"}} className="btn btn-success">Validate</button> 
                         </Col>
                         
                    </Row>
