@@ -1,0 +1,80 @@
+git init -> intialization du git
+git remote remove origin ->supprimer remote
+git remote add origin https://yassinesl98@bitbucket.org/yassinesl98/full-project.git->ajouter remote
+git add .->ajouter les fichier
+git commit -m "initial commit"->commit votre ajoute
+git push -u origin master-> enregistrer dans branche master
+rd .git /S/Q ->remove initialization
+
+----------------------------------------
+branche ->affiche les branche exist
+git branch name ->créer un branche avec le nom name
+git checkout name -> switch à votre branche
+git branch -d name ->supprimer le branche
+git merge name->marge master avec name
+git branch -m newName ->rename
+git push -u origin scroll
+
+------------------------------------------
+git pull 
+git stash save
+git merge origin/master
+git stash pop
+git pull origin master
+-------------------------------------
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
