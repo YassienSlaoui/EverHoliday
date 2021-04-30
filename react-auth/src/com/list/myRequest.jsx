@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PaidRequestService from '../../servicees/PaidRequestService'
+import ExeptionnelRequestService from '../../servicees/ExptionnelService'
 import UnPaidRequestService from '../../servicees/UnPaidRequestService';
 import {
     Badge,
@@ -19,10 +20,12 @@ class myRequest extends Component {
 
         this.state = {
             paidRequest: [],
-            unPaidRequest:[]
+            unPaidRequest:[],
+            exptionnel:[]
         }
         this.lists=this.lists.bind(this)
         this.Unpaidlists=this.Unpaidlists.bind(this)
+        this.ExpionnelList=this.ExpionnelList.bind(this)
         this.checkStatut=this.checkStatut.bind(this)
         this.deleteUser=this.deleteUser.bind(this)
     }
@@ -47,6 +50,9 @@ class myRequest extends Component {
         UnPaidRequestService.getUnPaidRequest().then((res) => {
             this.setState({ unPaidRequest: res.data});
         });
+        ExeptionnelRequestService.geExeptionnelRequest().then((res) => {
+            this.setState({ exptionnel: res.data});
+        });
     }
     checkStatut(value){
         if(value==="processed"){
@@ -69,7 +75,7 @@ class myRequest extends Component {
                                 return(
                                     <tr key = {paidRequests.id }>
                                 <td> {paidRequests.id}</td>
-                                
+                                <td>Paid Request</td>
                                 
                                {this.checkStatut(paidRequests.statut)} 
                                <td>{paidRequests.typeOfTime}</td>
@@ -89,7 +95,7 @@ class myRequest extends Component {
         return(
             <tbody>
                 {
-                this.state.unPaidRequest.map(
+                this.state.exptionnel.map(
                 paidRequests => {
                     
                  if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
@@ -98,7 +104,7 @@ class myRequest extends Component {
                          
                         <tr key = {paidRequests.id }>
                         <td> {paidRequests.id}</td>
-                       
+                       <td>Unpaid Request</td>
 
                        {this.checkStatut(paidRequests.statut)} 
                        <td>{paidRequests.typeOfTime}</td>
@@ -114,7 +120,34 @@ class myRequest extends Component {
 
         )
             
-                         }
+ }
+  ExpionnelList(){
+    return(
+        <tbody>
+            {
+            this.state.unPaidRequest.map(
+            paidRequests => {
+                
+             if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
+              
+                    return(
+                     
+                    <tr key = {paidRequests.id }>
+                    <td> {paidRequests.id}</td>
+                   <td>Unpaid Request</td>
+
+                   {this.checkStatut(paidRequests.statut)} 
+                   <td>{paidRequests.typeOfTime}</td>
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}>From {dates.startDate} to {dates.endDate}</p>)}</td> 
+                                           
+                     </tr> 
+                     
+                    );}})
+
+                    }
+        </tbody>
+    )       
+    }                                                                        
     render() {
         return (
             <div>
@@ -124,6 +157,7 @@ class myRequest extends Component {
                             <thead>
                                 <tr>
                                     <th>  Request Id</th>
+                                    <th>Type</th>
                                     <th> statut</th>
                                     <th>type of time</th>
                                     <th>Timing</th>
@@ -131,6 +165,7 @@ class myRequest extends Component {
                             </thead>
                             {this.lists()}
                             {this.Unpaidlists()}
+                            {this.ExpionnelList()}
                         </table>
                         
                 </div>

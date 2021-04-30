@@ -4,6 +4,8 @@ import PaidRequestService from '../../servicees/PaidRequestService'
 import UnPaidRequestService from '../../servicees/UnPaidRequestService';
 import UnitService from '../../servicees/UnitService'
 import CollaborateurServices from '../../servicees/CollaborateurServices'
+import ExeptionnelRequestService from '../../servicees/ExptionnelService'
+
 import '../css/list.css';
 
 class Request extends Component {
@@ -14,7 +16,8 @@ class Request extends Component {
             paidRequest: [],
             collaborator:[],
             request:"",
-            unPaidRequest:[]
+            unPaidRequest:[],
+            exeptionnel:[]
         }
         this.lists=this.lists.bind(this)
         this.checkStatut=this.checkStatut.bind(this)
@@ -23,6 +26,7 @@ class Request extends Component {
         this.RequestSuccess=this.RequestSuccess.bind(this)
         this.getrequestById=this.getrequestById.bind(this)
         this.Unpaidlists=this.Unpaidlists.bind(this)
+        this.exeptionnelList=this.exeptionnelList.bind()
     }
     getrequestById(id){
         PaidRequestService.getPaidRequestById(id).then(res=>{
@@ -78,7 +82,7 @@ class Request extends Component {
       
         
     }
-    RequestRejecte(id){
+    UnRequestSuccess(id){
         let Request ={statut:"accepted"}
         UnPaidRequestService.statut(Request,id).then(res=>{
             UnPaidRequestService.getUnPaidRequest().then(res=>{
@@ -111,6 +115,24 @@ class Request extends Component {
             })
         })
     }
+    exeptionnelSuccess(id){
+        let Request ={statut:"accepted"}
+        ExeptionnelRequestService.statut(Request,id).then(res=>{
+           
+            ExeptionnelRequestService.geExeptionnelRequest().then(res=>{
+                this.setState({ paidRequest: res.data});
+            })
+        })
+    }
+    exeptionnelRejecte(id){
+        let Request ={statut:"refused"}
+        ExeptionnelRequestService.statut(Request,id).then(res=>{
+           
+            ExeptionnelRequestService.geExeptionnelRequest().then(res=>{
+                this.setState({ paidRequest: res.data});
+            })
+        })
+    }
     deleteUser(id){
         
         PaidRequestService.deletPaidRequest(id).then( res => {
@@ -128,6 +150,9 @@ class Request extends Component {
         });
         UnitService.collaborators(parseInt(sessionStorage.getItem('user'))).then((res) => {
             this.setState({ collaborator: res.data});
+        });
+        ExeptionnelRequestService.geExeptionnelRequest().then((res) => {
+            this.setState({ exeptionnel: res.data});
         });
     }
     checkStatut(value){
@@ -200,7 +225,39 @@ class Request extends Component {
 
                 )
                     
-                                 }       
+                                 }  
+   exeptionnelList (){
+    return(
+        <tbody>
+            {
+            this.state.exeptionnel.map(
+            paidRequests => {
+                
+             if(paidRequests.statut==="processed"){
+              
+                    return(
+                     
+                    <tr key = {paidRequests.id }>
+                    <td> {paidRequests.id}</td>
+                    <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
+
+                   {this.checkStatut(paidRequests.statut)} 
+                   <td>{paidRequests.typeOfTime}</td>
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}>From {dates.startDate} to {dates.endDate}</p>)}</td> 
+                    <td>
+                    <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.exeptionnelRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
+                    <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.exeptionnelSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
+                    </td>                         
+                     </tr> 
+                     
+                    );}})
+
+                    }
+        </tbody>
+
+
+    )
+   }                             
     render() {
         return (
             <div>

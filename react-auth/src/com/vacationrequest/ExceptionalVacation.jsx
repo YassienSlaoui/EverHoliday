@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import HolidayService from '../../servicees/HolidayService'
+import ExeptionnelRequestService from '../../servicees/ExptionnelService'
+import collaboratorService from '../../servicees/CollaborateurServices';
 import Calendar from '../calendor/calendar5'
+import dateFormat from "dateformat";
+import '../css/Request.css';
 import {
     Badge,
     Button,
@@ -17,59 +20,210 @@ class ExceptionVacation extends Component {
         super(props)
         
         this.state = {
-            balance: []
-        }
+          balance: [],
+          calendarState:"",
+          calendar:{},
+          startDate:"",
+          cumulative:"",
+          annual:"",
+          list:[],
+          list1:[],
+          balanceNedded:"",
+          remainder:"",
+          user:"",
+          description:"",
+          soldes:"",
+          selectedType:"FullDay",
+          UnpaidRequest:[],
+          SelectTypeVacacion:"Sick leave"
+      }
+      this.calendarChange=this.calendarChange.bind(this)
+      this.childRef= React.createRef();
+      this.dates=this.dates.bind(this);
+      this.deletelist=this.deletelist.bind(this);
+      this.saveRequest=this.saveRequest.bind(this)
+      this.descrptionChange=this.descrptionChange.bind(this);
+      this.changeSelect=this.changeSelect.bind(this);
+      this.calculeBalance=this.calculeBalance.bind(this)
+
+  }
         
-        this.saverequestvacationpaid = this.saverequestvacationpaid.bind(this);
-    }
+        
+    
 
     // step 3
     
-    saverequestvacationpaid = (e) => {
-        e.preventDefault();
-        let holiday = {date_start: this.state.datestart, date_end: this.state.date, duration: this.state.duration};
-        console.log('vacation => ' + JSON.stringify(RequestVacationPaid));
-         BalanceService.createRequestVacationPaid(RequestVacationPaid).then(res =>{
-        this.props.history.push('/admin/RequestVacation/History');});
-    }
+    
     
 
-    cancel(){
-        this.props.history.push('/admin/RequestVacation/History');
+    add(){
+      const element = this.childRef.current;
+      if(element.state.startDate!=null ){
+        if(element.state.endDate!=null){
+    this.setState(state1 =>{return{calendar: element.state,startDate:element.state.startDate}})
+    let DateReq={
+      startDate:dateFormat(element.state.startDate.toLocaleDateString(), "yyyy-mm-dd"),
+      endDate:dateFormat(element.state.endDate.toLocaleDateString(), "yyyy-mm-dd"),
+      duration:Math.ceil((element.state.endDate.getTime()-element.state.startDate.getTime())/(1000 * 3600 * 24)+1)
     }
+    this.state.list.push([element.state.startDate,element.state.endDate,Math.ceil((element.state.endDate.getTime()-element.state.startDate.getTime())/(1000 * 3600 * 24)+1)])
+    this.state.list1.push(DateReq)
+    this.setState({list:this.state.list,list1:this.state.list1})
+  }else{
+    alert("entre EndDate")
+  }
+    }else{
+      alert("entre startDate")
+    }
+    
+}
+calendarChange = (calendarState) => {
+  this.setState(state => ({
+    calendarState: { ...state.calendarState, ...calendarState }
+  }));
+ 
+}
+deletelist(i){
+      
+  this.state.list.splice(i,1)
+  this.state.list1.splice(i,1)
+  this.setState({list:this.state.list,list1:this.state.list1})
+}    
+dates(){
+  if(this.state.list!=[]){
+    
+    return (
+      <table className = "table table-striped table-bordered" style={{padding:"0px",margin:"0px"}}>
+                        <thead>
+                            <tr>
+                                <th>  Start Date</th>
+                                <th>End Date</th>
+                                <th> Duration</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {   
+                                this.state.list.map(
+                                    
+                                    (lists,index) => 
+                                   
+                                    <tr key = {index} >
+                                        <td> {dateFormat(lists[0].toLocaleDateString(), "yyyy-mm-dd")}</td>
+                                        <td> {dateFormat(lists[1].toLocaleDateString(), "yyyy-mm-dd")}</td>
+                                        <td> {lists[2]}</td>
+                                        <td><button onClick={(e)=> {e.preventDefault(); this.deletelist(index)}} className="btn btn-danger"> X </button></td>
+                                        
+                                    </tr>
+                                )
+                            }
+                        </tbody>
+                    </table>
+    );
+  
+}
+}
+calculeBalance(){
+  let a = 0 ;
+  if(this.state.list!=[]){
+    if(this.state.selectedType==="FullDay"){
+  this.state.list.map(lists=>
+    a=a+lists[2]
+    
+    )
+  }else{
+    this.state.list.map(lists=>
+      a=a+lists[2]*0.5
+      
+      )
+  }
+  }
+    return a
+}
+saveRequest= (e) =>{
+  e.preventDefault();
+  let Request = {
+     collaborator : this.state.user,
+     description : this.state.description,
+     totalDays :this.calculeBalance(),
+     datesRequest:this.state.list1,
+     requestDate:dateFormat((new Date()).toLocaleDateString(), "yyyy-mm-dd"),
+     statut: "processed",
+     typeOfTime:this.state.selectedType,
+     vacacioType:this.state.SelectTypeVacacion
+  }
+  
+  ExeptionnelRequestService.creatExeptionnelRequest(Request).then(res=>{
+      this.props.history.push('/admin/Home');
+     
+    })
 
+  
+}
+descrptionChange = (event) =>{
+  this.setState({description: event.target.value})
+}
+changeSelect= (event) =>{
+  this.setState({selectedType: event.target.value})
+}    
+changeSelectType= (event) =>{
+  this.setState({SelectTypeVacacion: event.target.value})
+}  
+componentDidMount(){
+  collaboratorService.getUserById(sessionStorage.getItem("user")).then( (res) =>{
+    
+    let user = res.data;
+    this.setState({
+      
+      user:user,
+       
+    })
+   
+});
+
+}
     
     render() {
         return (
-        <Container fluid>
-            <Row>
-              <Col md="5">
-                <Card>
-                  <Card.Header>
-                    <Card.Title as="h4">Exception vacation</Card.Title>
-                  </Card.Header>
-                  <br></br>
-                  <br></br>
-                  <Card.Body>
-                    <Form>
-                      <Row>
-                        
-                        <Col className="pr-1" md="12">
-                          <Form.Group>
-                             <select>
-                                            <option defaultValue value="Fullday">Full-day</option>
-                                            <option value="Halfday">Half-day</option>
-                             </select>
-                          </Form.Group>
-                        </Col>
-                        <Col md="12">
+          <Container fluid>
+          <Row>
+            <Col md="6">
+              <Card>
+                <Card.Header>
+                  <Card.Title as="h4">Paid vacation</Card.Title>
+                </Card.Header>
+                <Card.Body>
+                  <Form>
+                    <Row>
+                      <Col className="pr-4" md="12">
+                        <Form.Group style={{display:"inline-block",paddingTop: "10px"}}>
+                           <select className="custom-select" onChange={this.changeSelect} style={{width:"200px"}}>
+                                          <option defaultValue value="FullDay">Full-Day</option>
+                                          <option value="HalfDay">Half-Day</option>
+                                          
+                           </select>
+                        </Form.Group>
+                        <Button className="btn btn-success" onClick={this.add.bind(this)} style={{marginLeft: "10px",float:"right"}}> Add</Button>
+                      </Col>
+                      <Col>
+                      {this.dates()}
+                      
+                      </Col>
+                    
+                      <Col md="12">                                
+                                        <label style={{color:"#1DC7EA", marginLeft: "10px",display:"block"}} htmlFor="startDate">Total days: {this.calculeBalance()}</label>
+                                        </Col>
+                                        <br></br>
+
+                    </Row>
+                    <Col md="12">
                                         <label  style={{color:"#1DC7EA",marginLeft: "10px"}} htmlFor="CumulativeB" >Select the type of vacation: </label>
                                         {/*<label type="number" id="CumulativeB" name="Cumulative balance" >{balance.cumelative}</label>*/}
                                         <br></br>
                                         </Col>
                         <Col className="pr-1" md="12">
-                          <Form.Group>
-                            <select style={{marginLeft: "10px"}}>
+                          <Form.Group  style={{display:"inline-block",paddingTop: "10px"}}>
+                            <select className="custom-select" onChange={this.changeSelectType} style={{width:"200px"}}>
                                             <option defaultValue value="Fsick">Sick leave</option>
                                             <option value="birth">Birth leave</option>
                                             <option value="marriage">Marriage leave</option>
@@ -79,43 +233,31 @@ class ExceptionVacation extends Component {
                             </select>  
                           </Form.Group>
                         </Col>
-                      
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        
-                       
-                      </Row>
-                      <Row>
-                        <Col md="15">
-                          <Form.Group>
-                            <label>Description:</label>
-                            <Form.Control cols="80" defaultValue="Description request" rows="4" as="textarea" ></Form.Control>
-                          </Form.Group>
-                        </Col>
-                      </Row>
-                      
-                      <Button className="btn-fill pull-right" type="submit" variant="info" > Save request</Button>
-                      <Button className="btn btn-danger"  style={{marginLeft: "10px"}}> Cancel</Button>
-                      {/*<div className="clearfix"></div>*/}
-                    </Form>
-                  </Card.Body>
-                </Card>
-              </Col>
+                    <Row>
+                      <Col md="15">
+                        <Form.Group>
+                          <label>Description:</label>
+                          <Form.Control cols="80"  onChange={this.descrptionChange} rows="4" as="textarea" ></Form.Control>
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    
+                    <Button className="btn-fill pull-right" type="submit" variant="info" onClick={this.saveRequest} > Save request</Button>
+                   
+                  </Form>
+                </Card.Body>
+              </Card>
+            </Col>
 
 
-              <Col md="7">
-                <Card className="card-user">
-                <div className = "form-group">
-                                        <Calendar/>
-                                        </div>
-                
-                </Card>
-              </Col>
-            </Row>
-          </Container>
+            <Col md="5">
+              
+              <Calendar state={this.state.calendarState} ref= {this.childRef } onChange={this.calendarChange}/>
+              
+            </Col>
+          </Row>
+          
+        </Container>
         );
     }
 }
