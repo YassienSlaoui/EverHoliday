@@ -11,7 +11,9 @@ class BoldeService {
     getUserById(balance){
         return axios.get(User_API_BASE_URL + '/' + balance);
     }
-
+    deleteBalance(userId){
+        return axios.delete(User_API_BASE_URL + '/' + userId);
+    }
    
 
 }

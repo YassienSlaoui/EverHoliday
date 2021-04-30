@@ -36,7 +36,8 @@ class PaidVacation extends Component {
             description:"",
             soldes:"",
             selectedType:"FullDay",
-            paidRequest:[]
+            paidRequest:[],
+            allrequest:0
         }
         
        
@@ -67,7 +68,12 @@ class PaidVacation extends Component {
         })
        
     });
-    
+    PaidRequestService.getPaidRequest().then((res) => {
+      res.data.map(request=>{
+        if(request.collaborator.id===parseInt(sessionStorage.getItem('user')))
+              this.setState({allrequest:this.state.allrequest+request.balanceUsed})
+      })
+  });
     }
     
     
@@ -185,7 +191,7 @@ class PaidVacation extends Component {
       }
       let balance =(this.state.annual+this.calculeCumulativeBalance())
       let differenceBtwnDate= this.state.list[0][0].getMonth()-(new Date()).getMonth()
-      if(balance+differenceBtwnDate>this.calculeBalance()){
+      if(balance+differenceBtwnDate>this.calculeBalance()+this.state.allrequest){
         e.preventDefault();
         PaidRequestService.createPaidRequest(Request).then(res=>{
           this.props.history.push('/admin/Home');
@@ -244,7 +250,7 @@ class PaidVacation extends Component {
                                        <label style={{color:"#1DC7EA", marginLeft: "10px"}} htmlFor="AnnualB" >Total balance:   {(this.state.annual+this.calculeCumulativeBalance())}</label>
                                        {/* <label type="number" id="AnnualB" name="Annual balance" >{balance.annual}</label>*/}
                                        <br></br>
-                                        <label style={{color:"#1DC7EA", marginLeft: "10px"}} htmlFor="PendingB" >Balance of pending requests: </label>
+                                        <label style={{color:"#1DC7EA", marginLeft: "10px"}} htmlFor="PendingB" >Balance of pending requests: {this.state.allrequest} </label>
                                         {/*<label type="number" id="AnnualB" name="balance of pending requests" >{balance.pending}</label>*/}
                                         <label style={{color:"#1DC7EA", marginLeft: "10px",display:"block"}} htmlFor="startDate">Balance of request: {this.calculeBalance()}</label>
                                         </Col>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import collaboratorService from '../../servicees/CollaborateurServices';
-import SupervisorService from "../../servicees/supervisorServices";
+import BalanceService from "../../servicees/BalanceService";
 import '../css/list.css';
 class listCollaborator extends Component {
     constructor(props) {
@@ -16,18 +16,13 @@ class listCollaborator extends Component {
         this.deleteUser = this.deleteUser.bind(this);
     }
 
-    deleteUser(id){
-        if(this.state.select === "collaborator"){
+    deleteUser(id,id1){
+       
             collaboratorService.deleteUser(id).then( res => {
                 this.setState({collaborator: this.state.collaborator.filter(user => user.id !== id)});
             });
+            BalanceService.deleteBalance(id1);
     }
-    else if(this.state.select ==="supervisor"){
-        
-        SupervisorService.deleteUser(id).then( res => {
-            this.setState({collaborator: this.state.collaborator.filter(user => user.id !== id)});
-        });
-    }}
         
     
     
@@ -100,7 +95,7 @@ class listCollaborator extends Component {
                                             <td>{user.experience}</td>    
                                             <td>
                                             <button onClick={ () => this.editUser(user.id)} className="btn btn-info">Update </button>
-                                            <button style={{marginLeft: "10px"}} onClick={ () => this.deleteUser(user.id)} className="btn btn-danger">Delete </button>
+                                            <button style={{marginLeft: "10px"}} onClick={ () => this.deleteUser(user.id,user.solde.id)} className="btn btn-danger">Delete </button>
                                             </td>
                                         </tr>
                                     )
