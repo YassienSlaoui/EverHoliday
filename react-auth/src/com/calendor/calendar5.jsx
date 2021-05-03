@@ -40,10 +40,10 @@ class calendar extends Component {
       }
        blockedDate (date){
         var show = false;
-       
+      
       this.state.holidays.map(map=>{
         
-        if (date.getDay()==6|| date.getDay()==0||dateFormat(date.toLocaleDateString(), "yyyy-mm-dd")==map.date){
+        if (date.getDay()==6|| date.getDay()==0||dateFormat(date, "yyyy-mm-dd")==map.date){
           show =true
          
         }
