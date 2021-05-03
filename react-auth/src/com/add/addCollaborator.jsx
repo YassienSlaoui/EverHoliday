@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import collaboratorService from '../../servicees/CollaborateurServices';
-import SupervisorService from "../../servicees/supervisorServices";
 import dateFormat from "dateformat";
+import {FormattedMessage} from "react-intl";
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 import {
     Row,
     Button
@@ -255,7 +257,7 @@ class addCollaborator extends Component {
     render() {
         
         return (
-            
+            <I18nPropvider locale={LOCALES.ENGLISH}>
             <div>
                 <br></br>
                 <div className = "container">
@@ -273,12 +275,12 @@ class addCollaborator extends Component {
                                                 value={this.state.cin} onChange={this.changecinHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> First Name: </label>
+                                            <label>  <FormattedMessage id="FirstName" />: </label>
                                             <input placeholder="First Name" name="firstname" className="form-control" 
                                                 value={this.state.firstname} onChange={this.changefirstnameHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> Last Name: </label>
+                                            <label> {translate('LastName')}: </label>
                                             <input placeholder="Last Name" name="lastname" className="form-control" 
                                                 value={this.state.lastname} onChange={this.changelastnameHandler}/>
                                         </div>
@@ -372,6 +374,7 @@ class addCollaborator extends Component {
 
                 </div>
             </div>
+            </I18nPropvider> 
         )
     }
 }
