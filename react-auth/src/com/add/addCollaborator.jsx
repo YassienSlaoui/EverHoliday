@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import collaboratorService from '../../servicees/CollaborateurServices';
-import SupervisorService from "../../servicees/supervisorServices";
 import dateFormat from "dateformat";
+import {FormattedMessage} from "react-intl";
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 import {
     Row,
     Button
@@ -17,7 +19,7 @@ class addCollaborator extends Component {
             cin:"",  
             firstname:"",
             lastname:"",
-            team:"",
+            
             age:"",
             adresse:"",
             password:"",
@@ -36,7 +38,6 @@ class addCollaborator extends Component {
         this.changecinHandler = this.changecinHandler.bind(this);
         this.changefirstnameHandler =this.changefirstnameHandler.bind(this);
         this.changelastnameHandler =this.changelastnameHandler.bind(this);
-        this.changeteamHandler =this.changeteamHandler.bind(this);
         this.changeageHandler =this.changeageHandler.bind(this);
         this.changeadresseHandler =this.changeadresseHandler.bind(this);
         this.changepasswordHandler =this.changepasswordHandler.bind(this);
@@ -70,7 +71,7 @@ class addCollaborator extends Component {
                     cin:user.cin,  
                     firstname:user.firstname,
                     lastname:user.lastname,
-                    team:user.team,
+                   
                     age:user.age,
                     adresse:user.adresse,
                     email:user.email,
@@ -96,7 +97,7 @@ class addCollaborator extends Component {
         let user = {cin:this.state.cin,  
             firstname:this.state.firstname,
             lastname:this.state.lastname,
-            team:this.state.team,
+            
             age:this.state.age,
             adresse:this.state.adresse,
             username:this.state.username,
@@ -139,9 +140,7 @@ class addCollaborator extends Component {
         this.setState({age: event.target.value});
     }
 
-    changeteamHandler= (event) => {
-        this.setState({team: event.target.value});
-    }
+    
     changefirstnameHandler= (event) => {
         this.setState({firstname: event.target.value});
     }
@@ -255,7 +254,7 @@ class addCollaborator extends Component {
     render() {
         
         return (
-            
+            <I18nPropvider locale={LOCALES.ENGLISH}>
             <div>
                 <br></br>
                 <div className = "container">
@@ -273,43 +272,38 @@ class addCollaborator extends Component {
                                                 value={this.state.cin} onChange={this.changecinHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> First Name: </label>
+                                            <label>  <FormattedMessage id="FirstName" />: </label>
                                             <input placeholder="First Name" name="firstname" className="form-control" 
                                                 value={this.state.firstname} onChange={this.changefirstnameHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> Last Name: </label>
+                                            <label> {translate('LastName')}: </label>
                                             <input placeholder="Last Name" name="lastname" className="form-control" 
                                                 value={this.state.lastname} onChange={this.changelastnameHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label>Team: </label>
-                                            <input placeholder="name" name="name" className="form-control" 
-                                                value={this.state.team} onChange={this.changeteamHandler}/>
-                                        </div>
-                                        <div className = "form-group">
-                                            <label> age: </label>
+                                            <label> {translate('age')}: </label>
                                             <input placeholder="age" name="age" className="form-control" 
                                                 value={this.state.age} onChange={this.changeageHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> address: </label>
+                                            <label> {translate('address')}: </label>
                                             <input placeholder="address" name="adress" className="form-control" 
                                                 value={this.state.adresse} onChange={this.changeadresseHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label>password: </label>
+                                            <label>{translate('password')}: </label>
                                             <input placeholder="password" name="password" className="form-control" 
                                                  onChange={this.changepasswordHandler}/>
                                         </div>
                                        
                                         <div className = "form-group">
-                                            <label> username </label>
+                                            <label> {translate('username')}: </label>
                                             <input placeholder="username" name="username" className="form-control" 
                                                 value={this.state.username} onChange={this.changeusernameHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label>country work: </label>
+                                            <label>{translate('country work')}: </label>
                                             <input placeholder="country work" name="country_work" className="form-control" 
                                                 value={this.state.country} onChange={this.changecountry_workHandler}/>
                                         </div>
@@ -372,6 +366,7 @@ class addCollaborator extends Component {
 
                 </div>
             </div>
+            </I18nPropvider> 
         )
     }
 }

@@ -37,10 +37,9 @@ public class SoldeService {
 
 
 	public ResponseEntity<Map<String, Boolean>> deleteSolde(Long id){
-		Solde user = SoldeRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(" not exist  :" + id));
 		
-		SoldeRepository.delete(user);
+		
+		SoldeRepository.delete(id);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
