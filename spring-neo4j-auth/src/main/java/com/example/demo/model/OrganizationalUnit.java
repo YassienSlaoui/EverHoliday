@@ -22,6 +22,7 @@ public class OrganizationalUnit {
 		this.collaborators = collaborators;
 	}
 	
+	public OrganizationalUnit(){}
 	public Long getId() {
 		return id;
 	}

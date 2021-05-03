@@ -18,6 +18,8 @@ public PaidRequest(LocalDate requestDate, String statut, String typeOfTime, List
 	this.balanceUsed = balanceUsed;
 }
 
+public PaidRequest(){}
+
 public String getDescription() {
 	return description;
 }

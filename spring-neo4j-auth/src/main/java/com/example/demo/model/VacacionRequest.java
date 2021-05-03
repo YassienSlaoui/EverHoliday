@@ -25,6 +25,9 @@ public VacacionRequest(LocalDate requestDate, String statut, String typeOfTime, 
 	this.datesRequest = datesRequest;
 	this.collaborator = collaborator;
 }
+
+public VacacionRequest() {}
+
 public LocalDate getRequestDate() {
 	return requestDate;
 }

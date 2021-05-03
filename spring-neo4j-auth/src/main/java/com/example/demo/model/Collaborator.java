@@ -63,7 +63,7 @@ public class Collaborator   implements UserDetails{
 		this.email=email;
 		this.startDate=startDate;
 	}
-	
+	public Collaborator() {}
 	public LocalDate getStartDate() {
 		return startDate;
 	}
