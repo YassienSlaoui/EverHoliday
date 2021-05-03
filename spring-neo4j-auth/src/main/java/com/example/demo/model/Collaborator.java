@@ -49,11 +49,10 @@ public class Collaborator   implements UserDetails{
 	private Collaborator sup;
 	@Relationship(type = "assignment", direction = Relationship.Direction.INCOMING)
 	private ArrayList<Collaborator> Collaborators;
-	public Collaborator(String cin, Integer age, String team, String firstname, String lastname, String adresse,
+	public Collaborator(String cin, Integer age, String firstname, String lastname, String adresse,
 			String username, String country, String password,int experience,String email,LocalDate startDate) {
 		this.cin = cin;
 		this.age = age;
-		this.team = team;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.adresse = adresse;
