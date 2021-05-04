@@ -68,19 +68,19 @@ class Vacationrequest extends Component {
                     <Form style={{display:"grid"}}>
                     
                       
-                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.paid} > {translate('Paid vacation')}</Button>
+                      <Button  className="btn-fill pull-right" type="submit" variant="success" onClick={this.paid} > {translate('Paid vacation')}</Button>
                       <br></br>
                       <br></br>
-                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.unpaid} > {translate('Unpaid vacation')}</Button>
+                      <Button  className="btn-fill pull-right" type="submit" variant="success" onClick={this.unpaid} > {translate('Unpaid vacation')}</Button>
                       <br></br>
                       <br></br>
-                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.exception}> {translate('Exceptional vacation')}</Button>
+                      <Button  className="btn-fill pull-right" type="submit" variant="success" onClick={this.exception}> {translate('Exceptional vacation')}</Button>
                       <br></br>
                       <br></br>
-                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.recovery}>{translate('Recovery vacation')} </Button>
+                      <Button  className="btn-fill pull-right" type="submit" variant="success" onClick={this.recovery}>{translate('Recovery vacation')} </Button>
                       <br></br>
                       <br></br>
-                      <Button className="btn-fill pull-right" type="submit" variant="info" >{translate('Historic')}</Button>
+                      <Button className="btn-fill pull-right" type="submit" variant="success" >{translate('Historic')}</Button>
                     </Form>
                   </Card.Body>
                 </Card>
