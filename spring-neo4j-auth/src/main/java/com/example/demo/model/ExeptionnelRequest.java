@@ -20,6 +20,7 @@ public class ExeptionnelRequest extends VacacionRequest{
 		this.description = description;
 		this.vacacioType = vacacioType;
 	}
+	public ExeptionnelRequest(){}
 	public Long getId() {
 		return id;
 	}

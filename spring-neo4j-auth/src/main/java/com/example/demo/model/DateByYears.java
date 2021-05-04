@@ -14,6 +14,7 @@ public class DateByYears {
 		this.year = year;
 		this.balance = balance;
 	}
+	public DateByYears(){}
 	public int getYear() {
 		return year;
 	}

@@ -11,11 +11,12 @@ public class Holiday {
  private String name;
  private String date;
  private String  duration;
-public Holiday(String name, String date, String duration) {
+public Holiday(String name, String date, String duration){
 	this.name = name;
 	this.date = date;
 	this.duration = duration;
 }
+public Holiday(){}
 public Long getId() {
 	return id;
 }

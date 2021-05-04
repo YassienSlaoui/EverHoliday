@@ -23,6 +23,9 @@ public class Solde {
 		this.cumulativeBances = cumulativeBances;
 		this.remainder=remainder;
 	}
+	
+	public Solde(){}
+	
 	public Double getCumulativeBalance() {
 		return cumulativeBalance;
 	}

@@ -21,6 +21,9 @@ public UnpaidRequest(LocalDate requestDate, String statut, String typeOfTime, Li
 		this.totalDays = totalDays;
 	}
 
+
+public UnpaidRequest() {}
+
 public Long getId() {
 	return id;
 }
