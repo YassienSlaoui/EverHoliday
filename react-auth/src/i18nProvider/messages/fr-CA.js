@@ -59,12 +59,11 @@ export default {
     'Balance of pending requests':'Solde des demandes en attente',
     'Balance of request':'Solde de la requête',
     'Unpaid vacation':'Congé non rémunérées',
-    'Vacation request':'Demande de vacances',
+    'Vacation request':'demande de congé',
     'Exceptional vacation':'Vongé exceptionnelles',
     'Recovery vacation':'Congé de récupération',
     'Historic':'Historique',
-
-
+    "Home":"Accueil",
     'Edit Profile':'Modifier le profil',
     'Company':'Entreprise',
     'Update Profile':'Mettre à jour le profil',
@@ -74,7 +73,7 @@ export default {
     'calendar':'calendrier',
     'REQUEST':'DEMANDE',
     'MY REQUEST':'MA DEMANDE',
-    'User Profile':"Profil d'utilisateur",
+    'User Profile':"profil utilisateur",
     'List Users':'Lister des utilisateurs',
     'Add employees':'Ajouter des employés',
     'Holidays':'Vacances',

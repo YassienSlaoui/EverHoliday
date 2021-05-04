@@ -16,7 +16,7 @@ class addCollaborator extends Component {
         this.state = {
             // step 2
             id: this.props.match.params.id,
-            cin:"",  
+             
             firstname:"",
             lastname:"",
             
@@ -35,7 +35,7 @@ class addCollaborator extends Component {
             years:"",
             balance:""       
         }
-        this.changecinHandler = this.changecinHandler.bind(this);
+        
         this.changefirstnameHandler =this.changefirstnameHandler.bind(this);
         this.changelastnameHandler =this.changelastnameHandler.bind(this);
         this.changeageHandler =this.changeageHandler.bind(this);
@@ -68,7 +68,7 @@ class addCollaborator extends Component {
                 let user = res.data;
                 this.setState({
                     id:user.id,
-                    cin:user.cin,  
+                      
                     firstname:user.firstname,
                     lastname:user.lastname,
                    
@@ -94,7 +94,7 @@ class addCollaborator extends Component {
         }else{
             this._isMounted = true;
         e.preventDefault();
-        let user = {cin:this.state.cin,  
+        let user = {  
             firstname:this.state.firstname,
             lastname:this.state.lastname,
             
@@ -132,9 +132,7 @@ class addCollaborator extends Component {
         
     }
     
-    changecinHandler= (event) => {
-        this.setState({cin: event.target.value});
-    }
+    
 
     changeageHandler= (event) => {
         this.setState({age: event.target.value});
@@ -266,11 +264,7 @@ class addCollaborator extends Component {
                                 <div className = "card-body">
                                     <form>
                                     
-                                        <div className = "form-group">
-                                            <label>CIN: </label>
-                                            <input placeholder="CIN" name="cin" className="form-control" 
-                                                value={this.state.cin} onChange={this.changecinHandler}/>
-                                        </div>
+                                        
                                         <div className = "form-group">
                                             <label>  <FormattedMessage id="FirstName" />: </label>
                                             <input placeholder="First Name" name="firstname" className="form-control" 

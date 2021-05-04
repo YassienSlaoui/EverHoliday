@@ -49,9 +49,8 @@ public class Collaborator   implements UserDetails{
 	private Collaborator sup;
 	@Relationship(type = "assignment", direction = Relationship.Direction.INCOMING)
 	private ArrayList<Collaborator> Collaborators;
-	public Collaborator(String cin, Integer age, String firstname, String lastname, String adresse,
+	public Collaborator( Integer age, String firstname, String lastname, String adresse,
 			String username, String country, String password,int experience,String email,LocalDate startDate) {
-		this.cin = cin;
 		this.age = age;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -80,30 +79,7 @@ public class Collaborator   implements UserDetails{
 		this.leaveDate = leaveDate;
 	}
 
-	/*public ArrayList<String> getUnit() {
-		ArrayList<String> A = new ArrayList<String>() ;
-		if(unit !=null) {
-			for (int i = 0 ;i<unit.size();i++) {
-				 A.add(unit.get(i).getName());
-			}
-		}
-		
-		
-		return A;
-	}
-	public Map<String,Long> getUnit1() {
-		Map<String, Long> A = new HashMap<>();
-		if(unit !=null) {
-			for (int i = 0 ;i<unit.size();i++) {
-				
-				 A.put(unit.get(i).getName(), unit.get(i).getValidator().getId());
-			}
-		}
-		
-		
-		return A;
-	}*/
-
+	
 
 	public void setUnit(ArrayList<OrganizationalUnit> unit) {
 		this.unit = unit;

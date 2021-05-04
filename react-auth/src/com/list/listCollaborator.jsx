@@ -75,7 +75,7 @@ class listCollaborator extends Component {
                         <table className = "table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th> CIN</th>
+                                    
                                     <th> {translate('FirstName')}</th>
                                     <th> {translate('LastName')} </th>
                                     
@@ -90,7 +90,7 @@ class listCollaborator extends Component {
                                     this.state.collaborator.map(
                                         user => 
                                         <tr key = {user.id }>
-                                            <td>  {user.cin} </td>   
+                                              
                                             <td> {user.firstname}</td>
                                             <td> {user.lastname}</td>
                                                     

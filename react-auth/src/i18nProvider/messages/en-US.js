@@ -4,6 +4,7 @@ export default {
   [LOCALES.ENGLISH]: {
     "FirstName":'First Name',
     'LastName':'Last Name',
+    "Home":"Home",
     'age':'age',
     'Experience':'Experience',
     'address':'address',
