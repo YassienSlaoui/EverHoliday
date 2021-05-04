@@ -65,7 +65,7 @@ public class AuthController {
         	System.out.println(OrganizationalUintService.checkValidator(userDetails));
         	return "Collaborator";}
         else {
-        	return "";
+        	return "Collaborator";
         }
         
         }

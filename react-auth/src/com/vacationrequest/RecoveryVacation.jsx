@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import HolidayService from '../../servicees/HolidayService'
 import Calendar from '../calendor/calendar5'
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 import {
     Badge,
     Button,
@@ -41,12 +42,13 @@ class RecoveryVacation extends Component {
     
     render() {
         return (
+          
         <Container fluid>
             <Row>
               <Col md="5">
                 <Card>
                   <Card.Header>
-                    <Card.Title as="h4">Unpaid vacation</Card.Title>
+                    <Card.Title as="h4">{translate('Recovery vacation')}</Card.Title>
                   </Card.Header>
                   <Card.Body>
                     <Form>
@@ -75,15 +77,12 @@ class RecoveryVacation extends Component {
                       <Row>
                         <Col md="15">
                           <Form.Group>
-                            <label>Description:</label>
+                            <label>{translate('Description')}:</label>
                             <Form.Control cols="80" defaultValue="Description request" rows="4" as="textarea" ></Form.Control>
                           </Form.Group>
                         </Col>
-                      </Row>
-                      
-                      <Button className="btn-fill pull-right" type="submit" variant="info" > Save request</Button>
-                      <Button className="btn btn-danger"  style={{marginLeft: "10px"}}> Cancel</Button>
-                      {/*<div className="clearfix"></div>*/}
+                      </Row>            
+                      <Button className="btn-fill pull-right" type="submit" variant="info" > {translate('Save request')}</Button>                  
                     </Form>
                   </Card.Body>
                 </Card>
@@ -93,13 +92,14 @@ class RecoveryVacation extends Component {
               <Col md="7">
                 <Card className="card-user">
                 <div className = "form-group">
-                                        <Calendar/>
-                                        </div>
+                     <Calendar/>
+                </div>
                 
                 </Card>
               </Col>
             </Row>
           </Container>
+        
         );
     }
 }

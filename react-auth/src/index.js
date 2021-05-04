@@ -33,38 +33,31 @@ import AdminLayout from "layouts/Admin.js";
 import Rh from "layouts/Rh.js";
 import Collaborator from "layouts/collaborateur.js";
 import axios from "axios";
+import { I18nPropvider, LOCALES } from '../src/i18nProvider';
 
-const getlayout = () => {
- 
-    if (sessionStorage.getItem('role') === "RH" ) {
-
-      return (
-        <Route path="/RH" render={(props) => <Rh {...props} />} />
-      );
-    }else if(sessionStorage.getItem('role') === "collaborator") {
-      return (
-        <Route path="/admin" render={(props) => <Collaborator {...props} />} />
-      );
-    }else if(sessionStorage.getItem('role') === "collaborator") {
-      return (
-        <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      );
-    }
-  
-};
+const getlangue = () =>{
+  if (sessionStorage.getItem('lang')==="En"){
+    return LOCALES.ENGLISH
+  }else if (sessionStorage.getItem('lang')==="Fr"){
+    return LOCALES.FRENCH
+  }else if (sessionStorage.getItem('lang')==="Sp"){
+    return LOCALES.spanish
+  }else{
+    return LOCALES.ENGLISH
+  }
+}
 ReactDOM.render(
+  <I18nPropvider locale={getlangue()}>
   <BrowserRouter>
     <Switch>
-     {/*
-      {getlayout()}
-      <Route path="/admin" render={(props) => <Rh {...props} />} />
-      <Route path="/admin" render={(props) => <Collaborator {...props} />} />
-     */} 
+    
      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
      <Route exact path="/"><Login/></Route>
      <Route exact path="/hy">< ForgetPassword/></Route>
-      {/* <Route exact path="/"><Alogin/></Route>*/}
+     
     </Switch>
-  </BrowserRouter>,
+  </BrowserRouter>
+  </I18nPropvider>
+  ,
   document.getElementById("root")
 );

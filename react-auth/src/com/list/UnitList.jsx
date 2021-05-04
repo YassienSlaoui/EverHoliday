@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import UnitService from '../../servicees/UnitService'
 import '../css/list.css';
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 class UnitList extends Component {
     constructor(props) {
         super(props)
@@ -45,9 +47,9 @@ class UnitList extends Component {
                         <table className = "table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>  Name</th>
-                                    <th>Validator</th>
-                                    <th> Team</th>
+                                    <th> {translate('Name')} </th>
+                                    <th>{translate('Validator')}</th>
+                                    <th> {translate('Team')}</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -70,7 +72,7 @@ class UnitList extends Component {
                             </tbody>
                         </table>
                         <div className="btnholiday">
-                                <button onClick={this.addHolidays.bind(this)} className="btn btn-info ">Add Unit</button>
+                                <button onClick={this.addHolidays.bind(this)} className="btn btn-info ">{translate('Add Unit')}</button>
                         </div>
                 </div>
             

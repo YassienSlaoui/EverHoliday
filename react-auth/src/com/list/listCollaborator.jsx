@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import collaboratorService from '../../servicees/CollaborateurServices';
 import BalanceService from "../../servicees/BalanceService";
 import '../css/list.css';
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
+
 class listCollaborator extends Component {
     constructor(props) {
         super(props)
@@ -65,6 +68,7 @@ class listCollaborator extends Component {
     }
     render() {
         return (
+            
             <div>
                 <br></br>
                 <div className = "row">
@@ -72,12 +76,12 @@ class listCollaborator extends Component {
                             <thead>
                                 <tr>
                                     <th> CIN</th>
-                                    <th> FirstName</th>
-                                    <th>  LastName</th>
-                                    <th> Team</th>
+                                    <th> {translate('FirstName')}</th>
+                                    <th> {translate('LastName')} </th>
+                                    
                                    
-                                    <th>Username</th>
-                                    <th>Experience</th>
+                                    <th>{translate('username')}</th>
+                                    <th>{translate('Experience')}</th>
                                     <th> Actions</th>
                                 </tr>
                             </thead>
@@ -89,13 +93,13 @@ class listCollaborator extends Component {
                                             <td>  {user.cin} </td>   
                                             <td> {user.firstname}</td>
                                             <td> {user.lastname}</td>
-                                            <td> {user.team}</td>         
+                                                    
                                             
                                             <td> {user.username}</td>
                                             <td>{user.experience}</td>    
                                             <td>
-                                            <button onClick={ () => this.editUser(user.id)} className="btn btn-info">Update </button>
-                                            <button style={{marginLeft: "10px"}} onClick={ () => this.deleteUser(user.id,user.solde.id)} className="btn btn-danger">Delete </button>
+                                            <button onClick={ () => this.editUser(user.id)} className="btn btn-info">{translate('Update')} </button>
+                                            <button style={{marginLeft: "10px"}} onClick={ () => this.deleteUser(user.id,user.solde.id)} className="btn btn-danger">{translate('Delete')} </button>
                                             </td>
                                         </tr>
                                     )
@@ -107,6 +111,7 @@ class listCollaborator extends Component {
             
                
                </div>
+               
         );
     }
 }

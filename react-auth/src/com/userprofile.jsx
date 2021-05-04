@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import collaboratorService from '../servicees/CollaborateurServices';
 import SupervisorService from '../servicees/supervisorServices'
+import { I18nPropvider, LOCALES } from '../i18nProvider';
+import translate from "../i18nProvider/translate"
 import {
     Badge,
     Button,
@@ -116,20 +118,20 @@ class Profile extends Component {
 
     render() {
         return (
-
+          
             <Container fluid>
             <Row>
               <Col md="8">
                 <Card>
                   <Card.Header>
-                    <Card.Title as="h4">Edit Profile</Card.Title>
+                    <Card.Title as="h4">{translate('Edit Profile')}</Card.Title>
                   </Card.Header>
                   <Card.Body>
                     <Form>
                       <Row>
                         <Col className="pr-1" md="5">
                           <Form.Group>
-                            <label>Company (disabled)</label>
+                            <label>{translate('Company')} </label>
                             <Form.Control defaultValue="Everis" disabled placeholder="Company" type="text" ></Form.Control>
                           </Form.Group>
                         </Col>
@@ -142,7 +144,7 @@ class Profile extends Component {
                         <Col className="pl-1" md="4">
                           <Form.Group>
                             <label htmlFor="exampleInputEmail1">
-                              First Name
+                            {translate('FirstName')}
                             </label>
                             <Form.Control defaultValue={this.state.firstname} onChange={this.changefirstnameHandler} type="text" ></Form.Control>
                           </Form.Group>
@@ -151,21 +153,16 @@ class Profile extends Component {
                       <Row>
                         <Col className="pr-1" md="6">
                           <Form.Group>
-                            <label>Last Name</label>
+                            <label>{translate('LastName')}</label>
                             <Form.Control defaultValue={this.state.lastname} onChange={this.changelastnameHandler}  placeholder="Last Name" type="text" ></Form.Control>
                           </Form.Group>
                         </Col>
-                        <Col className="pl-1" md="6">
-                          <Form.Group>
-                            <label>Team</label>
-                            <Form.Control defaultValue={this.state.team} onChange={this.changeteamHandler} placeholder="Team" type="text" ></Form.Control>
-                          </Form.Group>
-                        </Col>
+                        
                       </Row>
                       <Row>
                         <Col md="12">
                           <Form.Group>
-                            <label>Age</label>
+                            <label>{translate('age')}</label>
                             <Form.Control defaultValue={this.state.age} onChange={this.changeageHandler} placeholder="Age" type="number" ></Form.Control>
                           </Form.Group>
                         </Col>
@@ -173,27 +170,27 @@ class Profile extends Component {
                       <Row>
                         <Col className="pr-1" md="4">
                           <Form.Group>
-                            <label>Adresse</label>
+                            <label>{translate('address')}</label>
                             <Form.Control defaultValue={this.state.adresse} onChange={this.changeadresseHandler} placeholder="Adresse" type="text" ></Form.Control>
                           </Form.Group>
                         </Col>
                         
                         <Col className="pl-1" md="4">
                           <Form.Group>
-                            <label>Username</label>
+                            <label>{translate('username')}</label>
                             <Form.Control placeholder="Usrname" type="text" onChange={this.changeusernameHandler} defaultValue={this.state.username}></Form.Control>
                           </Form.Group>
                         </Col>
                         <Col className="pl-1" md="4">
                           <Form.Group>
-                            <label>Country</label>
+                            <label>{translate('country work')}</label>
                             <Form.Control placeholder="Country" type="text" onChange={this.changecountry_workHandler} defaultValue={this.state.country}></Form.Control>
                           </Form.Group>
                         </Col>
                       </Row>
                       
                       <Button className="btn-fill pull-right" type="submit" variant="info" onClick={this.UpdateUser} >
-                        Update Profile
+                      {translate('Update Profile')} 
                       </Button>
                       <div className="clearfix"></div>
                     </Form>

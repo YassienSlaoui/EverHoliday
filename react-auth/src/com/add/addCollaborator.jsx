@@ -254,7 +254,7 @@ class addCollaborator extends Component {
     render() {
         
         return (
-            <I18nPropvider locale={LOCALES.ENGLISH}>
+           
             <div>
                 <br></br>
                 <div className = "container">
@@ -308,26 +308,26 @@ class addCollaborator extends Component {
                                                 value={this.state.country} onChange={this.changecountry_workHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label>Experience: </label>
+                                            <label>{translate('Experience')}: </label>
                                             <input placeholder="country work" name="country_work" className="form-control" 
                                                 value={this.state.experience} onChange={this.changeexperienceHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label>Email: </label>
+                                            <label>{translate('Email')}: </label>
                                             <input placeholder="email" name="email" className="form-control" 
                                                 value={this.state.email} onChange={this.changeemailHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <h3 style={{color:"silver",textAlign:"center"}} onClick={this.add.bind(this)} >Solde</h3>
+                                            <h3 style={{color:"silver",textAlign:"center"}} onClick={this.add.bind(this)} >{translate('Balance')}</h3>
                                             <Button className="btn btn-success"  style={{marginLeft: "10px",float:"right"}} onClick={this.add.bind(this)}> Add</Button>
                                             <div className = "form-group" style={{display:"flex"}}>
                                             <div className = "form-group col-6">
-                                            <label>Years: </label>
+                                            <label>{translate('Years')}: </label>
                                             <input placeholder="Years"  className="form-control" onChange={this.changeYear} 
                                                 />
                                                 </div>
                                                 <div className = "form-group col-6">
-                                                <label>Balance: </label>
+                                                <label>{translate('Balance')}: </label>
                                             <input placeholder="Balance"  className="form-control" onChange={this.changeBalance}/>
                                             
                                                  </div>
@@ -335,30 +335,28 @@ class addCollaborator extends Component {
                                                  </div>
                                                  {this.soldess()}
                                             <div className = "form-group">
-                                                <label>Annual Balance: </label>
+                                                <label>{translate('Annual Balance')}: </label>
                                                 <input placeholder="country work" name="country_work" className="form-control" 
                                                     value={this.state.annualBalance} onChange={this.changeannualBalanceHandler}/>
                                             </div>
                                             <div className = "form-group">
-                                                <label>Cumulative Balance: </label>
+                                                <label>{translate('Cumulative Balance')}: </label>
                                                 <input placeholder="country work" name="country_work" className="form-control" 
                                                     value={this.state.cumulativeBalance} onChange={this.changecumulativeBalanceHandler}/>
                                             </div>
                                             <div className = "form-group">
-                                                <label>Remainder: </label>
+                                                <label>{translate('Remainder')}: </label>
                                                 <input placeholder="country work" name="country_work" className="form-control" 
                                                     value={this.state.remainder} onChange={this.changeremainderHandler}/>
                                             </div>
                                             <div className = "form-group">
-                                                <label>Last modificatio date: </label>
+                                                <label>{translate('Last modification date')}: </label>
                                                 <input placeholder="country work" name="country_work" className="form-control" 
                                                     type="date"   value={this.state.lastmodificatiodate} onChange={this.changelastmodificatiodateHandler}/>
                                             </div>
                                         </div>
-                                        
-
-                                        <button className="btn btn-success" onClick={this.saveOrUpdateUser}>Save</button>
-                                        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
+                                        <button className="btn btn-success" onClick={this.saveOrUpdateUser}>{translate('Save')}Save</button>
+                                        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>{translate('Cancel')}</button>
                                     </form>
                                 </div>
                             </div>
@@ -366,7 +364,7 @@ class addCollaborator extends Component {
 
                 </div>
             </div>
-            </I18nPropvider> 
+             
         )
     }
 }

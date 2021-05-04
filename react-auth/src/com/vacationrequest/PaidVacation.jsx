@@ -4,6 +4,8 @@ import collaboratorService from '../../servicees/CollaborateurServices';
 import PaidRequestService from '../../servicees/PaidRequestService';
 import Calendar from '../calendor/calendar5';
 import dateFormat from "dateformat";
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 import {
     Badge,
     Button,
@@ -213,12 +215,13 @@ class PaidVacation extends Component {
     
    
         return (
+          
         <Container fluid>
             <Row>
               <Col md="6">
                 <Card>
                   <Card.Header>
-                    <Card.Title as="h4">Paid vacation</Card.Title>
+                    <Card.Title as="h4">{translate('Paid vacation')}</Card.Title>
                   </Card.Header>
                   <Card.Body>
                     <Form>
@@ -231,7 +234,7 @@ class PaidVacation extends Component {
                                             
                              </select>
                           </Form.Group>
-                          <Button className="btn btn-success" onClick={this.add.bind(this)} style={{marginLeft: "10px",float:"right"}}> Add</Button>
+                          <Button className="btn btn-success" onClick={this.add.bind(this)} style={{marginLeft: "10px",float:"right"}}> {translate('Add')}</Button>
                         </Col>
                         <Col>
                         {this.dates()}
@@ -241,18 +244,15 @@ class PaidVacation extends Component {
                         <br/>
 
                         <Col md="12">
-                                        <label  style={{marginLeft: "10px",color:"#1DC7EA"}} htmlFor="CumulativeB" >Cumulative balance:   {this.calculeCumulativeBalance()} </label>
-                                        {/*<label type="number" id="CumulativeB" name="Cumulative balance" >{balance.cumelative}</label>*/}
+                                        <label  style={{marginLeft: "10px",color:"#1DC7EA"}} htmlFor="CumulativeB" >{translate('Cumulative Balance')}:   {this.calculeCumulativeBalance()} </label>
+                                       
                                         <br></br>
-                                        <label style={{color:"#1DC7EA", marginLeft: "10px"}} htmlFor="AnnualB" >Annual balance:   {this.state.annual}</label>
-                                       {/* <label type="number" id="AnnualB" name="Annual balance" >{balance.annual}</label>*/}
+                                        <label style={{color:"#1DC7EA", marginLeft: "10px"}} htmlFor="AnnualB" >{translate('Annual Balance')}:   {this.state.annual}</label>
                                        <br></br>
-                                       <label style={{color:"#1DC7EA", marginLeft: "10px"}} htmlFor="AnnualB" >Total balance:   {(this.state.annual+this.calculeCumulativeBalance())}</label>
-                                       {/* <label type="number" id="AnnualB" name="Annual balance" >{balance.annual}</label>*/}
+                                       <label style={{color:"#1DC7EA", marginLeft: "10px"}} htmlFor="AnnualB" >{translate('Total balance')}:   {(this.state.annual+this.calculeCumulativeBalance())}</label>
                                        <br></br>
-                                        <label style={{color:"#1DC7EA", marginLeft: "10px"}} htmlFor="PendingB" >Balance of pending requests: {this.state.allrequest} </label>
-                                        {/*<label type="number" id="AnnualB" name="balance of pending requests" >{balance.pending}</label>*/}
-                                        <label style={{color:"#1DC7EA", marginLeft: "10px",display:"block"}} htmlFor="startDate">Balance of request: {this.calculeBalance()}</label>
+                                        <label style={{color:"#1DC7EA", marginLeft: "10px"}} htmlFor="PendingB" >{translate('Balance of pending requests')}: {this.state.allrequest} </label>
+                                        <label style={{color:"#1DC7EA", marginLeft: "10px",display:"block"}} htmlFor="startDate">{translate('Balance of request')}: {this.calculeBalance()}</label>
                                         </Col>
                                         <br></br>
                         
@@ -267,13 +267,13 @@ class PaidVacation extends Component {
                       <Row>
                         <Col md="15">
                           <Form.Group>
-                            <label>Description:</label>
+                            <label>{translate('Description')}:</label>
                             <Form.Control cols="80"  onChange={this.descrptionChange} rows="4" as="textarea" ></Form.Control>
                           </Form.Group>
                         </Col>
                       </Row>
                       
-                      <Button className="btn-fill pull-right" type="submit" variant="info" onClick={this.saveRequest} > Save request</Button>
+                      <Button className="btn-fill pull-right" type="submit" variant="info" onClick={this.saveRequest}>{translate('Save request')}</Button>
                      
                     </Form>
                   </Card.Body>

@@ -5,7 +5,8 @@ import UnPaidRequestService from '../../servicees/UnPaidRequestService';
 import UnitService from '../../servicees/UnitService'
 import CollaborateurServices from '../../servicees/CollaborateurServices'
 import ExeptionnelRequestService from '../../servicees/ExptionnelService'
-
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 import '../css/list.css';
 
 class Request extends Component {
@@ -228,6 +229,7 @@ class Request extends Component {
                                  }  
    exeptionnelList (){
     return(
+        
         <tbody>
             {
             this.state.exeptionnel.map(
@@ -260,17 +262,18 @@ class Request extends Component {
    }                             
     render() {
         return (
+            
             <div>
                 <br></br>
                 <div className = "row">
                         <table className = "table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>  Request Id</th>
-                                    <th>Collaborator</th>
-                                    <th> statut</th>
-                                    <th>type of time</th>
-                                    <th>Timing</th>
+                                    <th>  {translate('Request Id')}</th>
+                                    <th>{translate('collaborator')}</th>
+                                    <th> {translate('statut')}</th>
+                                    <th>{translate('type of time')}</th>
+                                    <th>{translate('Timing')}</th>
                                     <th>action</th>
                                 </tr>
                             </thead>

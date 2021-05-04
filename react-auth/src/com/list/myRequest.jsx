@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PaidRequestService from '../../servicees/PaidRequestService'
 import ExeptionnelRequestService from '../../servicees/ExptionnelService'
 import UnPaidRequestService from '../../servicees/UnPaidRequestService';
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 import {
     Badge,
     Button,
@@ -93,6 +95,7 @@ class myRequest extends Component {
     }
     Unpaidlists(){
         return(
+            
             <tbody>
                 {
                 this.state.exptionnel.map(
@@ -150,17 +153,18 @@ class myRequest extends Component {
     }                                                                        
     render() {
         return (
+            
             <div>
                 <br></br>
                 <div className = "row">
                         <table className = "table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>  Request Id</th>
-                                    <th>Type</th>
-                                    <th> statut</th>
-                                    <th>type of time</th>
-                                    <th>Timing</th>
+                                    <th>  {translate('Request Id')}</th>
+                                    <th>{translate('Type')}</th>
+                                    <th> {translate('statut')}</th>
+                                    <th>{translate('type of time')}</th>
+                                    <th>{translate('Timing')}</th>
                                 </tr>
                             </thead>
                             {this.lists()}
@@ -170,7 +174,7 @@ class myRequest extends Component {
                         
                 </div>
             
-               <div className="backdiv">
+              {/* <div className="backdiv">
                    
                    <Row style={{margin:"10px"}}>
                         <Col md="4">
@@ -191,8 +195,8 @@ class myRequest extends Component {
                         
                    </Row>
                     
-               </div>
-               </div>
+               </div>*/}
+        </div>
         );
     }
 }

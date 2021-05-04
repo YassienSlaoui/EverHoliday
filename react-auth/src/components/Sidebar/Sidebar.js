@@ -21,7 +21,8 @@ import { useLocation, NavLink } from "react-router-dom";
 import { Nav ,Dropdown,DropdownButton,ButtonGroup,NavDropdown} from "react-bootstrap";
 
 import logo from "assets/img/reactlogo.png";
-
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 function Sidebar({ color, image, routes,path ,path2,path3,path4}) {
   const location = useLocation();
   const activeRoute = (routeName) => {
@@ -39,6 +40,7 @@ function Sidebar({ color, image, routes,path ,path2,path3,path4}) {
     
   } 
   return (
+    
     <div className="sidebar" data-image={image} data-color={color} style={{overflow: "hidden"}}>
       <div
         className="sidebar-background"
@@ -80,31 +82,13 @@ function Sidebar({ color, image, routes,path ,path2,path3,path4}) {
                     activeClassName="active"
                   >
                     <i className={prop.icon} />
-                    <p>{prop.name}</p>
+                    <p>{translate(prop.name)}</p>
                   </NavLink>
                 </li>
               );
             return null;
           })}
-                        
-        {/*[ 'right'].map((direction) => (
-          <NavDropdown
-            as={ButtonGroup}
-            key={direction}
-            
-            id={`dropdown-button-drop-${direction}`}
-            drop={direction}
-            variant="secondary"
-            title={` Drop ${direction} `}
-          >
-            <NavDropdown.Item className="nav-link" eventKey="1">Action</NavDropdown.Item>
-            <NavDropdown.Item className="nav-link" eventKey="2">Another action</NavDropdown.Item>
-            <NavDropdown.Item className="nav-link" eventKey="3">Something else here</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item className="nav-link" eventKey="4">Separated link</NavDropdown.Item>
-          </NavDropdown>
-        ))*/}
-  
+
         </Nav>
            
             

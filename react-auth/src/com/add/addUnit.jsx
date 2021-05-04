@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import UnitService from '../../servicees/UnitService';
 import collaboratorService from '../../servicees/CollaborateurServices';
 import Select from 'react-select';
+import {FormattedMessage} from "react-intl";
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 class addUnit extends Component {
     constructor(props) {
         super(props)
@@ -111,7 +114,6 @@ class addUnit extends Component {
             user => 
            {return { value: user, label: user.firstname +" "+user.lastname }; })
         return (
-            
             <div>
                 <br></br>
                 <div className = "container">
@@ -120,12 +122,12 @@ class addUnit extends Component {
                                 <div className = "card-body">
                                     <form>
                                         <div className = "form-group">
-                                            <label>Name: </label>
+                                            <label>{translate('Name')}: </label>
                                             <input placeholder="name" name="name" className="form-control" 
                                                 value={this.state.name} onChange={this.changenameHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> validator </label>
+                                            <label> {translate('validator')} </label>
                                             <Select 
                                                     
                                                  onChange={this.changevalidatorHandler}
@@ -135,7 +137,7 @@ class addUnit extends Component {
                                                 
                                         </div>
                                         <div className = "form-group">
-                                            <label> collaborator </label>
+                                            <label> {translate('collaborator')} </label>
                                            
                                                  <Select 
                                                  isMulti
@@ -145,8 +147,8 @@ class addUnit extends Component {
                                             
                                         </div>
 
-                                        <button className="btn btn-success" onClick={this.saveOrUpdateHoliday}>Save</button>
-                                        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
+                                        <button className="btn btn-success" onClick={this.saveOrUpdateHoliday}>{translate('Save')}</button>
+                                        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>{translate('Cancel')}</button>
                                     </form>
                                 </div>
                             </div>
@@ -154,7 +156,7 @@ class addUnit extends Component {
 
                 </div>
             </div>
-        )
+     )
     }
 }
 

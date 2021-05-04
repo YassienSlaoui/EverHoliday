@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import HolidayService from '../../servicees/HolidayService'
 import dateFormat from "dateformat";
+import {FormattedMessage} from "react-intl";
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 class Addholiday extends Component {
     constructor(props) {
         super(props)
@@ -76,7 +79,6 @@ class Addholiday extends Component {
     
     render() {
         return (
-            
             <div>
                 <br></br>
                 <div className = "container">
@@ -85,23 +87,23 @@ class Addholiday extends Component {
                                 <div className = "card-body">
                                     <form>
                                         <div className = "form-group">
-                                            <label>Name: </label>
+                                            <label>{translate('Name')}: </label>
                                             <input placeholder="name" name="name" className="form-control" 
                                                 value={this.state.name} onChange={this.changenameHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> date </label>
+                                            <label> {translate('date')} </label>
                                             <input placeholder="date" name="date" className="form-control" 
                                                type="date" value={this.state.date} onChange={this.changedateHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> duration </label>
+                                            <label> {translate('duration')} </label>
                                             <input placeholder="duration" name="duration" className="form-control" 
                                                 value={this.state.duration} onChange={this.changedurationHandler}/>
                                         </div>
 
-                                        <button className="btn btn-success" onClick={this.saveOrUpdateHoliday}>Save</button>
-                                        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
+                                        <button className="btn btn-success" onClick={this.saveOrUpdateHoliday}>{translate('Save')}</button>
+                                        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>{translate('Cancel')}</button>
                                     </form>
                                 </div>
                             </div>

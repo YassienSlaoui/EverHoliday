@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../css/Request.css';
-
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 import Calendar from '../calendor/calendar3'
 import {
     Badge,
@@ -55,31 +56,31 @@ class Vacationrequest extends Component {
     }
     render() {
         return (
+          
         <Container fluid>
             <Row>
               <Col md="12">
                 <Card>
                   <Card.Header>
-                    <Card.Title as="h4">Vacation request</Card.Title>
+                    <Card.Title as="h4">{translate('Vacation request')}</Card.Title>
                   </Card.Header>
                   <Card.Body>
                     <Form style={{display:"grid"}}>
                     
                       
-                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.paid} > Paid vacation</Button>
+                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.paid} > {translate('Paid vacation')}</Button>
                       <br></br>
                       <br></br>
-                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.unpaid} > Unpaid vacation</Button>
+                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.unpaid} > {translate('Unpaid vacation')}</Button>
                       <br></br>
                       <br></br>
-                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.exception}> Exceptional vacation</Button>
+                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.exception}> {translate('Exceptional vacation')}</Button>
                       <br></br>
                       <br></br>
-                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.recovery}> Recovery vacation </Button>
+                      <Button  className="btn-fill pull-right" type="submit" variant="info" onClick={this.recovery}>{translate('Recovery vacation')} </Button>
                       <br></br>
                       <br></br>
-                      <Button className="btn-fill pull-right" type="submit" variant="info" > Historic</Button>
-                      {/*<div className="clearfix"></div>*/}
+                      <Button className="btn-fill pull-right" type="submit" variant="info" >{translate('Historic')}</Button>
                     </Form>
                   </Card.Body>
                 </Card>

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-
+import {FormattedMessage} from "react-intl";
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 import collaboratorService from '../../servicees/CollaborateurServices';
 class changePassword extends Component {
     constructor(props) {
@@ -86,23 +88,23 @@ class changePassword extends Component {
                                     <form>
                                     
                                         <div className = "form-group">
-                                            <label>Password: </label>
+                                            <label>{translate('Password')}: </label>
                                             <input placeholder="Password" name="Password" className="form-control" 
                                                type="password" value={this.state.password} onChange={this.changepasswordHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> New password: </label>
+                                            <label> {translate('New password')}: </label>
                                             <input placeholder="" name="" className="form-control" 
                                                type="password" value={this.state.newpassword} onChange={this.changenewpasswordHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> Retype password: </label>
+                                            <label> {translate('Retype password')}: </label>
                                             <input placeholder="" name="" className="form-control" 
                                                type="password" value={this.state.retypepassword} onChange={this.changereytpepasswordHandler}/>
                                         </div>
                                       
-                                        <button className="btn btn-success" onClick={this.saveOrUpdatePassword}>Save</button>
-                                        <button className="btn btn-danger"  style={{marginLeft: "10px"}}>Cancel</button>
+                                        <button className="btn btn-success" onClick={this.saveOrUpdatePassword}>{translate('Save')}</button>
+                                        <button className="btn btn-danger"  style={{marginLeft: "10px"}}>{translate('Cancel')}</button>
                                     </form>
                                 </div>
                             </div>

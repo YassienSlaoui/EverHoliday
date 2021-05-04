@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import HolidayService from '../../servicees/HolidayService'
 import '../css/list.css';
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
+import collaboratorService from '../../servicees/CollaborateurServices';
 class Holidaylist extends Component {
     constructor(props) {
         super(props)
@@ -44,15 +47,16 @@ class Holidaylist extends Component {
     }
     render() {
         return (
+            
             <div>
                 <br></br>
                 <div className = "row">
                         <table className = "table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>  Holiday</th>
-                                    <th>Date</th>
-                                    <th> Duration</th>
+                                    <th>   {translate('Holiday')}</th>
+                                    <th>{translate('Date')}</th>
+                                    <th> {translate('Duration')}</th>
                                 </tr>
                             </thead>
                             <tbody>

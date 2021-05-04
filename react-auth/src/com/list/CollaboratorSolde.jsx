@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import UnitService from '../../servicees/UnitService'
 import '../css/list.css';
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
+import collaboratorService from '../../servicees/CollaborateurServices';
 class CollaboratorSolde extends Component {
     constructor(props) {
         super(props)
@@ -28,9 +31,9 @@ class CollaboratorSolde extends Component {
                         <table className = "table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>  Collaborator</th>
-                                    <th>Total balance</th>
-                                    <th> cumulativeBalance</th>
+                                    <th>  {translate('collaborator')}</th>
+                                    <th>{translate('Total balance')}</th>
+                                    <th>{translate('Cumulative Balance')} </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,6 +56,7 @@ class CollaboratorSolde extends Component {
             
                
                </div>
+               
         );
     }
 }

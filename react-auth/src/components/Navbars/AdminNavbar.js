@@ -20,7 +20,8 @@ import { useLocation } from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button ,SplitButton,ButtonGroup} from "react-bootstrap";
 import 'components/Navbars/navbar.css'
 import routes from "routes.js";
-
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 function Header() {
   const location = useLocation();
   const userDetaile = JSON.parse(sessionStorage.getItem('user1')).firstname +" "+ JSON.parse(sessionStorage.getItem('user1')).lastname
@@ -37,7 +38,6 @@ function Header() {
   };
   const handleClick = (e) => {
     if(e){
-      
     sessionStorage.setItem('user','');
     sessionStorage.setItem('token','');
     sessionStorage.setItem('role','');
@@ -90,93 +90,26 @@ function Header() {
                 <span className="d-lg-none ml-1">Dashboard</span>
               </Nav.Link>
             </Nav.Item>
-            
-           
+     
           </Nav>
           <Nav className="ml-auto" navbar>
-            
-              {/*
-              
-              <Dropdown as={Nav.Item}>
-              <Dropdown.Toggle
-                as={Nav.Link}
-                data-toggle="dropdown"
-                id="dropdown-67443507"
-                variant="default"
-                className="m-0"
-              >
-                <i className="nc-icon nc-stre-down"></i>
-                
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Notification 1
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Notification 2
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Profile 
-                </Dropdown.Item>
-                <Dropdown.Item
-                   href="/admin/password/change"
-                >
-                  Change password
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="/"
-                  onClick={()=> sessionStorage.clear()}
-                >
-                  Log out
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-              */}
-             
-            
-          
-           
+ 
           <Dropdown as={ButtonGroup}>
             <Button style={{border:"none",fontSize: "17px"}} >{userDetaile}</Button>
             <Dropdown.Toggle split variant="muted" style={{border:"none",top: "-8px"}}  id="dropdown-custom-2" />
             <Dropdown.Menu className="super-colors">
-              <Dropdown.Item eventKey="1" href="/admin/password/user">Profile</Dropdown.Item>
-              <Dropdown.Item eventKey="2" href="/admin/password/change">Change password</Dropdown.Item>
-              
+              <Dropdown.Item eventKey="1" href="/admin/password/user">{translate('Profile')}</Dropdown.Item>
+              <Dropdown.Item eventKey="2" href="/admin/password/change">{translate('Change password')}</Dropdown.Item>
+              <Dropdown.Item eventKey="3" >
+                <Button onClick={()=>{window.location.reload();sessionStorage.setItem('lang','En')}} variant="light">En</Button>
+                <Button onClick={()=>{window.location.reload();sessionStorage.setItem('lang','Fr')}} variant="light">Fr</Button>
+                <Button onClick={()=>{window.location.reload();sessionStorage.setItem('lang','Sp')}} variant="light">Sp</Button>
+              </Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item eventKey="4" href="/" onClick={()=> sessionStorage.clear()}>Log out</Dropdown.Item>
+              <Dropdown.Item eventKey="4" href="/" onClick={()=> sessionStorage.clear()}>{translate('Log out')}</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-            {/*<Nav.Item>
-              <Nav.Link
-                className="m-0"
-                href="#pablo"
-                href="/admin/password/change"
-              >
-                <span className="no-icon">Change password</span>
-              </Nav.Link>
-            </Nav.Item>
-            
-            <Nav.Item>
-              <Nav.Link
-                className="m-0"
-                href="/"
-                onClick={()=> sessionStorage.clear()}
-              >
-                <span className="no-icon">Log out</span>
-              </Nav.Link>
-            </Nav.Item>*/ }
-            
-            
+ 
           </Nav>
         </Navbar.Collapse>
       </Container>

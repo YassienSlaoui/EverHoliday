@@ -16,7 +16,7 @@ import PaidVacation from "com/vacationrequest/PaidVacation";
 import RecoveryVacation from "com/vacationrequest/RecoveryVacation";
 import ExceptionVacation from "com/vacationrequest/ExceptionalVacation";
 import UnpaidVacation from "com/vacationrequest/UnpaidVacation";
-//import historic from "com/vacationrequest/HistoricVacation";
+
 const dashboardRoutes = [
   
   {
@@ -76,7 +76,7 @@ const dashboardRoutes = [
     layout: "/admin",
   },{
     path: "/:id",
-    name:"addholiday",
+    name:"add holiday",
     component: Addholiday,
     layout: "/admin/holiday",
   },

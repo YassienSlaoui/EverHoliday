@@ -4,6 +4,8 @@ import collaboratorService from '../../servicees/CollaborateurServices';
 import UnPaidRequestService from '../../servicees/UnPaidRequestService';
 import Calendar from '../calendor/calendar5';
 import dateFormat from "dateformat";
+import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import translate from "../../i18nProvider/translate"
 import {
     Badge,
     Button,
@@ -88,9 +90,9 @@ dates(){
       <table className = "table table-striped table-bordered" style={{padding:"0px",margin:"0px"}}>
                         <thead>
                             <tr>
-                                <th>  Start Date</th>
-                                <th>End Date</th>
-                                <th> Duration</th>
+                                <th>  {translate('Start Date')}</th>
+                                <th>{translate('End Date')}</th>
+                                <th>{translate('Duration')} </th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -174,12 +176,13 @@ componentDidMount(){
     
     render() {
         return (
+          
           <Container fluid>
           <Row>
             <Col md="6">
               <Card>
                 <Card.Header>
-                  <Card.Title as="h4">Paid vacation</Card.Title>
+                  <Card.Title as="h4">{translate('Unpaid vacation')}</Card.Title>
                 </Card.Header>
                 <Card.Body>
                   <Form>
@@ -192,7 +195,7 @@ componentDidMount(){
                                           
                            </select>
                         </Form.Group>
-                        <Button className="btn btn-success" onClick={this.add.bind(this)} style={{marginLeft: "10px",float:"right"}}> Add</Button>
+                        <Button className="btn btn-success" onClick={this.add.bind(this)} style={{marginLeft: "10px",float:"right"}}> {translate('Add')}</Button>
                       </Col>
                       <Col>
                       {this.dates()}
@@ -200,7 +203,7 @@ componentDidMount(){
                       </Col>
                     
                       <Col md="12">                                
-                                        <label style={{color:"#1DC7EA", marginLeft: "10px",display:"block"}} htmlFor="startDate">Total days: {this.calculeBalance()}</label>
+                                        <label style={{color:"#1DC7EA", marginLeft: "10px",display:"block"}} htmlFor="startDate">{translate('Total balance')}: {this.calculeBalance()}</label>
                                         </Col>
                                         <br></br>
 
@@ -208,13 +211,13 @@ componentDidMount(){
                     <Row>
                       <Col md="15">
                         <Form.Group>
-                          <label>Description:</label>
+                          <label>{translate('Description')}:</label>
                           <Form.Control cols="80"  onChange={this.descrptionChange} rows="4" as="textarea" ></Form.Control>
                         </Form.Group>
                       </Col>
                     </Row>
                     
-                    <Button className="btn-fill pull-right" type="submit" variant="info" onClick={this.saveRequest} > Save request</Button>
+                    <Button className="btn-fill pull-right" type="submit" variant="info" onClick={this.saveRequest}>{translate('Save request')}</Button>
                    
                   </Form>
                 </Card.Body>
