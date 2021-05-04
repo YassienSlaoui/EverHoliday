@@ -55,9 +55,18 @@ public class AuthController {
     public String role(@RequestBody SignInRequest signInRequest) {
         Collaborator userDetails = (Collaborator) CustomrService.loadUserByUsername(signInRequest.getUsername());
         System.out.println(OrganizationalUintService.checkValidator(userDetails));
-        if(userDetails.getTeam().equals("admin RH")) {
+        
+        if(userDetails.getTeam()!=null ) {if(userDetails.getTeam().equals("admin RH")) {
         	return "RH";
-        	
+        }else if(OrganizationalUintService.checkValidator(userDetails) == 1) {
+        	System.out.println(OrganizationalUintService.checkValidator(userDetails));
+        	return "validator";
+        }else if(OrganizationalUintService.checkValidator(userDetails) == 0) {
+        	System.out.println(OrganizationalUintService.checkValidator(userDetails));
+        	return "Collaborator";}
+        else {
+        	return "Collaborator";
+        }
         }else if(OrganizationalUintService.checkValidator(userDetails) == 1) {
         	System.out.println(OrganizationalUintService.checkValidator(userDetails));
         	return "validator";

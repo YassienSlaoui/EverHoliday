@@ -56,6 +56,19 @@ function Admin() {
       
     });
   };
+  (function()
+{
+  if( window.localStorage )
+  {
+    if( !localStorage.getItem('firstLoad') )
+    {
+      localStorage['firstLoad'] = true;
+      window.location.reload();
+    }  
+    else
+      localStorage.removeItem('firstLoad');
+  }
+})();
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -69,7 +82,7 @@ function Admin() {
       element.parentNode.removeChild(element);
     }
   }, [location]);
-  function getSidebar ()  {
+  const getSidebar = () =>  {
     
     if(sessionStorage.getItem('role')==="RH"){
       return ( <Sidebar color={color} image={hasImage ? image : ""} routes={routes} path = "/admin" path2 = "/admin/list" path3="/admin/units" path4 = "/admin/validator" /> );

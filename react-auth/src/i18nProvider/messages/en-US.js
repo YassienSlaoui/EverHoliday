@@ -81,6 +81,7 @@ export default {
     'Start Date':'Start Date',
     'End Date':'End Date',
     'Duration':'Duration',
-    'Years':'Years'
+    'Years':'Years',
+    "Vacation Request":"Vacation Request"
   },
 };
