@@ -76,12 +76,16 @@ export default {
     'User Profile':"profil utilisateur",
     'List Users':'Lister des utilisateurs',
     'Add employees':'Ajouter des employés',
-    'Holidays':'Vacances',
+    'Holidays':'jours férié',
     'add holiday':'ajouter les jours firiers',
     'Organizational Unit':'Unité organisationnelle',
     'Start Date':'Date de début',
     'End Date':'Date de fin',
     'Duration':'Durée',
-    'Years':'Années'
+    'Years':'Années',
+    "birthday":"Date de naissance",
+    "Collaborator balance":"solde de collaborator",
+    "Vacation Request":"demande de congé",
+    "Experience":"Experience"
   },
 };

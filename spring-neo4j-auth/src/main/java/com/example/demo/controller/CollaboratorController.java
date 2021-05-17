@@ -42,6 +42,14 @@ public class CollaboratorController {
 			    // something that should execute on 1st day every month @ 00:00
 			}	
 		*/
+	    /**
+	     * create Collaborator 
+	     * use BCrypt in password
+	     * 
+	     * 
+	     * 
+	     * 
+	     * **/
 	    @Bean
 		  private PasswordEncoder passwordEncoder1() {
 		      return new BCryptPasswordEncoder();

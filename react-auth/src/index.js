@@ -25,14 +25,11 @@ import "./assets/css/animate.min.css";
 import "./assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0";
 import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Authentication from 'layouts/Authentication';
-import Alogin from 'layouts/login';
+
 import Login from 'layouts/Login1';
 import ForgetPassword from 'layouts/ForgetPassword'
 import AdminLayout from "layouts/Admin.js";
-import Rh from "layouts/Rh.js";
-import Collaborator from "layouts/collaborateur.js";
-import axios from "axios";
+
 import { I18nPropvider, LOCALES } from '../src/i18nProvider';
 
 const getlangue = () =>{

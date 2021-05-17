@@ -34,7 +34,6 @@ public ResponseEntity<Collaborator> updateEmployee( Long id,  Collaborator a){
 	Collaborator b = CollaborateurRepository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
 	b.setCin(a.getCin());
-	b.setAge(a.getAge());
 	b.setTeam(a.getTeam());
 	b.setAdresse(a.getAdresse());
 	b.setFirstname(a.getFirstname());
@@ -44,6 +43,7 @@ public ResponseEntity<Collaborator> updateEmployee( Long id,  Collaborator a){
 	b.setCountry(a.getCountry());
 	b.setSolde(a.getSolde());
 	b.setEmail(a.getEmail());
+	b.setBirthday(a.getBirthday());;
 	b.setExperience(a.getExperience());
 	Collaborator updatedUser = CollaborateurRepository.save(b);
 	return ResponseEntity.ok(updatedUser);

@@ -11,6 +11,7 @@ class CollaboratorSolde extends Component {
         this.state = {
                 collaborator: []
         }
+        this.calculeCumulativeBalance=this.calculeCumulativeBalance.bind(this)
         
     }
 
@@ -23,7 +24,16 @@ class CollaboratorSolde extends Component {
             this.setState({ collaborator: res.data});
         });
     }
+    calculeCumulativeBalance (soldes) {
+        let a=0
+        if(soldes!=[] && soldes!=null){
+           
+          soldes.map(solde=> a=a+solde.balance)
+        }
+        return a
+      }
     render() {
+        console.log(this.state.collaborator)
         return (
             <div>
                 <br></br>
@@ -43,8 +53,8 @@ class CollaboratorSolde extends Component {
                                         collaborators => 
                                         <tr key = {collaborators.id }>
                                             <td> {collaborators.firstname + " "+ collaborators.lastname}</td>
-                                            <td> {collaborators.solde.cumulativeBalance+collaborators.solde.annualBalance}</td>
-                                            <td> {collaborators.solde.cumulativeBalance}</td>
+                                            <td> {collaborators.solde.annualBalance+this.calculeCumulativeBalance(collaborators.solde.cumulativeBances)}</td>
+                                            <td> {this.calculeCumulativeBalance(collaborators.solde.cumulativeBances)}</td>
                                             
                                         </tr>
                                     )

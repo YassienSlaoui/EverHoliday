@@ -41,14 +41,14 @@ function Sidebar({ color, image, routes,path ,path2,path3,path4}) {
   } 
   return (
     
-    <div className="sidebar" data-image={image} data-color={color} style={{overflow: "hidden"}}>
+    <div className="sidebar"   style={{overflow: "hidden"}}>
       <div
         className="sidebar-background"
         style={{
-          backgroundImage: "url(" + image + ")",
+          
         }}
       />
-      <div className="sidebar-wrapper" style={{overflow: "hidden"}}>
+      <div className="sidebar-wrapper" style={{overflow: "hidden",backgroundColor:"#111"}}>
         <div className="logo d-flex align-items-center justify-content-start">
           <a
             
@@ -82,7 +82,7 @@ function Sidebar({ color, image, routes,path ,path2,path3,path4}) {
                     activeClassName="active"
                   >
                     <i className={prop.icon} />
-                    <p>{translate(prop.name)}</p>
+                    <p style={{fontSize:"11px"}}>{translate(prop.name)}</p>
                   </NavLink>
                 </li>
               );

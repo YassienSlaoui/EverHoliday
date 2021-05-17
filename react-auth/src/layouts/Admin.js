@@ -8,8 +8,8 @@ import routes from "routes.js";
 import Addholiday from "com/add/addHoliday"
 import sidebarImage from "assets/img/sidebar-3.jpg";
 function Admin() {
-  const [image, setImage] = React.useState(sidebarImage);
-  const [color, setColor] = React.useState("black");
+  const [image, setImage] = React.useState("");
+  const [color, setColor] = React.useState("");
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);

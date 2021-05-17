@@ -13,7 +13,8 @@ class Holidaylist extends Component {
         }
         //this.addUser = this.addUser.bind(this);
         this.editHoliday = this.editHoliday.bind(this);
-        
+        this.checkRh=this.checkRh.bind(this)
+        this.checkRhbtn=this.checkRhbtn.bind(this)
       //  this.deleteUser = this.deleteUser.bind(this);
     }
 /*
@@ -45,6 +46,23 @@ class Holidaylist extends Component {
             this.setState({ holidays: res.data});
         });
     }
+    checkRh(){
+        if(sessionStorage.getItem('role')==="RH"){
+            return(<td>
+                 <button onClick={ () => this.editHoliday(holiday.id)} className="btn btn-info">Update </button>
+                <button style={{marginLeft: "10px"}} onClick={ () => this.deleteHoliday(holiday.id)} className="btn btn-danger">Delete </button>
+            
+            </td>);
+               
+        }
+    }
+    checkRhbtn(){
+        if(sessionStorage.getItem('role')==="RH"){
+            return(
+        <div className="btnholiday">
+                                <button onClick={this.addHolidays.bind(this)} className="btn btn-info ">Add Holiday</button>
+       </div>);
+    }}
     render() {
         return (
             
@@ -55,7 +73,7 @@ class Holidaylist extends Component {
                             <thead>
                                 <tr>
                                     <th>   {translate('Holiday')}</th>
-                                    <th>{translate('Date')}</th>
+                                    <th>{translate('date')}</th>
                                     <th> {translate('Duration')}</th>
                                 </tr>
                             </thead>
@@ -68,18 +86,13 @@ class Holidaylist extends Component {
                                             <td> {holiday.name}</td>
                                             <td> {holiday.date}</td>
                                             <td> {holiday.duration}</td>
-                                            <td>
-                                            <button onClick={ () => this.editHoliday(holiday.id)} className="btn btn-info">Update </button>
-                                            <button style={{marginLeft: "10px"}} onClick={ () => this.deleteHoliday(holiday.id)} className="btn btn-danger">Delete </button>
-                                            </td>
+                                            {this.checkRh()}
                                         </tr>
                                     )
                                 }
                             </tbody>
                         </table>
-                        <div className="btnholiday">
-                                <button onClick={this.addHolidays.bind(this)} className="btn btn-info ">Add Holiday</button>
-                        </div>
+                         {this.checkRhbtn()}
                 </div>
             
                

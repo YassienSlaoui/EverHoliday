@@ -20,14 +20,13 @@ class addCollaborator extends Component {
             firstname:"",
             lastname:"",
             
-            age:"",
+            birthday:"",
             adresse:"",
             password:"",
             email:"",
             username:"",
             country:"" ,
             experience:"",
-            lastmodificatiodate:"",
             annualBalance:"",
             cumulativeBalance:"",
             remainder:"",
@@ -47,9 +46,7 @@ class addCollaborator extends Component {
         this.saveOrUpdateUser = this.saveOrUpdateUser.bind(this);
         this.changeexperienceHandler = this.changeexperienceHandler.bind(this);
         this.changeannualBalanceHandler =this.changeannualBalanceHandler.bind(this);
-        this.changecumulativeBalanceHandler =this.changecumulativeBalanceHandler.bind(this);
         this.changeremainderHandler=this.changeremainderHandler.bind(this);
-        this.changelastmodificatiodateHandler=this.changelastmodificatiodateHandler.bind(this);
         this.soldess=this.soldess.bind(this);
         this.deletelist=this.deletelist.bind(this);
         this.changeBalance=this.changeBalance.bind(this);
@@ -72,15 +69,13 @@ class addCollaborator extends Component {
                     firstname:user.firstname,
                     lastname:user.lastname,
                    
-                    age:user.age,
+                    birthday:user.birthday,
                     adresse:user.adresse,
                     email:user.email,
                     password:user.password,
                     username:user.username,
                     country:user.country,
                     annualBalance:user.solde.annualBalance,
-                    cumulativeBalance:user.solde.cumulativeBalance,
-                    lastmodificatiodate:user.solde.lastmodificatiodate,
                     experience:user.experience,
                     remainder:user.solde.remainder,
                     soldes:user.solde.cumulativeBances
@@ -90,7 +85,12 @@ class addCollaborator extends Component {
     }
     saveOrUpdateUser = (e) => {
         if(this.state.firstname===""|| this.state.lastname === "" ||this.state.password === "" ||this.state.cin===""){
-        alert('first name , last name, CIN or password is empty')
+            this._isMounted = true;
+             e.preventDefault();
+            document.querySelector(".firstname").style.display = "block";  
+            setTimeout(function(){document.querySelector(".firstname ").style.display = "none"},10200)
+            document.querySelector(".error").style.display = "inline-block";  
+            setTimeout(function(){document.querySelector(" .error").style.display = "none"},10200)
         }else{
             this._isMounted = true;
         e.preventDefault();
@@ -98,16 +98,14 @@ class addCollaborator extends Component {
             firstname:this.state.firstname,
             lastname:this.state.lastname,
             
-            age:this.state.age,
+            birthday:this.state.birthday,
             adresse:this.state.adresse,
             username:this.state.username,
             country:this.state.country,
             email:this.state.email,
             experience:this.state.experience,
             solde:{
-                cumulativeBalance:this.state.cumulativeBalance,
                 annualBalance:this.state.annualBalance,
-                lastmodificatiodate:this.state.lastmodificatiodate,
                 remainder:this.state.remainder,
                 cumulativeBances:this.state.soldes
             }
@@ -135,7 +133,7 @@ class addCollaborator extends Component {
     
 
     changeageHandler= (event) => {
-        this.setState({age: event.target.value});
+        this.setState({birthday: event.target.value});
     }
 
     
@@ -165,12 +163,8 @@ class addCollaborator extends Component {
     changeexperienceHandler= (event) => {
         this.setState({experience: event.target.value});
     }
-    changecumulativeBalanceHandler= (event) => {
-        this.setState({cumulativeBalance: event.target.value});
-    }
-    changelastmodificatiodateHandler= (event) => {
-        this.setState({lastmodificatiodate: dateFormat(event.target.value, "yyyy-mm-dd")});
-    }
+   
+    
     changeannualBalanceHandler= (event) => {
         this.setState({annualBalance: event.target.value});
        
@@ -250,7 +244,7 @@ class addCollaborator extends Component {
             
       }
     render() {
-        
+        console.log(this.state.birthday)
         return (
            
             <div>
@@ -269,6 +263,9 @@ class addCollaborator extends Component {
                                             <label>  <FormattedMessage id="FirstName" />: </label>
                                             <input placeholder="First Name" name="firstname" className="form-control" 
                                                 value={this.state.firstname} onChange={this.changefirstnameHandler}/>
+                                                <div className="hidden-error text-danger firstname" style={{display:"none"}}>
+                                                    Enter the first name.
+                                                </div>
                                         </div>
                                         <div className = "form-group">
                                             <label> {translate('LastName')}: </label>
@@ -276,9 +273,9 @@ class addCollaborator extends Component {
                                                 value={this.state.lastname} onChange={this.changelastnameHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> {translate('age')}: </label>
-                                            <input placeholder="age" name="age" className="form-control" 
-                                                value={this.state.age} onChange={this.changeageHandler}/>
+                                            <label> {translate('birthday')}: </label>
+                                            <input placeholder="birthday" name="birthday" className="form-control" 
+                                                type="date"  value={this.state.birthday} onChange={this.changeageHandler}/>
                                         </div>
                                         <div className = "form-group">
                                             <label> {translate('address')}: </label>
@@ -333,24 +330,17 @@ class addCollaborator extends Component {
                                                 <input placeholder="country work" name="country_work" className="form-control" 
                                                     value={this.state.annualBalance} onChange={this.changeannualBalanceHandler}/>
                                             </div>
-                                            <div className = "form-group">
-                                                <label>{translate('Cumulative Balance')}: </label>
-                                                <input placeholder="country work" name="country_work" className="form-control" 
-                                                    value={this.state.cumulativeBalance} onChange={this.changecumulativeBalanceHandler}/>
-                                            </div>
+                                           
                                             <div className = "form-group">
                                                 <label>{translate('Remainder')}: </label>
                                                 <input placeholder="country work" name="country_work" className="form-control" 
                                                     value={this.state.remainder} onChange={this.changeremainderHandler}/>
                                             </div>
-                                            <div className = "form-group">
-                                                <label>{translate('Last modification date')}: </label>
-                                                <input placeholder="country work" name="country_work" className="form-control" 
-                                                    type="date"   value={this.state.lastmodificatiodate} onChange={this.changelastmodificatiodateHandler}/>
-                                            </div>
+                                            
                                         </div>
-                                        <button className="btn btn-success" onClick={this.saveOrUpdateUser}>{translate('Save')}Save</button>
+                                        <button className="btn btn-success" onClick={this.saveOrUpdateUser}>{translate('Save')}</button>
                                         <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>{translate('Cancel')}</button>
+                                        <span className="hidden-error text-danger error" style={{display:"none" , paddingLeft:"20px"}}>Error</span>
                                     </form>
                                 </div>
                             </div>

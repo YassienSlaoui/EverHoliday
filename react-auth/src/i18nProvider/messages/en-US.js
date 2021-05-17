@@ -28,7 +28,7 @@ export default {
     'New password':'New password',
     'Retype password':'Retype password',
     'Total balance':'Total balance',
-    'Holiday':'Holiday',
+    'Holidays':'Holiday',
     'Date':'Date',
     'Duration':'Duration',
     'Update':'Update',
@@ -82,6 +82,9 @@ export default {
     'End Date':'End Date',
     'Duration':'Duration',
     'Years':'Years',
-    "Vacation Request":"Vacation Request"
+    "Vacation Request":"Vacation Request",
+    "Collaborator balance":"Collaborator balance",
+    "birthday":"birthday",
+    "Birth leave":"Birth leave"
   },
 };

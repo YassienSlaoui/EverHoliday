@@ -60,6 +60,19 @@ public class OrganizationalUintService {
 		}
 		return x ;
 	}
+	public Collaborator findValidator(Collaborator collaborator){
+		Collaborator x = null; 
+	
+		for (OrganizationalUnit unit : getAll()) {
+			for (Collaborator collaborators :unit.getCollaborators1()) {
+				if(collaborators.equals(collaborator)) {
+					x=unit.getValidator();
+					break;
+				}
+			}
+		}
+		return x ;
+	}
 	public Collection<Collaborator> CollaboratorSolde(Long validator){
 		Collection<Collaborator> A=new ArrayList<Collaborator>();
 	

@@ -23,6 +23,7 @@ public class Collaborator   implements UserDetails{
 	private String cin;
 	@NonNull
     private Integer age;
+	private LocalDate birthday;
     private String team;
     @NonNull
     private String firstname;
@@ -50,7 +51,7 @@ public class Collaborator   implements UserDetails{
 	@Relationship(type = "assignment", direction = Relationship.Direction.INCOMING)
 	private ArrayList<Collaborator> Collaborators;
 	public Collaborator( Integer age, String firstname, String lastname, String adresse,
-			String username, String country, String password,int experience,String email,LocalDate startDate) {
+			String username, String country, String password,int experience,String email,LocalDate startDate,LocalDate birthday) {
 		this.age = age;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -61,6 +62,7 @@ public class Collaborator   implements UserDetails{
 		this.experience=experience;
 		this.email=email;
 		this.startDate=startDate;
+		this.birthday=birthday;
 	}
 	public Collaborator() {}
 	public LocalDate getStartDate() {
@@ -241,6 +243,12 @@ public class Collaborator   implements UserDetails{
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
 	}
 	
 	

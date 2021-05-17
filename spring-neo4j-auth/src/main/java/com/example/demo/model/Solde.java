@@ -17,8 +17,8 @@ public class Solde {
 	
 	private Double annualBalance;
 	private Double remainder;
-	public Solde( LocalDate lastmodificatiodate, Double annualBalance,List<DateByYears> cumulativeBances,Double remainder) {
-		this.lastmodificatiodate = lastmodificatiodate;
+	public Solde(  Double annualBalance,List<DateByYears> cumulativeBances,Double remainder) {
+	
 		this.annualBalance = annualBalance;
 		this.cumulativeBances = cumulativeBances;
 		this.remainder=remainder;

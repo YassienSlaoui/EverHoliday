@@ -11,12 +11,14 @@ class listCollaborator extends Component {
 
         this.state = {
                 collaborator: [],
-                select:"collaborator"
+                select:"collaborator",
+                search:""
         }
         //this.addUser = this.addUser.bind(this);
         this.editUser = this.editUser.bind(this);
         this.changeselectHandler=this.changeselectHandler.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
+        this.changesearche=this.changesearche.bind(this);
     }
 
     deleteUser(id,id1){
@@ -65,6 +67,10 @@ class listCollaborator extends Component {
                     this.setState({ collaborator: res.data});
                 });
         }
+       
+    }
+    changesearche=(event)=>{
+        this.setState({search:event.target.value});
     }
     render() {
         return (
@@ -72,6 +78,7 @@ class listCollaborator extends Component {
             <div>
                 <br></br>
                 <div className = "row">
+                    <input type="text" placeholder="search" onChange={this.changesearche}/>
                         <table className = "table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -87,7 +94,13 @@ class listCollaborator extends Component {
                             </thead>
                             <tbody>
                                 {
-                                    this.state.collaborator.map(
+                                    this.state.collaborator.filter((val)=>{
+                                        if(this.state.search == ""){
+                                        return val
+                                    }else if (val.firstname.toLowerCase().includes(this.state.search.toLowerCase())){
+                                        return val
+                                        }
+                                        }).map(
                                         user => 
                                         <tr key = {user.id }>
                                               

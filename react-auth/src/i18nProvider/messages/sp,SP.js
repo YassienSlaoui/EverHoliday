@@ -84,7 +84,9 @@ export default {
     'Start Date':'Fecha de inicio',
     'End Date':'Fecha de finalización',
     'Duration':'Duración',
-    'Years':'Años'
+    'Years':'Años',
+    'Home':"bienvenida",
+    "Vacation Request":"Solicitud  vacaciones",
 
   },
 };
