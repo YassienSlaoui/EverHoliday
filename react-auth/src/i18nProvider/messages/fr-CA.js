@@ -86,6 +86,7 @@ export default {
     "birthday":"Date de naissance",
     "Collaborator balance":"solde de collaborator",
     "Vacation Request":"demande de congé",
-    "Experience":"Experience"
+    "Experience":"Experience",
+    
   },
 };

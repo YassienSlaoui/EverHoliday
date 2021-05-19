@@ -78,15 +78,13 @@ class listCollaborator extends Component {
             <div>
                 <br></br>
                 <div className = "row">
-                    <input type="text" placeholder="search" onChange={this.changesearche}/>
+                    <input type="text" placeholder="search" onChange={this.changesearche} style={{marginLeft: "10px"}}/>
                         <table className = "table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     
                                     <th> {translate('FirstName')}</th>
                                     <th> {translate('LastName')} </th>
-                                    
-                                   
                                     <th>{translate('username')}</th>
                                     <th>{translate('Experience')}</th>
                                     <th> Actions</th>

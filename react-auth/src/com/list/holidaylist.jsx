@@ -46,11 +46,11 @@ class Holidaylist extends Component {
             this.setState({ holidays: res.data});
         });
     }
-    checkRh(){
+    checkRh(x){
         if(sessionStorage.getItem('role')==="RH"){
             return(<td>
-                 <button onClick={ () => this.editHoliday(holiday.id)} className="btn btn-info">Update </button>
-                <button style={{marginLeft: "10px"}} onClick={ () => this.deleteHoliday(holiday.id)} className="btn btn-danger">Delete </button>
+                 <button onClick={ () => this.editHoliday(x)} className="btn btn-info">Update </button>
+                <button style={{marginLeft: "10px"}} onClick={ () => this.deleteHoliday(x)} className="btn btn-danger">Delete </button>
             
             </td>);
                
@@ -86,7 +86,7 @@ class Holidaylist extends Component {
                                             <td> {holiday.name}</td>
                                             <td> {holiday.date}</td>
                                             <td> {holiday.duration}</td>
-                                            {this.checkRh()}
+                                            {this.checkRh(holiday.id)}
                                         </tr>
                                     )
                                 }

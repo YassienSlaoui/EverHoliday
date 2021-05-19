@@ -83,17 +83,39 @@ class addCollaborator extends Component {
             });
         }
     }
-    saveOrUpdateUser = (e) => {
-        if(this.state.firstname===""|| this.state.lastname === "" ||this.state.password === "" ||this.state.cin===""){
-            this._isMounted = true;
-             e.preventDefault();
-            document.querySelector(".firstname").style.display = "block";  
-            setTimeout(function(){document.querySelector(".firstname ").style.display = "none"},10200)
+    errors = (x) =>{
+           
+            document.querySelector('.'+x).style.display = "block";  
+            setTimeout(function(){document.querySelector("."+x).style.display = "none"},10200)
             document.querySelector(".error").style.display = "inline-block";  
             setTimeout(function(){document.querySelector(" .error").style.display = "none"},10200)
-        }else{
-            this._isMounted = true;
-        e.preventDefault();
+
+    }
+    saveOrUpdateUser = (e) => {
+        this._isMounted = true;
+             e.preventDefault();
+        if(this.state.firstname==="" ){
+           this.errors('firstname')
+        }else if(this.state.lastname === ""){
+            this.errors('lastname')
+        }else if(this.state.password === ""){
+            this.errors('password')
+        }else if(this.state.email === ""){
+            this.errors('email')
+        }else if(this.state.experience === ""){
+            this.errors('experience')
+        }
+        else if(this.state.birthday === ""){
+            this.errors('birthday')
+        }
+        else if(this.state.username === ""){
+            this.errors('username')
+        }else if(this.state.country === ""){
+            this.errors('country')
+        }else if(this.state.remainder === ""){
+            this.errors('remainder')
+        }    
+        else{
         let user = {  
             firstname:this.state.firstname,
             lastname:this.state.lastname,
@@ -271,6 +293,9 @@ class addCollaborator extends Component {
                                             <label> {translate('LastName')}: </label>
                                             <input placeholder="Last Name" name="lastname" className="form-control" 
                                                 value={this.state.lastname} onChange={this.changelastnameHandler}/>
+                                                <div className="hidden-error text-danger lastname" style={{display:"none"}}>
+                                                    Enter the Last Name.
+                                                </div>
                                         </div>
                                         <div className = "form-group">
                                             <label> {translate('birthday')}: </label>
@@ -281,32 +306,50 @@ class addCollaborator extends Component {
                                             <label> {translate('address')}: </label>
                                             <input placeholder="address" name="adress" className="form-control" 
                                                 value={this.state.adresse} onChange={this.changeadresseHandler}/>
+                                            <div className="hidden-error text-danger address" style={{display:"none"}}>
+                                                    Enter the address.
+                                                </div>                                        
                                         </div>
                                         <div className = "form-group">
                                             <label>{translate('password')}: </label>
                                             <input placeholder="password" name="password" className="form-control" 
                                                  onChange={this.changepasswordHandler}/>
+                                                 <div className="hidden-error text-danger password" style={{display:"none"}}>
+                                                    Enter the password.
+                                                </div> 
                                         </div>
                                        
                                         <div className = "form-group">
                                             <label> {translate('username')}: </label>
                                             <input placeholder="username" name="username" className="form-control" 
                                                 value={this.state.username} onChange={this.changeusernameHandler}/>
+                                                <div className="hidden-error text-danger username" style={{display:"none"}}>
+                                                    Enter the username.
+                                                </div> 
                                         </div>
                                         <div className = "form-group">
                                             <label>{translate('country work')}: </label>
                                             <input placeholder="country work" name="country_work" className="form-control" 
                                                 value={this.state.country} onChange={this.changecountry_workHandler}/>
+                                                <div className="hidden-error text-danger country" style={{display:"none"}}>
+                                                    Enter the country.
+                                                </div> 
                                         </div>
                                         <div className = "form-group">
                                             <label>{translate('Experience')}: </label>
                                             <input placeholder="country work" name="country_work" className="form-control" 
                                                 value={this.state.experience} onChange={this.changeexperienceHandler}/>
+                                                <div className="hidden-error text-danger experience" style={{display:"none"}}>
+                                                    Enter the experience.
+                                                </div> 
                                         </div>
                                         <div className = "form-group">
                                             <label>{translate('Email')}: </label>
-                                            <input placeholder="email" name="email" className="form-control" 
+                                            <input placeholder="email" name="email" className="form-control" type="email" 
                                                 value={this.state.email} onChange={this.changeemailHandler}/>
+                                                <div className="hidden-error text-danger email" style={{display:"none"}}>
+                                                    Enter the email.
+                                                </div> 
                                         </div>
                                         <div className = "form-group">
                                             <h3 style={{color:"silver",textAlign:"center"}} onClick={this.add.bind(this)} >{translate('Balance')}</h3>
@@ -335,6 +378,9 @@ class addCollaborator extends Component {
                                                 <label>{translate('Remainder')}: </label>
                                                 <input placeholder="country work" name="country_work" className="form-control" 
                                                     value={this.state.remainder} onChange={this.changeremainderHandler}/>
+                                                    <div className="hidden-error text-danger remainder" style={{display:"none"}}>
+                                                    Enter the remainder.
+                                                </div> 
                                             </div>
                                             
                                         </div>
