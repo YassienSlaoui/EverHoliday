@@ -13,9 +13,9 @@ import org.activiti.engine.test.ActivitiRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class ProcessTestEverHolday {
+public class ProcessTestEverHoliday {
 
-	private String filename = "C:\\Users\\yaslaoui\\Desktop\\EverHoliday\\spring-neo4j-auth\\src\\main\\resources\\processes\\HolidayProcess.bpmn";
+	private String filename = "C:\\Users\\felkhaml\\Desktop\\full project\\full-project\\spring-neo4j-auth\\src\\main\\resources\\processes\\HolidayProcess.bpmn";
 
 	@Rule
 	public ActivitiRule activitiRule = new ActivitiRule();
@@ -23,12 +23,12 @@ public class ProcessTestEverHolday {
 	@Test
 	public void startProcess() throws Exception {
 		RepositoryService repositoryService = activitiRule.getRepositoryService();
-		repositoryService.createDeployment().addInputStream("EverHolday.bpmn20.xml",
+		repositoryService.createDeployment().addInputStream("EverHoliday.bpmn20.xml",
 				new FileInputStream(filename)).deploy();
 		RuntimeService runtimeService = activitiRule.getRuntimeService();
 		Map<String, Object> variableMap = new HashMap<String, Object>();
 		variableMap.put("name", "Activiti");
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("EverHolday", variableMap);
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("EverHoliday", variableMap);
 		assertNotNull(processInstance.getId());
 		System.out.println("id " + processInstance.getId() + " "
 				+ processInstance.getProcessDefinitionId());

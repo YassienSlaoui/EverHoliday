@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Collaborator;
 import com.example.demo.model.PaidRequest;
+import com.example.demo.proceessImpl.ActivitiProcess;
 import com.example.demo.service.PaidRequestService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -28,7 +29,8 @@ public class PaidRequestController {
 	@Autowired
     PaidRequestService PaidRequestService;
     
-    
+	@Autowired
+	private ActivitiProcess activitiProcess;
 
     @GetMapping("/PaidRequest")
     public Collection<PaidRequest> getAll() {
@@ -39,14 +41,15 @@ public class PaidRequestController {
 	
 	@PostMapping("/PaidRequest")
 	public PaidRequest adduser(@RequestBody PaidRequest PaidRequest) {
-		
+		activitiProcess.startProcess(PaidRequest);
 		return PaidRequestService.createPaidRequest(PaidRequest);
+		
 		
 	}
 	
 	
 	@GetMapping("/PaidRequest/{id}")
-	public ResponseEntity<PaidRequest> getEmployeeById(@PathVariable Long id) {
+	public PaidRequest getEmployeeById(@PathVariable Long id) {
 		
 		return PaidRequestService.getPaidRequestById(id);
 	}
@@ -55,6 +58,7 @@ public class PaidRequestController {
 	
 	@PutMapping("/PaidRequest/{id}")
 	public ResponseEntity<PaidRequest> updateEmployee(@PathVariable Long id, @RequestBody PaidRequest user){
+		
 		return PaidRequestService.updatePaidRequest(id,user);
 	}
 	@GetMapping("/PaidRequest/users")
@@ -67,8 +71,8 @@ public class PaidRequestController {
 		return PaidRequestService.deletePaidRequest(id);
 	}
 	@PutMapping("/PaidRequest/statut/{id}")
-	public ResponseEntity<PaidRequest> updateStatut(@PathVariable Long id, @RequestBody PaidRequest user){
-		
-		return PaidRequestService.updateStatut(id,user.getStatut());
+	public ResponseEntity<PaidRequest> updateStatut(@PathVariable Long id, @RequestBody PaidRequest request){
+		activitiProcess.updateStatut(id, request.getStatut());
+		return PaidRequestService.updateStatut(id,request.getStatut());
 	}
 }

@@ -95,7 +95,7 @@ import { withRouter } from 'react-router-dom';
                                              <input type="password" name="password" className="form-control" onChange={this.changepasswordHandler} placeholder="Password"/>
                                             </div>
                                             <div className="container-sm element-margin">
-                                             <button type="submit" className="btn btn-primary" name="singIn" onClick={this.login} >Sign In</button>
+                                             <button type="submit" className="btn btn-success" name="singIn" onClick={this.login} >Sign In</button>
                                     </div>
                                
                                 
@@ -103,7 +103,7 @@ import { withRouter } from 'react-router-dom';
                               </form>
                             </div>
                           
-                                <p ><a href="hy">forget pasword?</a></p>
+                                <p ><a href="hy"   class="forget_password">forget password?</a></p>
                             
                         </div>
                         

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Collaborator;
+import com.example.demo.service.PaidRequestService;
 import com.example.demo.model.OrganizationalUnit;
 import com.example.demo.model.PaidRequest;
 import com.example.demo.repository.PaidRequestRepository;
@@ -24,6 +25,8 @@ import org.activiti.engine.TaskService;
 public class ActivitiProcess {
 	@Autowired
 	private PaidRequestRepository PaidRequestRepository;
+	@Autowired 
+	private PaidRequestService PaidRequestService;
 	   @Autowired
 	  private  RuntimeService runtimeService;
 	   @Autowired
@@ -32,22 +35,28 @@ public class ActivitiProcess {
 		private EmailService EmailService;
 	   @Autowired
 	   private TaskService taskService;
+	   
+	   
 	 public ActivitiProcess() {
 		} 
 	public void startProcess(PaidRequest PaidRequest) {
 		String username = PaidRequest.getCollaborator().getUsername();
 		Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+		
 		Map<String, Object> data = new HashMap<String, Object>() ;
+		data.put("paidRequest", PaidRequest);
+		data.put("id", PaidRequest.getId());
 		data.put("Owner", PaidRequest.getCollaborator());
 		data.put("username", username);
-		data.put("validator",validator);
+		data.put("validator",validator.getId().toString());
 		data.put("description", PaidRequest.getDescription());
 		data.put("RequestDate", PaidRequest.getRequestDate());
 		data.put("TypeOfTime", PaidRequest.getTypeOfTime());
 		data.put("balanceUsed", PaidRequest.getBalanceUsed());
 		data.put("statut", PaidRequest.getStatut());
 		data.put("RequestDates", PaidRequest.getDatesRequest());
-		  runtimeService.startProcessInstanceByKey("HolidayProcess", String.valueOf(PaidRequest.getId()), data);
+		System.out.println("Process started successfully");
+		 runtimeService.startProcessInstanceByKey("EverHoliday", String.valueOf(PaidRequest.getId()), data).getId();
 	    }
 	
     public void sendMailOwner(PaidRequest PaidRequest) {
@@ -55,17 +64,18 @@ public class ActivitiProcess {
     	
         EmailService.sendSimpleMessage(PaidRequest.getCollaborator().getEmail(),
         		"EverHolday",
-        		"Bonjour "+PaidRequest.getCollaborator().getLastname()+" "+PaidRequest.getCollaborator().getLastname()+","
+        		"Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
         		+ " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+" est en attente de validation par : "
         				+validator.getLastname()+" "+validator.getFirstname()
         		+ " \n Cordialement.");
+  
        
     }
     public void sendMailValidator(PaidRequest PaidRequest) {
     	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
     	EmailService.sendSimpleMessage(validator.getEmail(),
         		"EverHolday",
-        		"Bonjour "+validator.getLastname()+" "+validator.getLastname()+","
+        		"Bonjour "+validator.getFirstname()+" "+validator.getLastname()+","
         		+ " \n "+ PaidRequest.getCollaborator().getLastname()+" " +PaidRequest.getCollaborator().getLastname()+
         		"a demandé une Congé payé dans la "+PaidRequest.getRequestDate() + " est en attente de votre validation "
         		+ " \n Cordialement.");
@@ -84,19 +94,20 @@ public class ActivitiProcess {
         	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
     		EmailService.sendSimpleMessage(col.getEmail(),
             		"EverHolday",
-            		"Bonjour "+col.getLastname()+" "+col.getLastname()+","
-            		+ " \n la demande du Congé payé de "+ PaidRequest.getCollaborator().getLastname()+" " +PaidRequest.getCollaborator().getLastname()+
+            		"Bonjour "+col.getFirstname()+" "+col.getLastname()+","
+            		+ " \n la demande du Congé payé de "+ PaidRequest.getCollaborator().getFirstname()+" " +PaidRequest.getCollaborator().getLastname()+
             		"a était refusé par  "+validator.getFirstname() 
             		+" "+validator.getLastname()
             		+ " \n Cordialement.");
     	}
     	
     }
-    public void sendMailValidationOwner(PaidRequest PaidRequest ,String statut) {
+    public void sendMailValidationOwner(Long id ,String statut) {
+    	PaidRequest PaidRequest = PaidRequestService.getPaidRequestById(id);
     	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
     	EmailService.sendSimpleMessage(validator.getEmail(),
     			"EverHolday",
-        		"Bonjour "+PaidRequest.getCollaborator().getLastname()+" "+PaidRequest.getCollaborator().getLastname()+","
+        		"Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
         		+ " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+" sera "+statut +"  par : "
         				+validator.getLastname()+" "+validator.getFirstname()
         		+ " \n Cordialement.");
@@ -106,20 +117,36 @@ public class ActivitiProcess {
 				.orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
 		
 		b.setStatut(a);
-		
 		PaidRequest updatedUser = PaidRequestRepository.save(b);
-		
-		List<Task> tasks = taskService.createTaskQuery()
-                .taskDefinitionKey(id+" "+a)
-                .processInstanceBusinessKey(String.valueOf(id))
-                .list();
 
-        for (Task task : tasks) {
-            Map<String, Object> data = new HashMap<String, Object>();
-            data.put("validation", a);
-            data.put("Owner",a);
-            taskService.complete(task.getId(), data);
-        }
+		Collaborator validator=OrganizationalUintService.findValidator(b.getCollaborator());
+		
+		
+		List<Task> tasks = taskService.createTaskQuery().taskAssignee(validator.getId().toString()).list();
+		System.out.println(tasks);
+		for (Task task : tasks) {
+			
+			Map<String, Object> taskVariables = new HashMap<String, Object>();
+			taskVariables.put("validation", a);
+			taskVariables.put("Owner", b.getCollaborator().getLastname()+" "+b.getCollaborator().getFirstname());
+			taskService.complete(task.getId(), taskVariables);
+			 System.out.println("   the data "+taskVariables.toString());
+		}
+		
+//		List<Task> tasks = taskService.createTaskQuery()
+//                .taskDefinitionKey("sid-340F039C-23AD-4511-AF40-7CFB028AC0A3")
+//                .processInstanceBusinessKey(String.valueOf(id))
+//                .list();
+//         System.out.println(tasks);
+//        for (Task task : tasks) {
+//            Map<String, Object> data = new HashMap<String, Object>();
+//            data.put("validation", a);
+//            data.put("Owner",b.getCollaborator().getLastname()+" "+b.getCollaborator().getFirstname());
+//            taskService.complete(task.getId(), data);
+//            System.out.println("   the data "+data.toString());
+//        }
+        System.out.println("the statut of "+a);
+
         return ResponseEntity.ok(updatedUser);
 	}
 }
