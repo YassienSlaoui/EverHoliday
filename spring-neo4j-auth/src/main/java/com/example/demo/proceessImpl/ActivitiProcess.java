@@ -108,8 +108,8 @@ public class ActivitiProcess {
 		b.setStatut(a);
 		
 		PaidRequest updatedUser = PaidRequestRepository.save(b);
-		return ResponseEntity.ok(updatedUser);
-		/*List<Task> tasks = taskService.createTaskQuery()
+		
+		List<Task> tasks = taskService.createTaskQuery()
                 .taskDefinitionKey(id+" "+a)
                 .processInstanceBusinessKey(String.valueOf(id))
                 .list();
@@ -119,6 +119,7 @@ public class ActivitiProcess {
             data.put("validation", a);
             data.put("Owner",a);
             taskService.complete(task.getId(), data);
-        }*/
+        }
+        return ResponseEntity.ok(updatedUser);
 	}
 }
