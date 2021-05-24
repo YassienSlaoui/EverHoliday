@@ -51,7 +51,7 @@ public class PaidRequestService {
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
-	}/*
+	}
 	public ResponseEntity<PaidRequest> updateStatut( Long id,  String a){
 		PaidRequest b = PaidRequestRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
@@ -61,5 +61,5 @@ public class PaidRequestService {
 		PaidRequest updatedUser = PaidRequestRepository.save(b);
 		return ResponseEntity.ok(updatedUser);
 	}
-*/
+
 }

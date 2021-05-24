@@ -2,17 +2,14 @@ import React, { Component } from 'react'
 import '../css/Request.css';
 import collaboratorService from '../../servicees/CollaborateurServices';
 import UnPaidRequestService from '../../servicees/UnPaidRequestService';
-import Calendar from '../calendor/calendar5';
+import Calendar from '../calendor/calendar6';
 import dateFormat from "dateformat";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 import {
-    Badge,
     Button,
     Card,
     Form,
-    Navbar,
-    Nav,
     Container,
     Row,
     Col,
@@ -20,7 +17,6 @@ import {
 class UnpaidVacation extends Component {
     constructor(props) {
         super(props)
-        
         this.state = {
             balance: [],
             calendarState:"",
@@ -52,6 +48,7 @@ class UnpaidVacation extends Component {
     // step 3
     add(){
       const element = this.childRef.current;
+      if(this.state.list=[]){
       if(element.state.startDate!=null ){
         if(element.state.endDate!=null){
     this.setState(state1 =>{return{calendar: element.state,startDate:element.state.startDate}})
@@ -68,6 +65,8 @@ class UnpaidVacation extends Component {
   }
     }else{
       alert("entre startDate")
+    }}else{
+      alert("you can't add other one")
     }
     
 }

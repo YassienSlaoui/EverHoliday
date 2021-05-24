@@ -41,13 +41,13 @@ class calendar extends Component {
        blockedDate (date){
         var show = false;
       
-      this.state.holidays.map(map=>{
+      
         
-        if (date.getDay()==6|| date.getDay()==0||dateFormat(date, "yyyy-mm-dd")==map.date){
+        if (date.getDay()==6|| date.getDay()==0){
           show =true
          
         }
-      })
+      
           
           return show
         }
@@ -63,7 +63,6 @@ class calendar extends Component {
                 startDate={this.state.startDate} // Date or null
                 endDate={this.state.endDate} // Date or null
                 focusedInput={this.state.focusedInput} // START_DATE, END_DATE or null
-                isDateBlocked={this.blockedDate}
                 
              />
         )
