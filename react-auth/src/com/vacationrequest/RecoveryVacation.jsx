@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Calendar from '../calendor/calendar5'
+import Calendar from '../calendor/calendar6'
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 import {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ExeptionnelRequestService from '../../servicees/ExptionnelService'
 import collaboratorService from '../../servicees/CollaborateurServices';
-import Calendar from '../calendor/calendar5'
+import Calendar from '../calendor/calendar6'
 import dateFormat from "dateformat";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
@@ -49,15 +49,6 @@ class ExceptionVacation extends Component {
       this.calculeBalance=this.calculeBalance.bind(this)
 
   }
-        
-        
-    
-
-    // step 3
-    
-    
-    
-
     add(){
       const element = this.childRef.current;
       if(element.state.startDate!=null ){

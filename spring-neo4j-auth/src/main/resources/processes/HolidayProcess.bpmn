@@ -61,7 +61,7 @@
         <omgdc:Bounds height="40.0" width="40.0" x="830.0" y="260.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
-        <omgdc:Bounds height="80.0" width="100.0" x="270.0" y="210.0"></omgdc:Bounds>
+        <omgdc:Bounds height="80.0" width="100.0" x="280.0" y="211.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="servicetask2" id="BPMNShape_servicetask2">
         <omgdc:Bounds height="80.0" width="100.0" x="270.0" y="30.0"></omgdc:Bounds>
@@ -73,7 +73,7 @@
         <omgdc:Bounds height="55.0" width="105.0" x="690.0" y="300.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="servicetask5" id="BPMNShape_servicetask5">
-        <omgdc:Bounds height="80.0" width="100.0" x="490.0" y="373.0"></omgdc:Bounds>
+        <omgdc:Bounds height="80.0" width="100.0" x="491.0" y="373.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sid-D38E8005-FE2F-4BAB-A7D7-48E391204F45" id="BPMNEdge_sid-D38E8005-FE2F-4BAB-A7D7-48E391204F45">
         <omgdi:waypoint x="125.0" y="167.0"></omgdi:waypoint>
@@ -89,7 +89,7 @@
         <omgdi:waypoint x="205.0" y="165.0"></omgdi:waypoint>
         <omgdi:waypoint x="227.0" y="165.0"></omgdi:waypoint>
         <omgdi:waypoint x="227.0" y="250.0"></omgdi:waypoint>
-        <omgdi:waypoint x="270.0" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="251.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-946F9A87-2FA9-4A01-8845-7485EAAB1A76" id="BPMNEdge_sid-946F9A87-2FA9-4A01-8845-7485EAAB1A76">
         <omgdi:waypoint x="540.0" y="205.0"></omgdi:waypoint>
@@ -97,13 +97,13 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-3E341A50-F166-4CA5-A48D-BAB82C328357" id="BPMNEdge_sid-3E341A50-F166-4CA5-A48D-BAB82C328357">
         <omgdi:waypoint x="540.0" y="320.0"></omgdi:waypoint>
-        <omgdi:waypoint x="540.0" y="373.0"></omgdi:waypoint>
+        <omgdi:waypoint x="541.0" y="373.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="14.0" width="100.0" x="546.0" y="340.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-896736DE-D339-4BD5-A21A-266946EB9D4F" id="BPMNEdge_sid-896736DE-D339-4BD5-A21A-266946EB9D4F">
-        <omgdi:waypoint x="590.0" y="413.0"></omgdi:waypoint>
+        <omgdi:waypoint x="591.0" y="413.0"></omgdi:waypoint>
         <omgdi:waypoint x="760.0" y="412.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
@@ -112,7 +112,7 @@
         <omgdi:waypoint x="420.0" y="144.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="370.0" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="380.0" y="251.0"></omgdi:waypoint>
         <omgdi:waypoint x="410.0" y="250.0"></omgdi:waypoint>
         <omgdi:waypoint x="420.0" y="184.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>

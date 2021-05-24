@@ -181,8 +181,8 @@ class Request extends Component {
                            
                           {this.checkStatut(paidRequests.statut)} 
                           <td>{paidRequests.typeOfTime}</td>
-                           <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}>From {dates.startDate} to {dates.endDate}</p>)}</td> 
-                           <td>
+                          <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                            <td>
                            <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.RequestRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
                            <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.RequestSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
                            </td>                         
@@ -211,8 +211,8 @@ class Request extends Component {
 
                                {this.checkStatut(paidRequests.statut)} 
                                <td>{paidRequests.typeOfTime}</td>
-                                <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}>From {dates.startDate} to {dates.endDate}</p>)}</td> 
-                                <td>
+                               <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                                 <td>
                                 <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.UnRequestRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
                                 <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.UnRequestSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
                                 </td>                         
@@ -245,8 +245,8 @@ class Request extends Component {
 
                    {this.checkStatut(paidRequests.statut)} 
                    <td>{paidRequests.typeOfTime}</td>
-                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}>From {dates.startDate} to {dates.endDate}</p>)}</td> 
-                    <td>
+                   <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                     <td>
                     <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.exeptionnelRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
                     <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.exeptionnelSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
                     </td>                         
@@ -273,7 +273,8 @@ class Request extends Component {
                                     <th>{translate('collaborator')}</th>
                                     <th> {translate('statut')}</th>
                                     <th>{translate('type of time')}</th>
-                                    <th>{translate('Timing')}</th>
+                                    <th>{translate('Start Date')}</th>
+                                    <th>{translate('End Date')}</th>
                                     <th>action</th>
                                 </tr>
                             </thead>

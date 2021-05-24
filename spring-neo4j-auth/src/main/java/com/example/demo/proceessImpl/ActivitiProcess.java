@@ -118,6 +118,7 @@ public class ActivitiProcess {
 		
 		b.setStatut(a);
 		PaidRequest updatedUser = PaidRequestRepository.save(b);
+
 		Collaborator validator=OrganizationalUintService.findValidator(b.getCollaborator());
 		
 		
@@ -145,6 +146,7 @@ public class ActivitiProcess {
 //            System.out.println("   the data "+data.toString());
 //        }
         System.out.println("the statut of "+a);
+
         return ResponseEntity.ok(updatedUser);
 	}
 }

@@ -79,9 +79,11 @@ class myRequest extends Component {
                                 <td> {paidRequests.id}</td>
                                 <td>Paid Request</td>
                                 
+                                
                                {this.checkStatut(paidRequests.statut)} 
                                <td>{paidRequests.typeOfTime}</td>
-                                <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}>From {dates.startDate} to {dates.endDate}</p>)}</td> 
+                                <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
+                                <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
                                 </tr>
                                 )
                             }                     
@@ -111,7 +113,8 @@ class myRequest extends Component {
 
                        {this.checkStatut(paidRequests.statut)} 
                        <td>{paidRequests.typeOfTime}</td>
-                        <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}>From {dates.startDate} to {dates.endDate}</p>)}</td> 
+                       <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
+                        <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
                                                
                          </tr> 
                          
@@ -141,8 +144,8 @@ class myRequest extends Component {
 
                    {this.checkStatut(paidRequests.statut)} 
                    <td>{paidRequests.typeOfTime}</td>
-                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}>From {dates.startDate} to {dates.endDate}</p>)}</td> 
-                                           
+                   <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                    
                      </tr> 
                      
                     );}})
@@ -164,7 +167,8 @@ class myRequest extends Component {
                                     <th>{translate('Type')}</th>
                                     <th> {translate('statut')}</th>
                                     <th>{translate('type of time')}</th>
-                                    <th>{translate('Timing')}</th>
+                                    <th>{translate('Start Date')}</th>
+                                    <th>{translate('End Date')}</th>
                                 </tr>
                             </thead>
                             {this.lists()}
