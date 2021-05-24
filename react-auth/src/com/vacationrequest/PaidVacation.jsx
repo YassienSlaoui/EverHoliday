@@ -93,7 +93,6 @@ class PaidVacation extends Component {
             if(element.state.endDate!=null){
         this.setState(state1 =>{return{calendar: element.state,startDate:element.state.startDate}})
               let DateReq = {
-       
           startDate:dateFormat(element.state.startDate, "yyyy-mm-dd"),
           endDate:dateFormat(element.state.endDate, "yyyy-mm-dd"),
           duration:Math.ceil((element.state.endDate.getTime()-element.state.startDate.getTime())/(1000 * 3600 * 24)+1)
