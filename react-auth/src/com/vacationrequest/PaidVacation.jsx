@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import '../css/Request.css';
 import collaboratorService from '../../servicees/CollaborateurServices';
 import PaidRequestService from '../../servicees/PaidRequestService';
-import Calendar from '../calendor/calendar5';
+import Calendar from '../calendor/calendar6';
 import dateFormat from "dateformat";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
+import HolidayService from '../../servicees/HolidayService'
 import {
     Badge,
     Button,
@@ -39,7 +40,8 @@ class PaidVacation extends Component {
             soldes:"",
             selectedType:"FullDay",
             paidRequest:[],
-            allrequest:0
+            allrequest:0,
+            holidays:[]
         }
         
        
@@ -76,6 +78,10 @@ class PaidVacation extends Component {
               this.setState({allrequest:this.state.allrequest+request.balanceUsed})
       })
   });
+  HolidayService.getHoliday().then(res => {
+    this.setState({ holidays: res.data});
+
+});
     }
     
     
@@ -87,17 +93,34 @@ class PaidVacation extends Component {
       }
       return a
     }
+    calculeAtt(a,b){
+      let z = Math.ceil(((a.getTime()-b.getTime())/(1000 * 3600 * 24)+1))
+      let i =new Date(b.getTime());
+      for( i ;i<=a;i.setDate(i.getDate()+1)){
+        this.state.holidays.map(map=>{
+        if (dateFormat(i, "yyyy-mm-dd")==map.date&&i.getDay()!=0&&i.getDay()!=6){ 
+          console.log(i) 
+          z=z-1
+        }})
+         if (i.getDay()==0||i.getDay()==6){
+          z=z-1
+        }
+      }
+      return z
+    }
     add(){
+      
           const element = this.childRef.current;
           if(element.state.startDate!=null ){
             if(element.state.endDate!=null){
+        
         this.setState(state1 =>{return{calendar: element.state,startDate:element.state.startDate}})
         let DateReq={
           startDate:dateFormat(element.state.startDate.toLocaleDateString(), "yyyy-mm-dd"),
           endDate:dateFormat(element.state.endDate.toLocaleDateString(), "yyyy-mm-dd"),
-          duration:Math.ceil((element.state.endDate.getTime()-element.state.startDate.getTime())/(1000 * 3600 * 24)+1)
+          duration:this.calculeAtt(element.state.endDate,element.state.startDate)
         }
-        this.state.list.push([element.state.startDate,element.state.endDate,Math.ceil((element.state.endDate.getTime()-element.state.startDate.getTime())/(1000 * 3600 * 24)+1)])
+        this.state.list.push([element.state.startDate,element.state.endDate,this.calculeAtt(element.state.endDate,element.state.startDate)])
         this.state.list1.push(DateReq)
         this.setState({list:this.state.list,list1:this.state.list1})
       }else{
