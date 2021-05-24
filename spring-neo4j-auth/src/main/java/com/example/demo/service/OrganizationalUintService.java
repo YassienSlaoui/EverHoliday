@@ -65,12 +65,15 @@ public class OrganizationalUintService {
 	
 		for (OrganizationalUnit unit : getAll()) {
 			for (Collaborator collaborators :unit.getCollaborators1()) {
-				if(collaborators.equals(collaborator)) {
-					x=unit.getValidator();
-					break;
-				}
+				if(collaborators.getId().equals(collaborator.getId())) {
+					x=unit.getValidator();break;				}
+//				if(collaborators.equals(collaborator)) {
+//					x=unit.getValidator();
+//					break;
+//				}
 			}
 		}
+		System.out.println("the validator is : "+x.getFirstname() +" "+ x.getLastname());
 		return x ;
 	}
 	public Collection<Collaborator> CollaboratorSolde(Long validator){

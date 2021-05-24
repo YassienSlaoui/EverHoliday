@@ -29,7 +29,7 @@ export default class ForgetPassword extends React.Component{
                                         </div>
                                          
                                             <div className="container-sm element-margin">
-                                             <button type="submit" className="btn btn-primary" name="singIn" ><a href="/">Send Request</a></button>
+                                             <button type="submit" className="btn btn-success" name="singIn" ><a href="/">Send Request</a></button>
                                     </div>
                                
                                 

@@ -72,7 +72,7 @@ class PaidVacation extends Component {
     });
     PaidRequestService.getPaidRequest().then((res) => {
       res.data.map(request=>{
-        if(request.collaborator.id===parseInt(sessionStorage.getItem('user')))
+        if(request.collaborator.id===parseInt(sessionStorage.getItem('user'))&&request.statut==="processed")
               this.setState({allrequest:this.state.allrequest+request.balanceUsed})
       })
   });
@@ -92,9 +92,10 @@ class PaidVacation extends Component {
           if(element.state.startDate!=null ){
             if(element.state.endDate!=null){
         this.setState(state1 =>{return{calendar: element.state,startDate:element.state.startDate}})
-        let DateReq={
-          startDate:dateFormat(element.state.startDate.toLocaleDateString(), "yyyy-mm-dd"),
-          endDate:dateFormat(element.state.endDate.toLocaleDateString(), "yyyy-mm-dd"),
+              let DateReq = {
+         // startDate:dateFormat(element.state.startDate.toLocaleDateString(), "yyyy-mm-dd"),
+          startDate:dateFormat(element.state.startDate, "yyyy-mm-dd"),
+          endDate:dateFormat(element.state.endDate, "yyyy-mm-dd"),
           duration:Math.ceil((element.state.endDate.getTime()-element.state.startDate.getTime())/(1000 * 3600 * 24)+1)
         }
         this.state.list.push([element.state.startDate,element.state.endDate,Math.ceil((element.state.endDate.getTime()-element.state.startDate.getTime())/(1000 * 3600 * 24)+1)])
@@ -166,8 +167,9 @@ class PaidVacation extends Component {
                                         (lists,index) => 
                                        
                                         <tr key = {index} >
-                                            <td> {dateFormat(lists[0].toLocaleDateString(), "yyyy-mm-dd")}</td>
-                                            <td> {dateFormat(lists[1].toLocaleDateString(), "yyyy-mm-dd")}</td>
+                                         
+                                            <td> {dateFormat(lists[0], "yyyy-mm-dd")}</td>
+                                            <td> {dateFormat(lists[1], "yyyy-mm-dd")}</td>
                                             <td> {lists[2]}</td>
                                             <td><button onClick={(e)=> {e.preventDefault(); this.deletelist(index)}} className="btn btn-danger"> X </button></td>
                                             
@@ -187,7 +189,7 @@ class PaidVacation extends Component {
          description : this.state.description,
          balanceUsed :this.calculeBalance(),
          datesRequest:this.state.list1,
-         requestDate:dateFormat((new Date()).toLocaleDateString(), "yyyy-mm-dd"),
+         requestDate:dateFormat((new Date()), "yyyy-mm-dd"),
          statut: "processed",
          typeOfTime:this.state.selectedType
       }

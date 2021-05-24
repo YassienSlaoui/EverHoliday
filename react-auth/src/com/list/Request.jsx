@@ -173,7 +173,7 @@ class Request extends Component {
                    paidRequests => {
                     if(paidRequests.collaborator.id===collaborators.id && paidRequests.statut==="processed"){
                            return(
-                            <tbody key = {collaborators.id }>
+                            <tbody>
                                   {
                            <tr key = {paidRequests.id }>
                            <td> {paidRequests.id}</td>
