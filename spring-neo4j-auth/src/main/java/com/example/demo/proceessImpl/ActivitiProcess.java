@@ -25,7 +25,7 @@ public class ActivitiProcess {
 	@Autowired
 	private PaidRequestRepository PaidRequestRepository;
 	@Autowired 
-	private PaidRequestService PaidRequestService;
+	private PaidRequestService paidRequestService;
 	   @Autowired
 	  private  RuntimeService runtimeService;
 	   @Autowired
@@ -34,11 +34,11 @@ public class ActivitiProcess {
 		private EmailService EmailService;
 	   @Autowired
 	   private TaskService taskService;
-	   @Autowired
-	    PaidRequestService paidRequestService;
+	  
 	   
 	 public ActivitiProcess() {
 		} 
+
 	public PaidRequest startProcess(PaidRequest PaidRequest) {
 		 PaidRequest p=paidRequestService.createPaidRequest(PaidRequest);
 		String username = p.getCollaborator().getUsername();
@@ -61,79 +61,89 @@ public class ActivitiProcess {
 		 return p;
 	    }
 	
+
     public void sendMailOwner(PaidRequest PaidRequest) {
-    	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
-    	
+        Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+        
         EmailService.sendSimpleMessage(PaidRequest.getCollaborator().getEmail(),
-        		"EverHolday",
-        		"Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
-        		+ " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+" est en attente de validation par : "
-        				+validator.getLastname()+" "+validator.getFirstname()
-        		+ " \n Cordialement.");
+                "EverHolday",
+                "Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
+                + " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+" est en attente de validation par : "
+                        +validator.getLastname()+" "+validator.getFirstname()
+                + " \n Cordialement.");
   
        
     }
     public void sendMailValidator(PaidRequest PaidRequest) {
-    	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
-    	EmailService.sendSimpleMessage(validator.getEmail(),
-        		"EverHolday",
-        		"Bonjour "+validator.getFirstname()+" "+validator.getLastname()+","
-        		+ " \n "+ PaidRequest.getCollaborator().getLastname()+" " +PaidRequest.getCollaborator().getLastname()+
-        		"a demandé une Congé payé dans la "+PaidRequest.getRequestDate() + " est en attente de votre validation "
-        		+ " \n Cordialement.");
+        Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+        EmailService.sendSimpleMessage(validator.getEmail(),
+                "EverHolday",
+                "Bonjour "+validator.getFirstname()+" "+validator.getLastname()+","
+                + " \n "+ PaidRequest.getCollaborator().getLastname()+" " +PaidRequest.getCollaborator().getLastname()+
+                "a demandé une Congé payé dans la "+PaidRequest.getRequestDate() + " est en attente de votre validation "
+                + " \n Cordialement.");
     }
     public void sendMailRH(PaidRequest PaidRequest) {
-    	ArrayList<Collaborator> listRH =new ArrayList<Collaborator>();
-    	 for(OrganizationalUnit unit:OrganizationalUintService.getAll()){
-    		 if(unit.getName().equals("RH")) {
-    			 listRH.add(unit.getValidator());
-    			 for(Collaborator col :unit.getCollaborators1()) {
-    				 listRH.add(col);
-    			 }
-    		 }
-    	};
-    	for(Collaborator col : listRH) {
-        	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
-    		EmailService.sendSimpleMessage(col.getEmail(),
-            		"EverHolday",
-            		"Bonjour "+col.getFirstname()+" "+col.getLastname()+","
-            		+ " \n la demande du Congé payé de "+ PaidRequest.getCollaborator().getFirstname()+" " +PaidRequest.getCollaborator().getLastname()+
-            		"a était refusé par  "+validator.getFirstname() 
-            		+" "+validator.getLastname()
-            		+ " \n Cordialement.");
-    	}
-    	
+        ArrayList<Collaborator> listRH =new ArrayList<Collaborator>();
+         for(OrganizationalUnit unit:OrganizationalUintService.getAll()){
+             if(unit.getName().equals("RH")) {
+                 listRH.add(unit.getValidator());
+                 for(Collaborator col :unit.getCollaborators1()) {
+                     listRH.add(col);
+                 }
+             }
+        };
+        for(Collaborator col : listRH) {
+            Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+            EmailService.sendSimpleMessage(col.getEmail(),
+                    "EverHolday",
+                    "Bonjour "+col.getFirstname()+" "+col.getLastname()+","
+                    + " \n la demande du Congé payé de "+ PaidRequest.getCollaborator().getFirstname()+" " +PaidRequest.getCollaborator().getLastname()+
+                    "a était refusé par  "+validator.getFirstname() 
+                    +" "+validator.getLastname()
+                    + " \n Cordialement.");
+        }
+        
     }
     public void sendMailValidationOwner(Long id ,String statut) {
-    	PaidRequest PaidRequest = PaidRequestService.getPaidRequestById(id);
-    	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
-    	EmailService.sendSimpleMessage(validator.getEmail(),
-    			"EverHolday",
-        		"Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
-        		+ " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+" sera "+statut +"  par : "
-        				+validator.getLastname()+" "+validator.getFirstname()
-        		+ " \n Cordialement.");
+        PaidRequest PaidRequest = paidRequestService.getPaidRequestById(id);
+        Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+        EmailService.sendSimpleMessage(PaidRequest.getCollaborator().getEmail(),
+                "EverHolday",
+                "Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
+                + " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+" sera "+statut +"  par : "
+                        +validator.getLastname()+" "+validator.getFirstname()
+                + " \n Cordialement.");
     }
     public ResponseEntity<PaidRequest> updateStatut( Long id,  String a){
-		PaidRequest b = PaidRequestRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
-		
-		b.setStatut(a);
-		PaidRequest updatedUser = PaidRequestRepository.save(b);
+        PaidRequest b = PaidRequestRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
+        
+        b.setStatut(a);
+        PaidRequest updatedUser = PaidRequestRepository.save(b);
 
-		Collaborator validator=OrganizationalUintService.findValidator(b.getCollaborator());
-		List<Task> tasks = taskService.createTaskQuery().taskAssignee(validator.getId().toString()).list();
-		System.out.println(tasks);
-		for (Task task : tasks) {
-			
-			Map<String, Object> taskVariables = new HashMap<String, Object>();
-			taskVariables.put("validation", a);
-			taskVariables.put("Owner", b.getCollaborator().getLastname()+" "+b.getCollaborator().getFirstname());
-			taskService.complete(task.getId(), taskVariables);
-			 System.out.println("   the data "+taskVariables.toString());
-		}
+ 
+
+        Collaborator validator=OrganizationalUintService.findValidator(b.getCollaborator());
+        
+        
+        List<Task> tasks = taskService.createTaskQuery().taskAssignee(validator.getId().toString()).list();
+        System.out.println(tasks);
+        for (Task task : tasks) {
+            
+            Map<String, Object> taskVariables = new HashMap<String, Object>();
+            taskVariables.put("validation", a);
+            taskVariables.put("Owner", b.getCollaborator().getLastname()+" "+b.getCollaborator().getFirstname());
+            taskService.complete(task.getId(), taskVariables);
+             System.out.println("   the data "+taskVariables.toString());
+        }
         System.out.println("the statut of "+a);
 
+ 
+
         return ResponseEntity.ok(updatedUser);
-	}
+    }
 }
+ 
+	
+

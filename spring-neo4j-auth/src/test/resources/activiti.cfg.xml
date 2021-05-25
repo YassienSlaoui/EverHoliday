@@ -12,5 +12,5 @@
 <property name="jdbcPassword" value="" />
 </bean>
 <bean id="activitiProcess" class="com.example.demo.proceessImpl.ActivitiProcess"/>
-</beans>
 	
+</beans>
