@@ -41,8 +41,8 @@ public class PaidRequestController {
 	
 	@PostMapping("/PaidRequest")
 	public PaidRequest adduser(@RequestBody PaidRequest PaidRequest) {
-		activitiProcess.startProcess(PaidRequest);
-		return PaidRequestService.createPaidRequest(PaidRequest);
+		
+		return activitiProcess.startProcess(PaidRequest);
 		
 		
 	}
@@ -72,7 +72,7 @@ public class PaidRequestController {
 	}
 	@PutMapping("/PaidRequest/statut/{id}")
 	public ResponseEntity<PaidRequest> updateStatut(@PathVariable Long id, @RequestBody PaidRequest request){
-		activitiProcess.updateStatut(id, request.getStatut());
-		return PaidRequestService.updateStatut(id,request.getStatut());
+		
+		return activitiProcess.updateStatut(id, request.getStatut());
 	}
 }
