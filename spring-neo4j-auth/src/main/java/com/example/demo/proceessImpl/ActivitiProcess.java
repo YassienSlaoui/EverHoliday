@@ -1,12 +1,12 @@
 package com.example.demo.proceessImpl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -14,12 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Collaborator;
-import com.example.demo.service.PaidRequestService;
 import com.example.demo.model.OrganizationalUnit;
 import com.example.demo.model.PaidRequest;
 import com.example.demo.repository.PaidRequestRepository;
 import com.example.demo.service.OrganizationalUintService;
-import org.activiti.engine.TaskService;
+import com.example.demo.service.PaidRequestService;
 
 @Service
 public class ActivitiProcess {
@@ -35,28 +34,31 @@ public class ActivitiProcess {
 		private EmailService EmailService;
 	   @Autowired
 	   private TaskService taskService;
-	   
+	   @Autowired
+	    PaidRequestService paidRequestService;
 	   
 	 public ActivitiProcess() {
 		} 
-	public void startProcess(PaidRequest PaidRequest) {
-		String username = PaidRequest.getCollaborator().getUsername();
+	public PaidRequest startProcess(PaidRequest PaidRequest) {
+		 PaidRequest p=paidRequestService.createPaidRequest(PaidRequest);
+		String username = p.getCollaborator().getUsername();
 		Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
 		
 		Map<String, Object> data = new HashMap<String, Object>() ;
-		data.put("paidRequest", PaidRequest);
-		data.put("id", PaidRequest.getId());
-		data.put("Owner", PaidRequest.getCollaborator());
+		data.put("paidRequest", p);
+		data.put("id", p.getId());
+		data.put("Owner", p.getCollaborator());
 		data.put("username", username);
 		data.put("validator",validator.getId().toString());
-		data.put("description", PaidRequest.getDescription());
-		data.put("RequestDate", PaidRequest.getRequestDate());
-		data.put("TypeOfTime", PaidRequest.getTypeOfTime());
-		data.put("balanceUsed", PaidRequest.getBalanceUsed());
-		data.put("statut", PaidRequest.getStatut());
-		data.put("RequestDates", PaidRequest.getDatesRequest());
+		data.put("description", p.getDescription());
+		data.put("RequestDate", p.getRequestDate());
+		data.put("TypeOfTime", p.getTypeOfTime());
+		data.put("balanceUsed", p.getBalanceUsed());
+		data.put("statut", p.getStatut());
+		data.put("RequestDates", p.getDatesRequest());
 		System.out.println("Process started successfully");
-		 runtimeService.startProcessInstanceByKey("EverHoliday", String.valueOf(PaidRequest.getId()), data).getId();
+		 runtimeService.startProcessInstanceByKey("EverHoliday", String.valueOf(p.getId()), data).getId();
+		 return p;
 	    }
 	
     public void sendMailOwner(PaidRequest PaidRequest) {
@@ -120,8 +122,6 @@ public class ActivitiProcess {
 		PaidRequest updatedUser = PaidRequestRepository.save(b);
 
 		Collaborator validator=OrganizationalUintService.findValidator(b.getCollaborator());
-		
-		
 		List<Task> tasks = taskService.createTaskQuery().taskAssignee(validator.getId().toString()).list();
 		System.out.println(tasks);
 		for (Task task : tasks) {
@@ -132,19 +132,6 @@ public class ActivitiProcess {
 			taskService.complete(task.getId(), taskVariables);
 			 System.out.println("   the data "+taskVariables.toString());
 		}
-		
-//		List<Task> tasks = taskService.createTaskQuery()
-//                .taskDefinitionKey("sid-340F039C-23AD-4511-AF40-7CFB028AC0A3")
-//                .processInstanceBusinessKey(String.valueOf(id))
-//                .list();
-//         System.out.println(tasks);
-//        for (Task task : tasks) {
-//            Map<String, Object> data = new HashMap<String, Object>();
-//            data.put("validation", a);
-//            data.put("Owner",b.getCollaborator().getLastname()+" "+b.getCollaborator().getFirstname());
-//            taskService.complete(task.getId(), data);
-//            System.out.println("   the data "+data.toString());
-//        }
         System.out.println("the statut of "+a);
 
         return ResponseEntity.ok(updatedUser);

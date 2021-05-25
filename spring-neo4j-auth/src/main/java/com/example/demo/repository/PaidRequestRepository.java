@@ -14,4 +14,5 @@ public interface PaidRequestRepository extends Neo4jRepository<PaidRequest, Long
 	@Query("MATCH(n:PaidRequest (m:PaidRequest {Collaborator:$username}  RETURN n,m ")
 	Collection<PaidRequest> getbyUser(@Param("username") Collaborator username);
 	
+	
 }
