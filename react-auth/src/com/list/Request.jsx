@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PaidRequestService from '../../servicees/PaidRequestService'
 import UnPaidRequestService from '../../servicees/UnPaidRequestService';
+import RecoveryRequestService from '../../servicees/RecoveryRequestService';
 import UnitService from '../../servicees/UnitService'
 import CollaborateurServices from '../../servicees/CollaborateurServices'
 import ExeptionnelRequestService from '../../servicees/ExptionnelService'
@@ -18,7 +19,9 @@ class Request extends Component {
             collaborator:[],
             request:"",
             unPaidRequest:[],
-            exeptionnel:[]
+            exeptionnel:[],
+            RecoveryRequest:[]
+
         }
         this.lists=this.lists.bind(this)
         this.checkStatut=this.checkStatut.bind(this)
@@ -28,6 +31,7 @@ class Request extends Component {
         this.getrequestById=this.getrequestById.bind(this)
         this.Unpaidlists=this.Unpaidlists.bind(this)
         this.exeptionnelList=this.exeptionnelList.bind()
+        this.Recoverylists=this.Recoverylists.bind(this)
     }
     getrequestById(id){
         PaidRequestService.getPaidRequestById(id).then(res=>{
@@ -96,6 +100,19 @@ class Request extends Component {
       
         
     }
+    RecoveryRequestSuccess(id){
+        let Request ={statut:"accepted"}
+        RecoveryRequestService.statut(Request,id).then(res=>{
+            RecoveryRequestService.getRecoveryRequest().then(res=>{
+               
+                this.setState({ RecoveryRequest: res.data});
+            })
+        })
+         
+        
+      
+        
+    }
     RequestRejecte (id){
        
         let Request ={statut:"refused"}
@@ -113,6 +130,16 @@ class Request extends Component {
            
             UnPaidRequestService.getUnPaidRequest().then(res=>{
                 this.setState({ unPaidRequest: res.data});
+            })
+        })
+    }
+    RecoveryRequestRejecte(id){
+       
+        let Request ={statut:"refused"}
+        RecoveryRequestService.statut(Request,id).then(res=>{
+           
+            RecoveryRequestService.getRecoveryRequest().then(res=>{
+                this.setState({ RecoveryRequest: res.data});
             })
         })
     }
@@ -148,6 +175,9 @@ class Request extends Component {
         });
         UnPaidRequestService.getUnPaidRequest().then((res) => {
             this.setState({ unPaidRequest: res.data});
+        });
+        RecoveryRequestService.getRecoveryRequest().then((res) => {
+            this.setState({ RecoveryRequest: res.data});
         });
         UnitService.collaborators(parseInt(sessionStorage.getItem('user'))).then((res) => {
             this.setState({ collaborator: res.data});
@@ -227,6 +257,39 @@ class Request extends Component {
                 )
                     
                                  }  
+        Recoverylists(){
+                return(
+                    <tbody>
+                        {
+                        this.state.RecoveryRequest.map(
+                        paidRequests => {
+                            
+                         if(paidRequests.statut==="processed"){
+                          
+                                return(
+                                 
+                                <tr key = {paidRequests.id }>
+                                <td> {paidRequests.id}</td>
+                                <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
+
+                               {this.checkStatut(paidRequests.statut)} 
+                               <td>{paidRequests.typeOfTime}</td>
+                               <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                                 <td>
+                                <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.RecoveryRequestRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
+                                <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.RecoveryRequestSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
+                                </td>                         
+                                 </tr> 
+                                 
+                                );}})
+
+                                }
+                    </tbody>
+
+
+                )
+                    
+                                 }                 
    exeptionnelList (){
     return(
         
@@ -280,6 +343,7 @@ class Request extends Component {
                             </thead>
                             {this.lists()}
                             {this.Unpaidlists()}
+                            {this.Recoverylists()}
                         </table>
                         
                 </div>
