@@ -17,9 +17,8 @@ package com.example.demo.controller;
 	import org.springframework.web.bind.annotation.RestController;
 
 	import com.example.demo.model.Collaborator;
-import com.example.demo.model.ExeptionnelRequest;
-import com.example.demo.model.PaidRequest;
-	import com.example.demo.model.UnpaidRequest;
+	import com.example.demo.model.ExeptionnelRequest;
+	import com.example.demo.model.TypeOfVaction;
 	
 	import com.example.demo.service.ExeptionnelRequestService;
 
@@ -38,6 +37,11 @@ import com.example.demo.model.PaidRequest;
 	    	
 	        return ExeptionnelRequestService.getAll();
 	    }
+	    @GetMapping("/ExeptionnelRequest/typeofVaction")
+	    public Collection<TypeOfVaction> getAllType() {
+	    	
+	        return ExeptionnelRequestService.getAllType();
+	    }
 	    
 		
 		@PostMapping("/ExeptionnelRequest")
@@ -46,19 +50,32 @@ import com.example.demo.model.PaidRequest;
 			return ExeptionnelRequestService.createPaidRequest(PaidRequest);
 			
 		}
-		
+		@PostMapping("/ExeptionnelRequest/typeofVaction")
+		public TypeOfVaction addType(@RequestBody TypeOfVaction typeOfVaction) {
+			
+			return ExeptionnelRequestService.createTypeOfVacation(typeOfVaction);
+			
+		}
 		
 		@GetMapping("/ExeptionnelRequest/{id}")
 		public ResponseEntity<ExeptionnelRequest> getEmployeeById(@PathVariable Long id) {
 			
 			return ExeptionnelRequestService.getPaidRequestById(id);
 		}
-		
+		@GetMapping("/ExeptionnelRequest/typeofVaction/{id}")
+		public ResponseEntity<TypeOfVaction> getTypeOfVacationtById(@PathVariable Long id) {
+			
+			return ExeptionnelRequestService.getTypeOfVacationtById(id);
+		}
 		
 		
 		@PutMapping("/ExeptionnelRequest/{id}")
 		public ResponseEntity<ExeptionnelRequest> updateEmployee(@PathVariable Long id, @RequestBody ExeptionnelRequest user){
 			return ExeptionnelRequestService.updatePaidRequest(id,user);
+		}
+		@PutMapping("/ExeptionnelRequest/typeofVaction/{id}")
+		public ResponseEntity<TypeOfVaction> updateEmployee(@PathVariable Long id, @RequestBody TypeOfVaction user){
+			return ExeptionnelRequestService.updateTypeOfVacation(id,user);
 		}
 		@GetMapping("/ExeptionnelRequest/users")
 		public ResponseEntity<Collection<ExeptionnelRequest>> getPaidRequestByUser( @RequestBody Collaborator user){
@@ -68,6 +85,11 @@ import com.example.demo.model.PaidRequest;
 		public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id){
 			
 			return ExeptionnelRequestService.deletePaidRequest(id);
+		}
+		@DeleteMapping("/ExeptionnelRequest/typeofVaction/{id}")
+		public ResponseEntity<Map<String, Boolean>> deleteTypeOfVacation(@PathVariable Long id){
+			
+			return ExeptionnelRequestService.deleteTypeOfVacation(id);
 		}
 		@PutMapping("/ExeptionnelRequest/statut/{id}")
 		public ResponseEntity<ExeptionnelRequest> updateStatut(@PathVariable Long id, @RequestBody ExeptionnelRequest user){
