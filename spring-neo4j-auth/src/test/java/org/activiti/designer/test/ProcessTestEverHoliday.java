@@ -15,7 +15,7 @@ import org.junit.Test;
 
 public class ProcessTestEverHoliday {
 
-	private String filename = "C:\\Users\\felkhaml\\Desktop\\full project\\full-project\\spring-neo4j-auth\\src\\main\\resources\\processes\\HolidayProcess.bpmn";
+	private String filename = "C:\\Users\\bessabri\\Desktop\\workspace\\EverHoliday\\spring-neo4j-auth\\src\\main\\resources\\processes\\HolidayProcess.bpmn";
 
 	@Rule
 	public ActivitiRule activitiRule = new ActivitiRule();

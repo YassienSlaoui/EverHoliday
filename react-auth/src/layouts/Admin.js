@@ -16,7 +16,7 @@ function Admin() {
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if(sessionStorage.getItem('role')==="RH"){
-        if (prop.layout === "/admin" || prop.layout === "/admin/holiday" || prop.layout === "/admin/list" || prop.layout === "/admin/unit" || prop.layout === "/admin/password"|| prop.layout === "/admin/units"||prop.layout==="/admin/vacationrequest"||prop.layout==="/admin/validator" ) {
+        if (prop.layout === "/admin" || prop.layout === "/admin/holiday" || prop.layout === "/admin/list" || prop.layout === "/admin/unit" || prop.layout === "/admin/password"|| prop.layout === "/admin/units"||prop.layout==="/admin/vacationrequest"||prop.layout==="/admin/validator"||prop.layout==="/admin/type" ) {
 
           return (
             <Route
@@ -25,9 +25,7 @@ function Admin() {
               key={key}
             />
           );
-        }else{
-          return null;
-        }
+          }
         } else if (sessionStorage.getItem('role') ==="Collaborator"){
           if (prop.layout === "/admin" || prop.layout === "/admin/holiday" || prop.layout === "/admin/password" ||prop.layout==="/admin/vacationrequest" ) {
 

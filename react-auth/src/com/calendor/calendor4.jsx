@@ -1,28 +1,71 @@
-import ReactLightCalendar from '@lls/react-light-calendar'
-import '@lls/react-light-calendar/dist/index.css'
+import React, {useState, Component } from 'react'
+import {Datepicker, START_DATE} from '@datepicker-react/styled'
+import HolidayService from '../../servicees/HolidayService'
+import dateFormat from "dateformat";
+class calendar extends Component {
+    constructor(props) {
+        super(props)
 
-const DAY_LABELS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
-const MONTH_LABELS = ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aûot', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
-
-class colendor extends Component {
-  constructor(props) {
-    super(props)
-    const date = new Date()
-    const startDate = date.getTime()
-    this.state = {
-      startDate, // Today
-      endDate: new Date(startDate).setDate(date.getDate() + 6) // Today + 6 days
+        this.state = {
+            // step 2
+            startDate: null,
+            endDate: null,
+            focusedInput: START_DATE,
+            holidays:[]
+        }
+        this.handleChange=this.handleChange.bind(this)
+        this.handleDatesChange=this.handleDatesChange.bind(this)
+        this.blockedDate=this.blockedDate.bind(this)
+       
     }
-  }
 
-  onChange = (startDate, endDate) => this.setState({ startDate, endDate })
-
-  render = () => {
-    const { startDate, endDate } = this.state
-
-    return (
-        <ReactLightCalendar startDate={startDate} endDate={endDate} onChange={this.onChange} range displayTime />
-    )
-  }
+     handleDatesChange(data) {
+        if (!data.focusedInput) {
+            this.setState({...data, focusedInput: START_DATE})
+        } else {
+          this.setState(data)
+        }
+      }
+      componentDidMount(){
+          HolidayService.getHoliday().then(res => {
+            this.setState({ holidays: res.data});
+        
+    });
+      }
+      
+      
+       handleChange(value, e) {
+        console.log(value +"hi"); // this will be a moment date object
+        console.log(e.target.value); // this will be a string value in datepicker input field
+      }
+       blockedDate (date){
+        var show = false;
+      
+      this.state.holidays.map(map=>{
+        
+        if (date.getDay()==6|| date.getDay()==0||dateFormat(date, "yyyy-mm-dd")==map.date){
+          show =true
+         
+        }
+      })
+          
+          return show
+        }
+    
+    
+    render() {
+     
+      
+        return (
+            <Datepicker
+                onDatesChange={this.handleDatesChange}
+                onChange={this.handleChange}
+                startDate={this.state.startDate} // Date or null
+                focusedInput={this.state.focusedInput} // START_DATE, END_DATE or null
+                isDateBlocked={this.blockedDate}
+                
+             />
+        )
+    }
 }
-export default colendor;
+export default calendar;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PaidRequestService from '../../servicees/PaidRequestService'
 import ExeptionnelRequestService from '../../servicees/ExptionnelService'
 import UnPaidRequestService from '../../servicees/UnPaidRequestService';
+import RecoveryRequestService from '../../servicees/RecoveryRequestService';
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 import {
@@ -23,11 +24,13 @@ class myRequest extends Component {
         this.state = {
             paidRequest: [],
             unPaidRequest:[],
-            exptionnel:[]
+            exptionnel:[],
+            RecoveryRequest: []
         }
         this.lists=this.lists.bind(this)
         this.Unpaidlists=this.Unpaidlists.bind(this)
         this.ExpionnelList=this.ExpionnelList.bind(this)
+        this.Recoverylists=this.Recoverylists.bind(this)
         this.checkStatut=this.checkStatut.bind(this)
         this.deleteUser=this.deleteUser.bind(this)
     }
@@ -54,6 +57,9 @@ class myRequest extends Component {
         });
         ExeptionnelRequestService.geExeptionnelRequest().then((res) => {
             this.setState({ exptionnel: res.data});
+        });
+        RecoveryRequestService.getRecoveryRequest().then((res) => {
+            this.setState({ RecoveryRequest: res.data});
         });
     }
     checkStatut(value){
@@ -100,7 +106,7 @@ class myRequest extends Component {
             
             <tbody>
                 {
-                this.state.exptionnel.map(
+                this.state.unPaidRequest.map(
                 paidRequests => {
                     
                  if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
@@ -131,7 +137,7 @@ class myRequest extends Component {
     return(
         <tbody>
             {
-            this.state.unPaidRequest.map(
+            this.state.exptionnel.map(
             paidRequests => {
                 
              if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
@@ -140,7 +146,7 @@ class myRequest extends Component {
                      
                     <tr key = {paidRequests.id }>
                     <td> {paidRequests.id}</td>
-                   <td>Unpaid Request</td>
+                   <td>Exeptionnel Request</td>
 
                    {this.checkStatut(paidRequests.statut)} 
                    <td>{paidRequests.typeOfTime}</td>
@@ -153,6 +159,38 @@ class myRequest extends Component {
                     }
         </tbody>
     )       
+    }
+    Recoverylists(){
+        return(
+            
+            <tbody>
+                {
+                this.state.RecoveryRequest.map(
+                paidRequests => {
+                    
+                 if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
+                  
+                        return(
+                         
+                        <tr key = {paidRequests.id }>
+                        <td> {paidRequests.id}</td>
+                       <td>Recovery Request</td>
+
+                       {this.checkStatut(paidRequests.statut)} 
+                       <td>{paidRequests.typeOfTime}</td>
+                       <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
+                        <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
+                                               
+                         </tr> 
+                         
+                        );}})
+
+                        }
+            </tbody>
+
+
+        )
+            
     }                                                                        
     render() {
         return (
@@ -174,6 +212,7 @@ class myRequest extends Component {
                             {this.lists()}
                             {this.Unpaidlists()}
                             {this.ExpionnelList()}
+                            {this.Recoverylists()}
                         </table>
                         
                 </div>

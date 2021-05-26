@@ -73,4 +73,3 @@ public class UnpaidRequestController {
 		return UnpaidRequestService.updateStatut(id,user.getStatut());
 	}
 }
-

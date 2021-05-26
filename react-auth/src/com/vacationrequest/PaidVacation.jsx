@@ -99,8 +99,8 @@ class PaidVacation extends Component {
       for( i ;i<=a;i.setDate(i.getDate()+1)){
         this.state.holidays.map(map=>{
         if (dateFormat(i, "yyyy-mm-dd")==map.date&&i.getDay()!=0&&i.getDay()!=6){ 
-          console.log(i) 
-          z=z-1
+         
+          z=z-map.duration
         }})
          if (i.getDay()==0||i.getDay()==6){
           z=z-1
