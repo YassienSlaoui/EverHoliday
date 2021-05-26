@@ -85,6 +85,8 @@ export default {
     "Vacation Request":"Vacation Request",
     "Collaborator balance":"Collaborator balance",
     "birthday":"birthday",
-    "Birth leave":"Birth leave"
+    "Birth leave":"Birth leave",
+    "Type of vacation":"Type of vacation",
+    "Add":"Agregar"
   },
 };
