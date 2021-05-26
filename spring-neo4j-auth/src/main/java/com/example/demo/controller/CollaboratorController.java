@@ -64,14 +64,17 @@ public class CollaboratorController {
 		
 		@PostMapping("/collaborator")
 		public Collaborator adduser(@RequestBody Collaborator Collaborator) {
-			
 			return CollaborateurService.createEmployee(Collaborator);
 		}
 		
-		
+		@GetMapping("/collaborator/findbyname/{username}")
+		public boolean getEmployeeByUsername(@PathVariable String username) {
+			
+			return CollaborateurService.findByUserName(username);
+		}
+
 		@GetMapping("/collaborator/{id}")
 		public ResponseEntity<Collaborator> getEmployeeById(@PathVariable Long id) {
-			
 			return CollaborateurService.getEmployeeById(id);
 		}
 		

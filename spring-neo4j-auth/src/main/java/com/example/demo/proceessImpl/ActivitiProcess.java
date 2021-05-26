@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
+import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -72,13 +74,15 @@ public class ActivitiProcess {
        
     }
     public void sendMailValidator(PaidRequest PaidRequest) {
-        Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
-        EmailService.sendSimpleMessage(validator.getEmail(),
-                "EverHolday",
-                "Bonjour "+validator.getFirstname()+" "+validator.getLastname()+","
-                + " \n "+ PaidRequest.getCollaborator().getLastname()+" " +PaidRequest.getCollaborator().getLastname()+
-                "a demandé une Congé payé dans la "+PaidRequest.getRequestDate() + " est en attente de votre validation "
-                + " \n Cordialement.");
+
+    	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+    	EmailService.sendSimpleMessage(validator.getEmail(),
+        		"EverHolday",
+        		"Bonjour "+validator.getFirstname()+" "+validator.getLastname()+","
+        		+ " \n "+ PaidRequest.getCollaborator().getLastname()+" " +PaidRequest.getCollaborator().getFirstname()+
+        		" a demandé une Congé payé dans la "+PaidRequest.getRequestDate() + " est en attente de votre validation "
+        		+ " \n Cordialement.");
+
     }
     public void sendMailRH(PaidRequest PaidRequest) {
         ArrayList<Collaborator> listRH =new ArrayList<Collaborator>();
@@ -103,14 +107,16 @@ public class ActivitiProcess {
         
     }
     public void sendMailValidationOwner(Long id ,String statut) {
-        PaidRequest PaidRequest = paidRequestService.getPaidRequestById(id);
-        Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
-        EmailService.sendSimpleMessage(PaidRequest.getCollaborator().getEmail(),
-                "EverHolday",
-                "Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
-                + " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+" sera "+statut +"  par : "
-                        +validator.getLastname()+" "+validator.getFirstname()
-                + " \n Cordialement.");
+
+    	PaidRequest PaidRequest = paidRequestService.getPaidRequestById(id);
+    	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+    	EmailService.sendSimpleMessage(PaidRequest.getCollaborator().getEmail(),
+    			"EverHolday",
+        		"Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
+        		+ " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+"  est "+statut +"  par : "
+        				+validator.getLastname()+" "+validator.getFirstname()
+        		+ " \n Cordialement.");
+
     }
     public ResponseEntity<PaidRequest> updateStatut( Long id,  String a){
         PaidRequest b = PaidRequestRepository.findById(id)
@@ -140,7 +146,9 @@ public class ActivitiProcess {
  
 
         return ResponseEntity.ok(updatedUser);
-    }
+
+	}
+ 
 }
  
 	

@@ -74,7 +74,7 @@ public class PaidRequestController {
 	}
 	@PutMapping("/PaidRequest/statut/{id}")
 	public ResponseEntity<PaidRequest> updateStatut(@PathVariable Long id, @RequestBody PaidRequest request){
-		
-		return activitiProcess.updateStatut(id, request.getStatut());
+       return activitiProcess.updateStatut(id, request.getStatut());
+
 	}
 }

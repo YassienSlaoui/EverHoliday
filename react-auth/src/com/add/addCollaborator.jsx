@@ -63,6 +63,7 @@ class addCollaborator extends Component {
         }else{
             collaboratorService.getUserById(this.state.id).then( (res) =>{
                 let user = res.data;
+              
                 this.setState({
                     id:user.id,
                       
@@ -78,7 +79,8 @@ class addCollaborator extends Component {
                     annualBalance:user.solde.annualBalance,
                     experience:user.experience,
                     remainder:user.solde.remainder,
-                    soldes:user.solde.cumulativeBances
+                    soldes: user.solde.cumulativeBances
+                    
                 });
             });
         }
@@ -136,14 +138,22 @@ class addCollaborator extends Component {
 
         // step 5
         
-            if(this.state.id === ":id"){
-                user.password=this.state.password;
-                collaboratorService.createUser(user).then(res =>{
-                    
-                    this.props.history.push('/admin/list/Collaborator');
+            if (this.state.id === ":id") {
+                user.password = this.state.password;
+                let newone = collaboratorService.getUserByUsername(user.username).then(res => {
+                     if (!res.data) {
+                     collaboratorService.createUser(user).then(res => {
+                        this.props.history.push('/admin/list/Collaborator');
+                    });
+                   }else {
+                   alert("User name already exist,choose another one");
+                      }
                 });
+               
+               
+                
             }else{
-                collaboratorService.updateUser(user, this.state.id).then( res => {
+                collaboratorService.updateUser(user, this.state.id).then(res => {
                     this.props.history.push('/admin/list/Collaborator');
                 });
             }
@@ -177,7 +187,8 @@ class addCollaborator extends Component {
         this.setState({unite_organisationelle: event.target.value});
     }
     changeusernameHandler= (event) => {
-        this.setState({username: event.target.value});
+        this.setState({ username: event.target.value });
+      
     }
     changecountry_workHandler= (event) => {
         this.setState({country: event.target.value});
@@ -266,7 +277,7 @@ class addCollaborator extends Component {
             
       }
     render() {
-        console.log(this.state.birthday)
+      
         return (
            
             <div>
@@ -384,7 +395,7 @@ class addCollaborator extends Component {
                                             </div>
                                             
                                         </div>
-                                        <button className="btn btn-success" onClick={this.saveOrUpdateUser}>{translate('Save')}</button>
+                                        <button className="btn btn-success"  onClick={this.saveOrUpdateUser}>{translate('Save')}</button>
                                         <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>{translate('Cancel')}</button>
                                         <span className="hidden-error text-danger error" style={{display:"none" , paddingLeft:"20px"}}>Error</span>
                                     </form>
