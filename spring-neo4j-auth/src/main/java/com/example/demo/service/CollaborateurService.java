@@ -25,6 +25,18 @@ public Collaborator createEmployee( Collaborator A) {
 	A.setPassword("{bcrypt}"+passwordEncoder5().encode(A.getPassword()));
 	return CollaborateurRepository.save(A);
 }
+public boolean findByUserName(String username) {
+	if(CollaborateurRepository.logins(username)!=null) {
+		System.out.println(" "+CollaborateurRepository.logins(username).getId());
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+public Collaborator findByEmail(String email) {
+	return CollaborateurRepository.findByEmail(email);
+}
 public ResponseEntity<Collaborator> getEmployeeById(Long id) {
 	Collaborator a = CollaborateurRepository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException(" not exist with id :" + id));

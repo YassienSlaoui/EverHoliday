@@ -17,6 +17,10 @@ class collaboratorService {
     createUser(user){
         return axios.post(User_API_BASE_URL, user);
     }
+    getUserByUsername(username){
+         return axios.get(User_API_BASE_URL + '/findbyname/' + username);
+    }
+  
     getUserById(userId){
         return axios.get(User_API_BASE_URL + '/' + userId);
     }

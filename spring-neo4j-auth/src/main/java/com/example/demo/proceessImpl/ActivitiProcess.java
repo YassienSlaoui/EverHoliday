@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
+import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -78,8 +80,8 @@ public class ActivitiProcess {
     	EmailService.sendSimpleMessage(validator.getEmail(),
         		"EverHolday",
         		"Bonjour "+validator.getFirstname()+" "+validator.getLastname()+","
-        		+ " \n "+ PaidRequest.getCollaborator().getLastname()+" " +PaidRequest.getCollaborator().getLastname()+
-        		"a demandé une Congé payé dans la "+PaidRequest.getRequestDate() + " est en attente de votre validation "
+        		+ " \n "+ PaidRequest.getCollaborator().getLastname()+" " +PaidRequest.getCollaborator().getFirstname()+
+        		" a demandé une Congé payé dans la "+PaidRequest.getRequestDate() + " est en attente de votre validation "
         		+ " \n Cordialement.");
     }
     public void sendMailRH(PaidRequest PaidRequest) {
@@ -107,10 +109,10 @@ public class ActivitiProcess {
     public void sendMailValidationOwner(Long id ,String statut) {
     	PaidRequest PaidRequest = PaidRequestService.getPaidRequestById(id);
     	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
-    	EmailService.sendSimpleMessage(validator.getEmail(),
+    	EmailService.sendSimpleMessage(PaidRequest.getCollaborator().getEmail(),
     			"EverHolday",
         		"Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
-        		+ " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+" sera "+statut +"  par : "
+        		+ " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+"  a était "+statut +"  par : "
         				+validator.getLastname()+" "+validator.getFirstname()
         		+ " \n Cordialement.");
     }
@@ -136,4 +138,8 @@ public class ActivitiProcess {
 
         return ResponseEntity.ok(updatedUser);
 	}
+    
+    
+   
+
 }
