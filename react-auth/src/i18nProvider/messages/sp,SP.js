@@ -33,7 +33,7 @@ export default {
     'Holiday':'Vacaciones',
     'Date':'Fecha',
     'Duration':'Duración',
-    'Update':'Actualizar',
+    'Update':'Editar',
     'Delete':'borrar',
     'Request Id':'ID solicitud',
     'Type':'Tipo',
@@ -50,7 +50,7 @@ export default {
     'Half Day':'Medio día',
     'Add':'Añadir',
     'Total days':'total de días',
-    'Select the type of vacation':'Seleccione el tipo de vacaciones',
+    'Select the type of vacation':'Seleccione el tipo de licencia',
     'Sick leave':'Licencia por enfermedad',
     'Birth leave':'Licencia por nacimiento',
     'Marriage leave':'licencia por matrimonio',
@@ -87,6 +87,7 @@ export default {
     'Years':'Años',
     'Home':"bienvenida",
     "Vacation Request":"Solicitud  vacaciones",
+    "Type of vacation":"tipo de licencia"
 
   },
 };

@@ -31,7 +31,7 @@ export default {
     'Holiday':'Vacance',
     'date':'Date',
     'duration':'Durée',
-    'Update':'Mettre à jour',
+    'Update':'Editer',
     'Delete':'supprimer',
     'Request Id':'Id Demande',
     'Type':'Type',
@@ -47,7 +47,7 @@ export default {
     'Half Day':'demi-journée',
     'Add':'Ajouter',
     'Total days':'Nombre total de jours',
-    'Select the type of vacation':'Sélectionnez le type de vacances',
+    'Select the type of vacation':'Sélectionnez le type de congé',
     'Sick leave':'Congé de maladie',
     'Birth leave':'Congé de naissance',
     'Marriage leave':'Congé de mariage',
@@ -87,6 +87,7 @@ export default {
     "Collaborator balance":"solde de collaborator",
     "Vacation Request":"demande de congé",
     "Experience":"Experience",
-    
+    "Type of vacation":"type de congé",
+    "Add":"Ajouter"
   },
 };

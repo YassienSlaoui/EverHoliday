@@ -131,7 +131,7 @@ class myRequest extends Component {
     return(
         <tbody>
             {
-            this.state.unPaidRequest.map(
+            this.state.exptionnel.map(
             paidRequests => {
                 
              if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
@@ -140,7 +140,7 @@ class myRequest extends Component {
                      
                     <tr key = {paidRequests.id }>
                     <td> {paidRequests.id}</td>
-                   <td>Unpaid Request</td>
+                   <td>Exeptionnel Request</td>
 
                    {this.checkStatut(paidRequests.statut)} 
                    <td>{paidRequests.typeOfTime}</td>

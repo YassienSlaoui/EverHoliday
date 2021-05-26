@@ -16,7 +16,8 @@ import PaidVacation from "com/vacationrequest/PaidVacation";
 import RecoveryVacation from "com/vacationrequest/RecoveryVacation";
 import ExceptionVacation from "com/vacationrequest/ExceptionalVacation";
 import UnpaidVacation from "com/vacationrequest/UnpaidVacation";
-
+import TypeOfVacation from "com/list/TypeOfVacacionList";
+import AddType from "com/add/addType";
 const dashboardRoutes = [
   
   {
@@ -134,6 +135,19 @@ const dashboardRoutes = [
     name:"RecoveryVacation",
     component: RecoveryVacation,
     layout: "/admin/vacationrequest",
+  },
+  {
+    path: "/Type",
+    name:"Type of vacation",
+    icon: "nc-icon nc-send",
+    component: TypeOfVacation,
+    layout: "/admin/list",
+  },
+  {
+    path: "/:id",
+    name:"Type Of Vacation",
+    component: AddType,
+    layout: "/admin/type",
   }
 ];
 
