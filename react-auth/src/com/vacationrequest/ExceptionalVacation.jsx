@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
 import ExeptionnelRequestService from '../../servicees/ExptionnelService'
 import collaboratorService from '../../servicees/CollaborateurServices';
-import Calendar from '../calendor/calendar6'
+import Calendar from '../calendor/calendor4'
 import dateFormat from "dateformat";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 import '../css/Request.css';
+import Select from 'react-select';
 import {
-    Badge,
     Button,
     Card,
     Form,
-    Navbar,
-    Nav,
     Container,
     Row,
     Col,
@@ -37,7 +35,9 @@ class ExceptionVacation extends Component {
           soldes:"",
           selectedType:"FullDay",
           UnpaidRequest:[],
-          SelectTypeVacacion:"Sick leave"
+          SelectTypeVacacion:"",
+          duration:0,
+          option:[]
       }
       this.calendarChange=this.calendarChange.bind(this)
       this.childRef= React.createRef();
@@ -51,19 +51,21 @@ class ExceptionVacation extends Component {
   }
     add(){
       const element = this.childRef.current;
+      b=new Date(element.state.startDate.getTime());
+      b.setDate(element.state.startDate.getDate()+this.state.duration-1)
       if(element.state.startDate!=null ){
-        if(element.state.endDate!=null){
+        if(this.state.duration!=0){
     this.setState(state1 =>{return{calendar: element.state,startDate:element.state.startDate}})
     let DateReq={
       startDate:dateFormat(element.state.startDate.toLocaleDateString(), "yyyy-mm-dd"),
-      endDate:dateFormat(element.state.endDate.toLocaleDateString(), "yyyy-mm-dd"),
-      duration:Math.ceil((element.state.endDate.getTime()-element.state.startDate.getTime())/(1000 * 3600 * 24)+1)
+      endDate:dateFormat(b.toLocaleDateString(), "yyyy-mm-dd"),
+      duration:Math.ceil((b.getTime()-element.state.startDate.getTime())/(1000 * 3600 * 24)+1)
     }
-    this.state.list.push([element.state.startDate,element.state.endDate,Math.ceil((element.state.endDate.getTime()-element.state.startDate.getTime())/(1000 * 3600 * 24)+1)])
+    this.state.list.push([element.state.startDate,b,Math.ceil((b.getTime()-element.state.startDate.getTime())/(1000 * 3600 * 24)+1)])
     this.state.list1.push(DateReq)
     this.setState({list:this.state.list,list1:this.state.list1})
   }else{
-    alert("entre EndDate")
+    alert("entre une select")
   }
     }else{
       alert("entre startDate")
@@ -143,7 +145,7 @@ saveRequest= (e) =>{
      requestDate:dateFormat((new Date()).toLocaleDateString(), "yyyy-mm-dd"),
      statut: "processed",
      typeOfTime:this.state.selectedType,
-     vacacioType:this.state.SelectTypeVacacion
+     vacacioType:this.state.SelectTypeVacacion.value
   }
   
   ExeptionnelRequestService.creatExeptionnelRequest(Request).then(res=>{
@@ -159,8 +161,9 @@ descrptionChange = (event) =>{
 changeSelect= (event) =>{
   this.setState({selectedType: event.target.value})
 }    
-changeSelectType= (event) =>{
-  this.setState({SelectTypeVacacion: event.target.value})
+changeSelectType= (SelectTypeVacacion) =>{
+  this.setState({SelectTypeVacacion})
+  this.setState({duration:SelectTypeVacacion.value.duration})
 }  
 componentDidMount(){
   collaboratorService.getUserById(sessionStorage.getItem("user")).then( (res) =>{
@@ -173,10 +176,16 @@ componentDidMount(){
     })
    
 });
+ExeptionnelRequestService.getType().then(res=>{
+  this.setState({option:res.data})
+})
 
 }
-    
-    render() {
+
+    render() {console.log(this.state.duration)
+     let options =this.state.option.map(
+        user => 
+       {return { value: user, label: user.name }; })
         return (
           
           <Container fluid>
@@ -216,15 +225,8 @@ componentDidMount(){
                                         <br></br>
                                         </Col>
                         <Col className="pr-1" md="12">
-                          <Form.Group  style={{display:"inline-block",paddingTop: "10px"}}>
-                            <select className="custom-select" onChange={this.changeSelectType} style={{width:"200px"}}>
-                                            <option defaultValue value="Fsick">Sick leave</option>
-                                            <option value="birth">Birth leave</option>
-                                            <option value="marriage">Marriage leave</option>
-                                            <option value="maternity">Maternity leave</option>
-                                            <option value="Cmarriage">Child marriage leave</option>
-                                            <option value="Osurgical">Surgical operation or the employee's child</option>
-                            </select>  
+                          <Form.Group  style={{display:"inline-block",paddingTop: "10px",width:"75%"}}>
+                                <Select onChange={this.changeSelectType} options={options} />   
                           </Form.Group>
                         </Col>
                     <Row>

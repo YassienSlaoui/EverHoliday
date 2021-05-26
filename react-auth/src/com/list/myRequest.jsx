@@ -146,7 +146,7 @@ class myRequest extends Component {
                      
                     <tr key = {paidRequests.id }>
                     <td> {paidRequests.id}</td>
-                   <td>Unpaid Request</td>
+                   <td>Exeptionnel Request</td>
 
                    {this.checkStatut(paidRequests.statut)} 
                    <td>{paidRequests.typeOfTime}</td>
