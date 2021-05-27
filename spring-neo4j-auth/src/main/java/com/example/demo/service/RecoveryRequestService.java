@@ -44,7 +44,7 @@ public class RecoveryRequestService {
 		RecoveryRequest user = RecoveryRequestRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(" not exist  :" + id));
 		
-		RecoveryRequestRepository.delete(user);
+		RecoveryRequestRepository.deleteAll(id);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
