@@ -142,11 +142,31 @@ class addCollaborator extends Component {
                 user.password = this.state.password;
                 let newone = collaboratorService.getUserByUsername(user.username).then(res => {
                      if (!res.data) {
-                     collaboratorService.createUser(user).then(res => {
-                        this.props.history.push('/admin/list/Collaborator');
-                    });
+                        console.log(res.data)
+                         let varificationemail = collaboratorService.getUserByEmail(user.email).then(res => {
+                              console.log(res.data)
+                             if (!res.data) {
+                                   collaboratorService.createUser(user).then(res => {
+                                    console.log(res.data)
+                                    this.props.history.push('/admin/list/Collaborator');
+                                   });
+                             }
+                             else {
+                                   alert("Email "+ user.email+" already exist,choose another one");
+                                  }
+                         })
+                   
                    }else {
-                   alert("User name already exist,choose another one");
+                         alert("User name" + user.username + " already exist,choose another one");
+                         if (!res.data) {
+                                   collaboratorService.createUser(user).then(res => {
+                                   console.log(res.data)
+                                  this.props.history.push('/admin/list/Collaborator');
+                                   });
+                             }
+                             else {
+                                   alert("Email "+ user.email+" already exist,choose another one");
+                                  }
                       }
                 });
                

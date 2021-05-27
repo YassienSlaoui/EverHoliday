@@ -34,6 +34,16 @@ public boolean findByUserName(String username) {
 		return false;
 	}
 }
+
+public boolean findByEmails(String email) {
+	if(CollaborateurRepository.findByEmail(email)!=null) {
+		System.out.println(" "+CollaborateurRepository.findByEmail(email).getId());
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 public Collaborator findByEmail(String email) {
 	return CollaborateurRepository.findByEmail(email);
 }

@@ -20,7 +20,9 @@ class collaboratorService {
     getUserByUsername(username){
          return axios.get(User_API_BASE_URL + '/findbyname/' + username);
     }
-  
+    getUserByEmail(email){
+         return axios.get(User_API_BASE_URL + '/email/' + email);
+    }
     getUserById(userId){
         return axios.get(User_API_BASE_URL + '/' + userId);
     }

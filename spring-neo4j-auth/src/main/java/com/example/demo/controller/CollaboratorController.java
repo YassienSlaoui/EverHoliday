@@ -72,6 +72,10 @@ public class CollaboratorController {
 			
 			return CollaborateurService.findByUserName(username);
 		}
+		@GetMapping("/collaborator/email/{email}")
+		public boolean getEmployeeByEmail(@PathVariable String email) {
+			return CollaborateurService.findByEmails(email);
+		}
 
 		@GetMapping("/collaborator/{id}")
 		public ResponseEntity<Collaborator> getEmployeeById(@PathVariable Long id) {
