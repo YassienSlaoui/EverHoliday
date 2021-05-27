@@ -44,6 +44,30 @@ class myRequest extends Component {
     
    
     }
+    deleteun(id){
+        
+        UnPaidRequestService.deletPaidRequest(id).then( res => {
+                this.setState({unPaidRequest: this.state.unPaidRequest.filter(user => user.id !== id)});
+          });
+    
+   
+    }
+    deleteEx(id){
+        
+        ExeptionnelRequestService.deletPaidRequest(id).then( res => {
+                this.setState({exptionnel: this.state.exptionnel.filter(user => user.id !== id)});
+          });
+    
+   
+    }
+    deleteRe(id){
+        
+        RecoveryRequestService.deletPaidRequest(id).then( res => {
+                this.setState({RecoveryRequest: this.state.RecoveryRequest.filter(user => user.id !== id)});
+          });
+    
+   
+    }
        
    addHolidays(){
     this.props.history.push('/admin/unit/add');
@@ -77,19 +101,21 @@ class myRequest extends Component {
            
                 <tbody>
                  {   
-                       this.state.paidRequest.map(
+                       this.state.paidRequest.filter(val =>{if(val.statut==="processed"){return val}}).map(
                         paidRequests => {
                             if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
                                 return(
                                     <tr key = {paidRequests.id }>
                                 <td> {paidRequests.id}</td>
+                                <td>{paidRequests.requestDate}</td>
                                 <td>Paid Request</td>
                                 
                                 
                                {this.checkStatut(paidRequests.statut)} 
                                <td>{paidRequests.typeOfTime}</td>
                                 <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
-                                <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
+                                <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>
+                                <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteUser(paidRequests.id)} className="btn btn-danger">{translate('Delete')} </button> </td>
                                 </tr>
                                 )
                             }                     
@@ -106,7 +132,7 @@ class myRequest extends Component {
             
             <tbody>
                 {
-                this.state.unPaidRequest.map(
+                this.state.unPaidRequest.filter(val =>{if(val.statut==="processed"){return val}}).map(
                 paidRequests => {
                     
                  if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
@@ -115,13 +141,14 @@ class myRequest extends Component {
                          
                         <tr key = {paidRequests.id }>
                         <td> {paidRequests.id}</td>
+                        <td>{paidRequests.requestDate}</td>
                        <td>Unpaid Request</td>
 
                        {this.checkStatut(paidRequests.statut)} 
                        <td>{paidRequests.typeOfTime}</td>
                        <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                         <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
-                                               
+                        <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteun(paidRequests.id)} className="btn btn-danger">{translate('Delete')} </button> </td>                       
                          </tr> 
                          
                         );}})
@@ -137,7 +164,7 @@ class myRequest extends Component {
     return(
         <tbody>
             {
-            this.state.exptionnel.map(
+            this.state.exptionnel.filter(val =>{if(val.statut==="processed"){return val}}).map(
             paidRequests => {
                 
              if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
@@ -146,12 +173,15 @@ class myRequest extends Component {
                      
                     <tr key = {paidRequests.id }>
                     <td> {paidRequests.id}</td>
+                    <td>{paidRequests.requestDate}</td>
                    <td>Exeptionnel Request</td>
 
                    {this.checkStatut(paidRequests.statut)} 
                    <td>{paidRequests.typeOfTime}</td>
                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
-                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                    
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>              
+                    <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteEx(paidRequests.id)} className="btn btn-danger">{translate('Delete')} </button> </td>                       
+      
                      </tr> 
                      
                     );}})
@@ -165,7 +195,7 @@ class myRequest extends Component {
             
             <tbody>
                 {
-                this.state.RecoveryRequest.map(
+                this.state.RecoveryRequest.filter(val =>{if(val.statut==="processed"){return val}}).map(
                 paidRequests => {
                     
                  if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
@@ -174,13 +204,14 @@ class myRequest extends Component {
                          
                         <tr key = {paidRequests.id }>
                         <td> {paidRequests.id}</td>
+                        <td>{paidRequests.requestDate}</td>
                        <td>Recovery Request</td>
 
                        {this.checkStatut(paidRequests.statut)} 
                        <td>{paidRequests.typeOfTime}</td>
                        <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                         <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
-                                               
+                        <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteRe(paidRequests.id)} className="btn btn-danger">{translate('Delete')} </button> </td>                       
                          </tr> 
                          
                         );}})
@@ -202,11 +233,13 @@ class myRequest extends Component {
                             <thead>
                                 <tr>
                                     <th>  {translate('Request Id')}</th>
+                                    <th>Request date</th>
                                     <th>{translate('Type')}</th>
                                     <th> {translate('statut')}</th>
                                     <th>{translate('type of time')}</th>
                                     <th>{translate('Start Date')}</th>
                                     <th>{translate('End Date')}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             {this.lists()}

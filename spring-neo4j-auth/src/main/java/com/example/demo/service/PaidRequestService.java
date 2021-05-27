@@ -46,7 +46,7 @@ public class PaidRequestService {
 		PaidRequest user = PaidRequestRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(" not exist  :" + id));
 		
-		PaidRequestRepository.delete(user);
+		PaidRequestRepository.deleteAll(id);;
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);

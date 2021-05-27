@@ -13,6 +13,7 @@ import com.example.demo.model.PaidRequest;
 public interface PaidRequestRepository extends Neo4jRepository<PaidRequest, Long>{
 	@Query("MATCH(n:PaidRequest (m:PaidRequest {Collaborator:$username}  RETURN n,m ")
 	Collection<PaidRequest> getbyUser(@Param("username") Collaborator username);
-	
+	@Query("MATCH (n:PaidRequest)-[r:DATES_REQUEST]->(p:DatesRequest) WHERE ID(n)=$id DETACH DELETE n,p,r")
+	void deleteAll(@Param("id") Long id);
 	
 }

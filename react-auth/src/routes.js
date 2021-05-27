@@ -16,6 +16,7 @@ import PaidVacation from "com/vacationrequest/PaidVacation";
 import RecoveryVacation from "com/vacationrequest/RecoveryVacation";
 import ExceptionVacation from "com/vacationrequest/ExceptionalVacation";
 import UnpaidVacation from "com/vacationrequest/UnpaidVacation";
+import Historic from "com/vacationrequest/HistoricVacation";
 import TypeOfVacation from "com/list/TypeOfVacacionList";
 import AddType from "com/add/addType";
 const dashboardRoutes = [
@@ -134,6 +135,12 @@ const dashboardRoutes = [
     path: "/recovery",
     name:"RecoveryVacation",
     component: RecoveryVacation,
+    layout: "/admin/vacationrequest",
+  },
+  {
+    path: "/History",
+    name:"Historic",
+    component: Historic,
     layout: "/admin/vacationrequest",
   },
   {

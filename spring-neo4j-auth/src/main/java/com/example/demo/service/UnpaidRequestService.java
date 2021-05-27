@@ -48,7 +48,7 @@ public class UnpaidRequestService {
 		UnpaidRequest user = UnpaidRequestRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(" not exist  :" + id));
 		
-		UnpaidRequestRepository.delete(user);
+		UnpaidRequestRepository.deleteAll(id);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
