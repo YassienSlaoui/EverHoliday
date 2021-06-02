@@ -24,6 +24,7 @@ class Request extends Component {
 
         }
         this.lists=this.lists.bind(this)
+        this.lists1=this.lists1.bind(this)
         this.checkStatut=this.checkStatut.bind(this)
         this.deleteUser=this.deleteUser.bind(this)
         this.RequestRejecte=this.RequestRejecte.bind(this)
@@ -201,9 +202,11 @@ class Request extends Component {
             
                   this.state.paidRequest.map(
                    paidRequests => {
+
                     if(paidRequests.collaborator.id===collaborators.id && paidRequests.statut==="processed"){
+
                            return(
-                            <tbody>
+                            <tbody key = {collaborators.id }>
                                   {
                            <tr key = {paidRequests.id }>
                            <td> {paidRequests.id}</td>
@@ -220,18 +223,71 @@ class Request extends Component {
                              }
                             </tbody> 
                            )
-                            }              
+                            }else if(paidRequests.collaborator.team==="admin RH" && paidRequests.statut==="processed" && sessionStorage.getItem('role')==="Directeur")    {
+
+                                return(
+                                    <tbody>
+                                          {
+                                   <tr key = {paidRequests.id }>
+                                   <td> {paidRequests.id}</td>
+                                   <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
+                                   
+                                  {this.checkStatut(paidRequests.statut)} 
+                                  <td>{paidRequests.typeOfTime}</td>
+                                  <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
+                            <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                            <td>
+                                   <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.RequestRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
+                                   <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.RequestSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
+                                   </td>                         
+                                    </tr>
+                                     }
+                                    </tbody> 
+                                   )
+                            }else{
+
+                            }          
                    }    
                ))   )               
             }
+            lists1(){
+                return(
+                          this.state.paidRequest.map(
+                           paidRequests => {
+
+                          if(paidRequests.collaborator.team==="admin RH" && paidRequests.statut==="processed" && sessionStorage.getItem('role')==="Directeur") 
+        
+                                        return(
+                                            <tbody>
+                                                  {
+                                           <tr key = {paidRequests.id}>
+                                           <td> {paidRequests.id}</td>
+                                           <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
+                                           
+                                          {this.checkStatut(paidRequests.statut)} 
+                                          <td>{paidRequests.typeOfTime}</td>
+                                          {paidRequests.datesRequest.map(dates=><td key={dates.id}> <p>{dates.startDate}</p> </td>)}
+                                        
+                                        {paidRequests.datesRequest.map(dates=><td key={dates.id}><p> {dates.endDate} </p></td> )}                     
+                                              <td>
+                                           <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.RequestRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
+                                           <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.RequestSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
+                                           </td>                         
+                                            </tr>
+                                             }
+                                            </tbody> 
+                                           )
+                                            
+                           }    
+                       ))               
+                    }
             Unpaidlists(){
                 return(
                     <tbody>
                         {
-                        this.state.unPaidRequest.map(
+                        this.state.unPaidRequest.filter(val=>{if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){ return val}}).map(
                         paidRequests => {
                             
-                         if(paidRequests.statut==="processed"){
+                         if(paidRequests.statut==="processed" ){
                           
                                 return(
                                  
@@ -261,7 +317,7 @@ class Request extends Component {
                 return(
                     <tbody>
                         {
-                        this.state.RecoveryRequest.map(
+                        this.state.RecoveryRequest.filter(val=>{if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){ return val}}).map(
                         paidRequests => {
                             
                          if(paidRequests.statut==="processed"){
@@ -295,7 +351,7 @@ class Request extends Component {
         
         <tbody>
             {
-            this.state.exeptionnel.map(
+            this.state.exeptionnel.filter(val=>{if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){ return val}}).map(
             paidRequests => {
                 
              if(paidRequests.statut==="processed"){
@@ -342,6 +398,7 @@ class Request extends Component {
                                 </tr>
                             </thead>
                             {this.lists()}
+                            {this.lists1()}
                             {this.Unpaidlists()}
                             {this.Recoverylists()}
                         </table>

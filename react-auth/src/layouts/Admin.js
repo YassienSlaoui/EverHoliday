@@ -15,7 +15,7 @@ function Admin() {
   const mainPanel = React.useRef(null);
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if(sessionStorage.getItem('role')==="RH"){
+      if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){
         if (prop.layout === "/admin" || prop.layout === "/admin/holiday" || prop.layout === "/admin/list" || prop.layout === "/admin/unit" || prop.layout === "/admin/password"|| prop.layout === "/admin/units"||prop.layout==="/admin/vacationrequest"||prop.layout==="/admin/validator"||prop.layout==="/admin/type" ) {
 
           return (
@@ -28,6 +28,17 @@ function Admin() {
           }
         } else if (sessionStorage.getItem('role') ==="Collaborator"){
           if (prop.layout === "/admin" || prop.layout === "/admin/holiday" || prop.layout === "/admin/password" ||prop.layout==="/admin/vacationrequest" ) {
+
+            return (
+              <Route
+                path={prop.layout + prop.path}
+                render={(props) => <prop.component {...props} />}
+                key={key}
+              />
+            );
+        }
+      } else if (sessionStorage.getItem('role') ==="Directeur"){
+          if (prop.layout === "/admin" || prop.layout === "/admin/holiday" || prop.layout === "/admin/password"  || prop.layout === "/admin/validator") {
 
             return (
               <Route
@@ -54,7 +65,7 @@ function Admin() {
       
     });
   };
-  (function()
+  /*(function()
 {
   if( window.localStorage )
   {
@@ -66,7 +77,7 @@ function Admin() {
     else
       localStorage.removeItem('firstLoad');
   }
-})();
+})();*/
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -81,17 +92,15 @@ function Admin() {
     }
   }, [location]);
   const getSidebar = () =>  {
-    
-    if(sessionStorage.getItem('role')==="RH"){
+    if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){
       return ( <Sidebar color={color} image={hasImage ? image : ""} routes={routes} path = "/admin" path2 = "/admin/list" path3="/admin/units" path4 = "/admin/validator" /> );
+    }else if(sessionStorage.getItem('role')==="Directeur"){
+      return (<Sidebar color={color} image={hasImage ? image : ""} routes={routes} path = "/admin"  path2 = "/admin/validator" path5 = "/vacationrequests"/>);
     }else if(sessionStorage.getItem('role')==="Collaborator"){
       return (<Sidebar color={color} image={hasImage ? image : ""} routes={routes} path = "/admin"   />);
     }else  if(sessionStorage.getItem('role')==="validator"){
       return (<Sidebar color={color} image={hasImage ? image : ""} routes={routes} path = "/admin" path2 = "/admin/validator"  />);
-    }else{
-      <Sidebar color={color} image={hasImage ? image : ""} routes={routes} path = "/admin" path2 = "/admin/list"  />
     }
-   
   }
   return (
     <>

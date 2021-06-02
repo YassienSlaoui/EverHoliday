@@ -87,6 +87,6 @@ export default {
     "birthday":"birthday",
     "Birth leave":"Birth leave",
     "Type of vacation":"Type of vacation",
-    "Add":"Agregar"
+    "Add":"Add"
   },
 };

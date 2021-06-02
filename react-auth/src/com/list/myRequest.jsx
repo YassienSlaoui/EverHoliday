@@ -46,7 +46,7 @@ class myRequest extends Component {
     }
     deleteun(id){
         
-        UnPaidRequestService.deletPaidRequest(id).then( res => {
+        UnPaidRequestService.deletUnPaidRequest(id).then( res => {
                 this.setState({unPaidRequest: this.state.unPaidRequest.filter(user => user.id !== id)});
           });
     
@@ -54,7 +54,7 @@ class myRequest extends Component {
     }
     deleteEx(id){
         
-        ExeptionnelRequestService.deletPaidRequest(id).then( res => {
+        ExeptionnelRequestService.deletExeptionnelRequest(id).then( res => {
                 this.setState({exptionnel: this.state.exptionnel.filter(user => user.id !== id)});
           });
     
@@ -62,7 +62,7 @@ class myRequest extends Component {
     }
     deleteRe(id){
         
-        RecoveryRequestService.deletPaidRequest(id).then( res => {
+        RecoveryRequestService.deletRecoveryRequest(id).then( res => {
                 this.setState({RecoveryRequest: this.state.RecoveryRequest.filter(user => user.id !== id)});
           });
     
