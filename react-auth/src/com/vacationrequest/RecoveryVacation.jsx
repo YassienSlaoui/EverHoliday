@@ -135,6 +135,7 @@ calculeBalance(){
 }
 saveRequest= (e) =>{
   e.preventDefault();
+  if(this.state.list1.length!=0){
   let Request = {
      collaborator : this.state.user,
      description : this.state.description,
@@ -144,13 +145,12 @@ saveRequest= (e) =>{
      statut: "processed",
      typeOfTime:this.state.selectedType
   }
-  
   RecoveryRequestService.createRecoveryRequest(Request).then(res=>{
       this.props.history.push('/admin/Home');
-     
     })
-
-  
+  }else{
+    alert('not')
+  }
 }
 descrptionChange = (event) =>{
   this.setState({description: event.target.value})

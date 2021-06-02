@@ -103,7 +103,7 @@ import { withRouter } from 'react-router-dom';
                               </form>
                             </div>
                           
-                                <p ><a href="hy"   class="forget_password">forget password?</a></p>
+                                <p ><a href="hy"   className="forget_password">forget password?</a></p>
                             
                         </div>
                         

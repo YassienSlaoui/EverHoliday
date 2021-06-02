@@ -109,8 +109,9 @@ class PaidVacation extends Component {
       return z
     }
     add(){
-      
+     
           const element = this.childRef.current;
+          if(this.state.list=[]){
           if(element.state.startDate!=null ){
             if(element.state.endDate!=null){
         
@@ -130,7 +131,7 @@ class PaidVacation extends Component {
           alert("entre startDate")
         }
         
-    }
+    }}
     calendarChange = (calendarState) => {
       this.setState(state => ({
         calendarState: { ...state.calendarState, ...calendarState }
@@ -206,6 +207,7 @@ class PaidVacation extends Component {
     }
     saveRequest= (e) =>{
       e.preventDefault();
+      if(this.state.list1.length!=0){
       let Request = {
          collaborator : this.state.user,
          description : this.state.description,
@@ -218,7 +220,7 @@ class PaidVacation extends Component {
       let balance =(this.state.annual+this.calculeCumulativeBalance())
       let differenceBtwnDate= this.state.list[0][0].getMonth()-(new Date()).getMonth()
       if(balance+differenceBtwnDate>this.calculeBalance()+this.state.allrequest){
-        e.preventDefault();
+        
         PaidRequestService.createPaidRequest(Request).then(res=>{
           this.props.history.push('/admin/Home');
          
@@ -226,6 +228,8 @@ class PaidVacation extends Component {
 
       }else{
         alert('solde insuffisant')
+      }}else{
+        alert('aa')
       }
     }
     descrptionChange = (event) =>{

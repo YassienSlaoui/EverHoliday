@@ -1,6 +1,6 @@
 import listCollaborator from "com/list/listCollaborator";
 import addCollaborator from "com/add/addCollaborator";
-import calendar from "com/calendor/calendar5";
+import calendar from "com/calendor/calendor";
 import  Profile from "./com/userprofile";
 import Addholiday from './com/add/addHoliday';
 import Holidaylist from './com/list/holidaylist';
