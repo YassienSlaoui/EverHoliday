@@ -19,13 +19,13 @@ import React, { Component } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 
 import { Nav ,Dropdown,DropdownButton,ButtonGroup,NavDropdown} from "react-bootstrap";
-
 import logo from "assets/img/reactlogo.png";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 
 function Sidebar({ color, image, routes, path, path2, path3, path4 }) {
   const userDetaile = JSON.parse(sessionStorage.getItem('user1')).firstname +" "+ JSON.parse(sessionStorage.getItem('user1')).lastname
+
   const location = useLocation();
   const activeRoute = (routeName) => {
     return location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -69,7 +69,10 @@ function Sidebar({ color, image, routes, path, path2, path3, path4 }) {
         </div>
         <Nav>
           {routes.map((prop, key) => {
-            if (prop.layout === path || prop.layout === path2|| prop.layout === path3|| prop.layout ===path4)
+            if (prop.layout === path || prop.layout === path2|| prop.layout === path3|| prop.layout ===path4 ){
+
+              if(prop.path != path5){
+
               return (
                 <li
                   className={
@@ -88,7 +91,8 @@ function Sidebar({ color, image, routes, path, path2, path3, path4 }) {
                     <p style={{fontSize:"11px"}}>{translate(prop.name)}</p>
                   </NavLink>
                 </li>
-              );
+              );                          
+                }} 
             return null;
           })}
 

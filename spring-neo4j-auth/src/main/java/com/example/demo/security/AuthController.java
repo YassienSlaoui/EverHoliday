@@ -53,25 +53,20 @@ public class AuthController {
         }
     @PostMapping(value = {"/role"})
     public String role(@RequestBody SignInRequest signInRequest) {
-        Collaborator userDetails = (Collaborator) CustomrService.loadUserByUsername(signInRequest.getUsername());
-        System.out.println(OrganizationalUintService.checkValidator(userDetails));
-        
-        if(userDetails.getTeam()!=null ) {if(userDetails.getTeam().equals("admin RH")) {
+        Collaborator userDetails = (Collaborator) CustomrService.loadUserByUsername(signInRequest.getUsername());      
+        if(userDetails.getTeam()!=null && userDetails.getTeam().equals("admin RH")) {
         	return "RH";
-        }else if(OrganizationalUintService.checkValidator(userDetails) == 1) {
-        	System.out.println(OrganizationalUintService.checkValidator(userDetails));
-        	return "validator";
-        }else if(OrganizationalUintService.checkValidator(userDetails) == 0) {
-        	System.out.println(OrganizationalUintService.checkValidator(userDetails));
-        	return "Collaborator";}
-        else {
-        	return "Collaborator";
+        }else if(OrganizationalUintService.checkRH(userDetails)){
+        	return "RH grp";
+        }else if(userDetails.getTeam()!=null && userDetails.getTeam().equals("Directeur") ) {
+        	
+        	return "Directeur";
         }
-        }else if(OrganizationalUintService.checkValidator(userDetails) == 1) {
-        	System.out.println(OrganizationalUintService.checkValidator(userDetails));
+        else if(OrganizationalUintService.checkValidator(userDetails) == 1) {
+        	
         	return "validator";
         }else if(OrganizationalUintService.checkValidator(userDetails) == 0) {
-        	System.out.println(OrganizationalUintService.checkValidator(userDetails));
+        	
         	return "Collaborator";}
         else {
         	return "Collaborator";

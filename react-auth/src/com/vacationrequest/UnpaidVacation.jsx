@@ -135,6 +135,8 @@ calculeBalance(){
 }
 saveRequest= (e) =>{
   e.preventDefault();
+  if(this.state.list1.length!=0){
+  
   let Request = {
      collaborator : this.state.user,
      description : this.state.description,
@@ -149,7 +151,9 @@ saveRequest= (e) =>{
       this.props.history.push('/admin/Home');
      
     })
-
+  }else{
+    alert('aa')
+  }
   
 }
 descrptionChange = (event) =>{

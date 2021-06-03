@@ -51,7 +51,7 @@ class ExceptionVacation extends Component {
   }
     add(){
       const element = this.childRef.current;
-      b=new Date(element.state.startDate.getTime());
+      const b=new Date(element.state.startDate.getTime());
       b.setDate(element.state.startDate.getDate()+this.state.duration-1)
       if(element.state.startDate!=null ){
         if(this.state.duration!=0){
@@ -137,6 +137,7 @@ calculeBalance(){
 }
 saveRequest= (e) =>{
   e.preventDefault();
+  if(this.state.list1.length!=0){
   let Request = {
      collaborator : this.state.user,
      description : this.state.description,
@@ -152,7 +153,9 @@ saveRequest= (e) =>{
       this.props.history.push('/admin/Home');
      
     })
-
+  }else{
+    alert('aa')
+  }
   
 }
 descrptionChange = (event) =>{

@@ -62,5 +62,9 @@ public class OrganizatiojnalUnitController {
 		public Collection<Collaborator> solde( @PathVariable Long id){
 			return OrganizationalUintService.CollaboratorSolde(id);
 		}
+		@GetMapping("/unit/team/{id}")
+		public Collection<Collaborator> team( @PathVariable Long id){
+			return OrganizationalUintService.CollaboratorUnit(id);
+		}
 }
 

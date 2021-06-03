@@ -75,7 +75,7 @@ public class ExeptionnelRequestService {
 		ExeptionnelRequest user = ExeptionnelRequestRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(" not exist  :" + id));
 		
-		ExeptionnelRequestRepository.delete(user);
+		ExeptionnelRequestRepository.deleteAll(id);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
