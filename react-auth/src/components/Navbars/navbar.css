@@ -1,3 +1,6 @@
-.show>.btn-primary.dropdown-toggle {
- background-color: none !important;
+.show > .btn-primary.dropdown-toggle {
+  background-color: none !important;
+}
+.icon {
+  color: "#93A603";
 }

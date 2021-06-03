@@ -19,11 +19,13 @@ import React, { Component } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 
 import { Nav ,Dropdown,DropdownButton,ButtonGroup,NavDropdown} from "react-bootstrap";
-
 import logo from "assets/img/reactlogo.png";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
-function Sidebar({ color, image, routes,path ,path2,path3,path4,path5}) {
+
+function Sidebar({ color, image, routes, path, path2, path3, path4 }) {
+  const userDetaile = JSON.parse(sessionStorage.getItem('user1')).firstname +" "+ JSON.parse(sessionStorage.getItem('user1')).lastname
+
   const location = useLocation();
   const activeRoute = (routeName) => {
     return location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -48,7 +50,7 @@ function Sidebar({ color, image, routes,path ,path2,path3,path4,path5}) {
           
         }}
       />
-      <div className="sidebar-wrapper" style={{overflow: "hidden",backgroundColor:"#111"}}>
+      <div className="sidebar-wrapper" style={{overflow: "hidden",backgroundColor:"#111",backgroundImage:`url('../../layouts/bg.jpg')`}}>
         <div className="logo d-flex align-items-center justify-content-start">
           <a
             
@@ -58,8 +60,9 @@ function Sidebar({ color, image, routes,path ,path2,path3,path4,path5}) {
               <img
                 src={require("assets/img/everis.svg").default}
                 alt="..."
-                style={{maxWidth:100+"%",maxHeight:88+"px"}}
+                style={{maxWidth:100+"%",maxHeight:60+"px"}}
               />
+             <p> {userDetaile} </p>
             </div>
           </a>
           
