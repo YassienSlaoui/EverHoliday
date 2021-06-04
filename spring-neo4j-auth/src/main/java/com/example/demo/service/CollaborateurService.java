@@ -12,12 +12,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.demo.model.Collaborator;
 import com.example.demo.repository.CollaborateurRepository;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import com.example.demo.proceessImpl.EmailService;
+
 @Service
 public class CollaborateurService {
 	
 @Autowired
 CollaborateurRepository CollaborateurRepository;
-
+@Autowired
+private EmailService EmailService;
 public Collection<Collaborator> getAll() {
 	  return CollaborateurRepository.findAll();
  }		    
@@ -36,6 +44,9 @@ public boolean findByUserName(String username) {
 }
 
 public boolean findByEmails(String email) {
+	System.out.println(CollaborateurRepository.findByEmail(email));
+	System.out.println(email);
+	
 	if(CollaborateurRepository.findByEmail(email)!=null) {
 		System.out.println(" "+CollaborateurRepository.findByEmail(email).getId());
 		return true;
@@ -90,6 +101,7 @@ public ResponseEntity<Map<String, Boolean>> deleteEmployee(Long id){
 /*public void UpdateRealation() {
 	CollaborateurRepository.makeRelation();
 }*/
+
 @Bean
 private PasswordEncoder passwordEncoder5() {
     return new BCryptPasswordEncoder();
@@ -110,6 +122,22 @@ public void updatePassword(Collaborator customer, String newPassword) {
     customer.setPassword("{bcrypt}"+passwordEncoder5().encode(newPassword));
     customer.setResetPasswordToken(null);
     CollaborateurRepository.save(customer);
+}
+
+public static int random_int(int Min, int Max)
+{
+     return (int) (Math.random()*(Max-Min))+Min;
+}
+
+
+public long ResetPassword(String email){
+	
+	int code = random_int(10000, 99999);
+	if(CollaborateurRepository.findByEmail(email)!= null) {
+		EmailService.sendSimpleMessage(email, "saisir le code suivant"+ code ,"pour changer votre mot de pass ");
+	
+	}	
+	return code;
 }
 	    
 }
