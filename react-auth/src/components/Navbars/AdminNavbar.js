@@ -22,6 +22,9 @@ import 'components/Navbars/navbar.css'
 import routes from "routes.js";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
+import { BsBellFill } from "react-icons/bs"
+import { IoLanguageSharp } from "react-icons/io5"
+import { FaUser } from "react-icons/fa"
 function Header() {
   const location = useLocation();
   const userDetaile = JSON.parse(sessionStorage.getItem('user1')).firstname +" "+ JSON.parse(sessionStorage.getItem('user1')).lastname
@@ -92,25 +95,35 @@ function Header() {
             </Nav.Item>
      
           </Nav>
+        
           <Nav className="ml-auto" navbar>
- 
-          <Dropdown as={ButtonGroup}>
-            <Button style={{border:"none",fontSize: "17px"}} >{userDetaile}</Button>
-            <Dropdown.Toggle split variant="muted" style={{border:"none",top: "-8px"}}  id="dropdown-custom-2" />
+         <Dropdown as={ButtonGroup}>  
+              <Dropdown.Toggle split variant="muted" style={{ border: "none", top: "-8px" }} id="dropdown-custom-2" ><BsBellFill className="icon" style={{color:'#93A603',fontSize:'25px'}}/></Dropdown.Toggle>
+            
+          </Dropdown>
+            <Dropdown as={ButtonGroup}>  
+            <Dropdown.Toggle split variant="muted" style={{border:"none",top: "-8px"}}  id="dropdown-custom-2" ><IoLanguageSharp className="icon" style={{color:'#93A603',fontSize:'25px'}}/></Dropdown.Toggle>
             <Dropdown.Menu className="super-colors">
-              <Dropdown.Item eventKey="1" href="/admin/password/user">{translate('Profile')}</Dropdown.Item>
-              <Dropdown.Item eventKey="2" href="/admin/password/change">{translate('Change password')}</Dropdown.Item>
               <Dropdown.Item eventKey="3" >
                 <Button onClick={()=>{window.location.reload();sessionStorage.setItem('lang','En')}} variant="light">En</Button>
                 <Button onClick={()=>{window.location.reload();sessionStorage.setItem('lang','Fr')}} variant="light">Fr</Button>
                 <Button onClick={()=>{window.location.reload();sessionStorage.setItem('lang','Sp')}} variant="light">Sp</Button>
               </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item eventKey="4" href="/" onClick={()=> sessionStorage.clear()}>{translate('Log out')}</Dropdown.Item>
-            </Dropdown.Menu>
+             </Dropdown.Menu>
           </Dropdown>
- 
+          <Dropdown as={ButtonGroup}>
+              
+            <Dropdown.Toggle split variant="muted" style={{border:"none",top: "-8px"}}  id="dropdown-custom-2" ><FaUser className="icon" style={{color:'#93A603',fontSize:'25px'}}/></Dropdown.Toggle>
+            <Dropdown.Menu className="super-colors">
+              <Dropdown.Item eventKey="1" href="/admin/password/user">{translate('Profile')}</Dropdown.Item>
+              <Dropdown.Item eventKey="2" href="/admin/password/change">{translate('Change password')}</Dropdown.Item>
+              <Dropdown.Item eventKey="3" href="/" onClick={()=> sessionStorage.clear()}>{translate('Log out')}</Dropdown.Item>
+             </Dropdown.Menu>
+          </Dropdown>
+
+            
           </Nav>
+          
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -50,6 +50,8 @@ public class Collaborator implements UserDetails{
 	private Collaborator sup;
 	@Relationship(type = "assignment", direction = Relationship.Direction.INCOMING)
 	private ArrayList<Collaborator> Collaborators;
+    @Relationship(type = "notification", direction = Relationship.Direction.OUTGOING)
+	private ArrayList<Notification> notification;
 	public Collaborator( Integer age, String firstname, String lastname, String adresse,
 			String username, String country, String password,int experience,String email,LocalDate startDate,LocalDate birthday) {
 		this.age = age;
@@ -202,6 +204,16 @@ public class Collaborator implements UserDetails{
 	}
 	public void setCollaborators(ArrayList<Collaborator> collaborators) {
 		Collaborators = collaborators;
+	}
+	
+	public ArrayList<Notification> getNotification() {
+		return notification;
+	}
+	public void setNotification(ArrayList<Notification> notification) {
+		this.notification = notification;
+	}
+	public ArrayList<OrganizationalUnit> getUnit() {
+		return unit;
 	}
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

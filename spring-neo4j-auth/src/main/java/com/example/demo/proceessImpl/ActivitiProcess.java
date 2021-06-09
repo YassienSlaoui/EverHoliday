@@ -3,20 +3,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
-import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import com.example.demo.model.Collaborator;
+import com.example.demo.model.Notification;
 import com.example.demo.model.OrganizationalUnit;
 import com.example.demo.model.PaidRequest;
 import com.example.demo.repository.PaidRequestRepository;
+import com.example.demo.service.NotificationService;
 import com.example.demo.service.OrganizationalUintService;
 import com.example.demo.service.PaidRequestService;
 
@@ -34,6 +36,9 @@ public class ActivitiProcess {
 		private EmailService EmailService;
 	   @Autowired
 	   private TaskService taskService;
+	   
+	   @Autowired
+	   private NotificationService notificationService;
 	  
 	   
 	 public ActivitiProcess() {
@@ -58,6 +63,10 @@ public class ActivitiProcess {
 		data.put("RequestDates", p.getDatesRequest());
 		System.out.println("Process started successfully");
 		 runtimeService.startProcessInstanceByKey("EverHoliday", String.valueOf(p.getId()), data).getId();
+		 p.getCollaborator().getNotification().add(new Notification("Paid Request","Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
+                + " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+" est en attente de validation par : "
+                        +validator.getLastname()+" "+validator.getFirstname()
+                + " \n Cordialement."));
 		 return p;
 	    }
 	
