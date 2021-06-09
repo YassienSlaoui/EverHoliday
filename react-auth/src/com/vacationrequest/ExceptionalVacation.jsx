@@ -5,6 +5,7 @@ import Calendar from '../calendor/calendor4'
 import dateFormat from "dateformat";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import '../css/Request.css';
 import Select from 'react-select';
 import {
@@ -37,7 +38,10 @@ class ExceptionVacation extends Component {
           UnpaidRequest:[],
           SelectTypeVacacion:"",
           duration:0,
-          option:[]
+          option:[],
+          collaborators:[],
+          options:[],
+          users:""
       }
       this.calendarChange=this.calendarChange.bind(this)
       this.childRef= React.createRef();
@@ -46,7 +50,8 @@ class ExceptionVacation extends Component {
       this.saveRequest=this.saveRequest.bind(this)
       this.descrptionChange=this.descrptionChange.bind(this);
       this.changeSelect=this.changeSelect.bind(this);
-      this.calculeBalance=this.calculeBalance.bind(this)
+      this.calculeBalance=this.calculeBalance.bind(this);
+      this.selectRH=this.selectRH.bind(this)
 
   }
     add(){
@@ -121,7 +126,7 @@ dates(){
 calculeBalance(){
   let a = 0 ;
   if(this.state.list!=[]){
-    if(this.state.selectedType==="FullDay"){
+    if(this.state.selectedType==="Full Day"){
   this.state.list.map(lists=>
     a=a+lists[2]
     
@@ -138,21 +143,58 @@ calculeBalance(){
 saveRequest= (e) =>{
   e.preventDefault();
   if(this.state.list1.length!=0){
-  let Request = {
-     collaborator : this.state.user,
-     description : this.state.description,
-     totalDays :this.calculeBalance(),
-     datesRequest:this.state.list1,
-     requestDate:dateFormat((new Date()).toLocaleDateString(), "yyyy-mm-dd"),
-     statut: "processed",
-     typeOfTime:this.state.selectedType,
-     vacacioType:this.state.SelectTypeVacacion.value
-  }
-  
-  ExeptionnelRequestService.creatExeptionnelRequest(Request).then(res=>{
-      this.props.history.push('/admin/Home');
+    if(sessionStorage.getItem('role')!="RH"){
+      let Request = {
+        collaborator : this.state.user,
+        description : this.state.description,
+        totalDays :this.calculeBalance(),
+        datesRequest:this.state.list1,
+        requestDate:dateFormat((new Date()).toLocaleDateString(), "yyyy-mm-dd"),
+        statut: "Pending",
+        typeOfTime:this.state.selectedType,
+        vacacioType:this.state.SelectTypeVacacion.value
+     }
+     console.log(Request)
      
-    })
+     ExeptionnelRequestService.creatExeptionnelRequest(Request).then(res=>{
+         this.props.history.push('/admin/Home');
+        
+       })
+    }else if(sessionStorage.getItem('role')==="RH" && this.state.users===""){
+      let Request = {
+        collaborator : this.state.user,
+        description : this.state.description,
+        totalDays :this.calculeBalance(),
+        datesRequest:this.state.list1,
+        requestDate:dateFormat((new Date()).toLocaleDateString(), "yyyy-mm-dd"),
+        statut: "accepted",
+        typeOfTime:this.state.selectedType,
+        vacacioType:this.state.SelectTypeVacacion.value
+     }
+     
+     ExeptionnelRequestService.creatExeptionnelRequest(Request).then(res=>{
+         this.props.history.push('/admin/Home');
+        
+       })
+    }else if(sessionStorage.getItem('role')==="RH" && this.state.users!=""){
+      let Request = {
+        collaborator : this.state.users.value,
+        description : this.state.description,
+        totalDays :this.calculeBalance(),
+        datesRequest:this.state.list1,
+        requestDate:dateFormat((new Date()).toLocaleDateString(), "yyyy-mm-dd"),
+        statut: "accepted",
+        typeOfTime:this.state.selectedType,
+        vacacioType:this.state.SelectTypeVacacion.value
+     }
+     console.log(Request)
+     
+     ExeptionnelRequestService.creatExeptionnelRequest(Request).then(res=>{
+         this.props.history.push('/admin/Home');
+        
+       })
+    }
+  
   }else{
     alert('aa')
   }
@@ -168,16 +210,40 @@ changeSelectType= (SelectTypeVacacion) =>{
   this.setState({SelectTypeVacacion})
   this.setState({duration:SelectTypeVacacion.value.duration})
 }  
+selectRH(){
+  if(sessionStorage.getItem('role')==="RH"){
+    return(
+      <div className = "form-group">
+      <label> {translate('Collaborator')} </label>
+      <Select 
+           onChange={change=>this.changevalidatorHandler(change)}
+           options={this.state.options}
+           />
+          
+      </div>
+    )
+  }
+  
+}
+changevalidatorHandler= (users) => {
+  this.setState({users:users});
+  
+}
 componentDidMount(){
   collaboratorService.getUserById(sessionStorage.getItem("user")).then( (res) =>{
-    
     let user = res.data;
     this.setState({
-      
       user:user,
-       
-    })
+    })})
+  collaboratorService.getUser().then((res)=>{
+      this.setState({ collaborators: res.data,
+        options : res.data.map(
+            user => {
+                return { value: user, label: user.firstname+" "+user.lastname };
+            }
+    )
    
+});
 });
 ExeptionnelRequestService.getType().then(res=>{
   this.setState({option:res.data})
@@ -204,10 +270,15 @@ ExeptionnelRequestService.getType().then(res=>{
                       <Col className="pr-4" md="12">
                         <Form.Group style={{display:"inline-block",paddingTop: "10px"}}>
                            <select className="custom-select" onChange={this.changeSelect} style={{width:"200px"}}>
-                                          <option defaultValue value="FullDay">Full Day</option>
-                                          <option value="HalfDay">Half Day</option>
+                           <FormattedMessage id='Full Day' key={'op' + '-' + 'b'}>
+                                              {(message) => <option defaultValue value="Full Day">{message}</option>}
+                            </FormattedMessage>
+                                            <FormattedMessage id='Half Day' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day">{message}</option>}
+                            </FormattedMessage>
                                           
                            </select>
+                          {this.selectRH()}
                         </Form.Group>
                         <Button className="btn btn-success" onClick={this.add.bind(this)} style={{marginLeft: "10px",float:"right"}}> {translate('Add')}</Button>
                       </Col>

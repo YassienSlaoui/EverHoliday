@@ -68,8 +68,8 @@ public class UnpaidRequestController {
 		return UnpaidRequestService.deletePaidRequest(id);
 	}
 	@PutMapping("/UnpaidRequest/statut/{id}")
-	public ResponseEntity<UnpaidRequest> updateStatut(@PathVariable Long id, @RequestBody PaidRequest user){
-		
+	public ResponseEntity<UnpaidRequest> updateStatut(@PathVariable Long id, @RequestBody UnpaidRequest user){
+		UnpaidRequestService.updatejustif(id, user.getJustification());
 		return UnpaidRequestService.updateStatut(id,user.getStatut());
 	}
 }

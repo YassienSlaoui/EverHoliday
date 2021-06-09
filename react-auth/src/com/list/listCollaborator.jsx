@@ -4,6 +4,7 @@ import BalanceService from "../../servicees/BalanceService";
 import '../css/list.css';
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
+import UnitService from '../../servicees/UnitService';
 
 class listCollaborator extends Component {
     constructor(props) {
@@ -12,7 +13,9 @@ class listCollaborator extends Component {
         this.state = {
                 collaborator: [],
                 select:"collaborator",
-                search:""
+                search:"",
+                teamRh:[],
+                RHadmin:""
         }
         //this.addUser = this.addUser.bind(this);
         this.editUser = this.editUser.bind(this);
@@ -44,35 +47,33 @@ class listCollaborator extends Component {
        
     */
     componentDidMount(){
-        if(this.state.select === "collaborator"){
+       
         collaboratorService.getUser().then((res) => {
+            
             this.setState({ collaborator: res.data});
         });
-    }
-    else if(this.state.select ==="supervisor"){
-        
-            SupervisorService.getUser().then((res) => {
-                this.setState({ collaborator: res.data});
-            });
-    }}
+    
+    UnitService.getunit().then(res=>{
+       res.data.map(res=>{
+        if(res.name==="RH"){
+            this.setState({teamRh:res.collaborators1,RHadmin:res.validator})
+        }})
+    })
+}
     componentDidUpdate(pp,ps,sS){
-        if(ps.select === "collaborator"){
+        
             collaboratorService.getUser().then((res) => {
                 this.setState({ collaborator: res.data});
             });
-        }
-        else if(ps.select ==="supervisor"){
-            
-                SupervisorService.getUser().then((res) => {
-                    this.setState({ collaborator: res.data});
-                });
-        }
+        
+        
        
     }
     changesearche=(event)=>{
         this.setState({search:event.target.value});
     }
     render() {
+    
         return (
             
             <div>
@@ -93,19 +94,39 @@ class listCollaborator extends Component {
                             <tbody>
                                 {
                                     this.state.collaborator.filter((val)=>{
-                                        if(this.state.search == ""){
-                                        return val
-                                    }else if (val.firstname.toLowerCase().includes(this.state.search.toLowerCase())){
-                                        return val
+                                       if(parseInt(sessionStorage.getItem('user'))!=this.state.RHadmin.id){
+                                           let a=false;
+                                            this.state.teamRh.map(res=>{
+                                                
+                                            if( val.id == res.id ){
+                                              a =true
+                                             
+                                            }
+                                        }) 
+                                        
+                                        console.log(a==false)
+                                        if(a ==false &&this.state.search == "" && val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
+                                                   
+                                            return val
+                                        }else if (a ==false &&val.firstname.toLowerCase().includes(this.state.search.toLowerCase())&&val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
+                                          return val
+                                            }
+                                        
+                                        }else{
+                                            if(this.state.search == ""&&val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
+                                                
+                                                return val
+                                            }else if (val.firstname.toLowerCase().includes(this.state.search.toLowerCase())&&val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
+                                                return val
+                                                }  
                                         }
+                                        
                                         }).map(
                                         user => 
                                         <tr key = {user.id }>
                                               
                                             <td> {user.firstname}</td>
                                             <td> {user.lastname}</td>
-                                                    
-                                            
                                             <td> {user.username}</td>
                                             <td>{user.experience}</td>    
                                             <td>

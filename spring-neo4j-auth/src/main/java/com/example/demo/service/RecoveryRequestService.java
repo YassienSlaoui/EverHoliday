@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Collaborator;
+import com.example.demo.model.ExeptionnelRequest;
 import com.example.demo.model.RecoveryRequest;
 import com.example.demo.repository.RecoveryRequestRepository;
 @Service
@@ -58,5 +59,13 @@ public class RecoveryRequestService {
 		RecoveryRequest updatedUser = RecoveryRequestRepository.save(b);
 		return ResponseEntity.ok(updatedUser);
 	}
-
+	public void updatejustif( Long id,  String a){
+		RecoveryRequest b = RecoveryRequestRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
+		
+		b.setJustification(a);
+		
+		RecoveryRequestRepository.save(b);
+	
+	}
 }

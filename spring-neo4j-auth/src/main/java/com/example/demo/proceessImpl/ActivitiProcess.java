@@ -8,6 +8,7 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -88,7 +89,7 @@ public class ActivitiProcess {
         ArrayList<Collaborator> listRH =new ArrayList<Collaborator>();
          for(OrganizationalUnit unit:OrganizationalUintService.getAll()){
              if(unit.getName().equals("RH")) {
-                 listRH.add(unit.getValidator());
+                 listRH.add(unit.getValidator()); 
                  for(Collaborator col :unit.getCollaborators1()) {
                      listRH.add(col);
                  }
@@ -107,6 +108,7 @@ public class ActivitiProcess {
         
     }
     public void sendMailValidationOwner(Long id ,String statut) {
+        System.out.println("fff");
 
     	PaidRequest PaidRequest = paidRequestService.getPaidRequestById(id);
     	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
@@ -129,9 +131,10 @@ public class ActivitiProcess {
         Collaborator validator=OrganizationalUintService.findValidator(b.getCollaborator());
         
         
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(validator.getId().toString()).list();
-        System.out.println(tasks);
-        for (Task task : tasks) {
+        TaskQuery tasks = taskService.createTaskQuery().taskAssignee(validator.getId().toString());
+        List<Task> tasks1 = taskService.createTaskQuery().taskAssignee(validator.getId().toString()).list();
+        System.out.println(tasks.list());
+        for (Task task : tasks1) {
             
             Map<String, Object> taskVariables = new HashMap<String, Object>();
             taskVariables.put("validation", a);

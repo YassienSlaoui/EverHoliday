@@ -68,8 +68,8 @@ public class RecoveryRequestController {
 		return RecoveryRequestService.deletePaidRequest(id);
 	}
 	@PutMapping("/RecoveryRequest/statut/{id}")
-	public ResponseEntity<RecoveryRequest> updateStatut(@PathVariable Long id, @RequestBody PaidRequest user){
-		
+	public ResponseEntity<RecoveryRequest> updateStatut(@PathVariable Long id, @RequestBody RecoveryRequest user){
+		RecoveryRequestService.updatejustif(id, user.getJustification());
 		return RecoveryRequestService.updateStatut(id,user.getStatut());
 	}
 }

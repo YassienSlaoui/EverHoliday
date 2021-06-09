@@ -6,6 +6,7 @@ import Calendar from '../calendor/calendar6';
 import dateFormat from "dateformat";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import HolidayService from '../../servicees/HolidayService'
 import {
     Badge,
@@ -38,7 +39,7 @@ class PaidVacation extends Component {
             user:"",
             description:"",
             soldes:"",
-            selectedType:"FullDay",
+            selectedType:"Full Day",
             paidRequest:[],
             allrequest:0,
             holidays:[]
@@ -155,7 +156,7 @@ class PaidVacation extends Component {
     calculeBalance(){
       let a = 0 ;
       if(this.state.list!=[]){
-        if(this.state.selectedType==="FullDay"){
+        if(this.state.selectedType==="Full Day"){
       this.state.list.map(lists=>
         a=a+lists[2]
         
@@ -214,13 +215,12 @@ class PaidVacation extends Component {
          balanceUsed :this.calculeBalance(),
          datesRequest:this.state.list1,
          requestDate:dateFormat((new Date()), "yyyy-mm-dd"),
-         statut: "processed",
+         statut: "Pending",
          typeOfTime:this.state.selectedType
       }
       let balance =(this.state.annual+this.calculeCumulativeBalance())
       let differenceBtwnDate= this.state.list[0][0].getMonth()-(new Date()).getMonth()
       if(balance+differenceBtwnDate>this.calculeBalance()+this.state.allrequest){
-        
         PaidRequestService.createPaidRequest(Request).then(res=>{
           this.props.history.push('/admin/Home');
          
@@ -241,7 +241,18 @@ class PaidVacation extends Component {
     render() {
    var a  =JSON.parse(JSON.stringify(this.state.user));
     
-   
+  const msg = defineMessages({
+      firstoption: {
+          id: 'mycomponent.firstoption',
+          defaultMessage: 'Coffee',
+      },
+      secondoption: {
+          id: 'mycomponent.secondoption',
+          defaultMessage: 'Tea',
+      }
+  });
+  
+ 
         return (
           
         <Container fluid>
@@ -257,8 +268,13 @@ class PaidVacation extends Component {
                         <Col className="pr-4" md="12">
                           <Form.Group style={{display:"inline-block",paddingTop: "10px"}}>
                              <select className="custom-select" onChange={this.changeSelect} style={{width:"200px"}}>
-                                            <option defaultValue value="FullDay">Full-Day</option>
-                                            <option value="HalfDay">Half-Day</option>
+                                            
+                                            <FormattedMessage id='Full Day' key={'op' + '-' + 'b'}>
+                                              {(message) => <option defaultValue value="Full Day">{message}</option>}
+                                            </FormattedMessage>
+                                            <FormattedMessage id='Half Day' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day">{message}</option>}
+                                            </FormattedMessage>
                                             
                              </select>
                           </Form.Group>
@@ -321,4 +337,4 @@ class PaidVacation extends Component {
     }
 }
 
-export default PaidVacation 
+export default injectIntl(PaidVacation) 

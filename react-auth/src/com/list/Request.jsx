@@ -20,7 +20,9 @@ class Request extends Component {
             request:"",
             unPaidRequest:[],
             exeptionnel:[],
-            RecoveryRequest:[]
+            RecoveryRequest:[],
+            justis:[],
+            col:""
 
         }
         this.lists=this.lists.bind(this)
@@ -31,8 +33,9 @@ class Request extends Component {
         this.RequestSuccess=this.RequestSuccess.bind(this)
         this.getrequestById=this.getrequestById.bind(this)
         this.Unpaidlists=this.Unpaidlists.bind(this)
-        this.exeptionnelList=this.exeptionnelList.bind()
+        this.exeptionnelList=this.exeptionnelList.bind(this)
         this.Recoverylists=this.Recoverylists.bind(this)
+        this.changeJusti=this.changeJusti.bind(this)
     }
     getrequestById(id){
         PaidRequestService.getPaidRequestById(id).then(res=>{
@@ -43,21 +46,32 @@ class Request extends Component {
          
      })
     }
-    RequestSuccess (id){
+    getcoltById(id){
+        CollaborateurServices.getUserById(id).then(res=>{
+            
+            this.setState({
+             col:res.data
+         })
+         
+     })
+    }
+    RequestSuccess (id,col){
   
         let Request ={statut:"accepted"}
         PaidRequestService.statut(Request,id).then(res=>{
             PaidRequestService.getPaidRequest().then(res=>{
                 this.getrequestById(id)
+                this.getcoltById(col)
                 setTimeout(() => {
                     if(this.state.request!=""){
                         let b =this.state.request.balanceUsed
                         let a =0
-                        let user1 =JSON.parse(JSON.stringify(this.state.request.collaborator));
-                        if(this.state.request.collaborator.solde.cumulativeBances!=null){
-                            this.state.request.collaborator.solde.cumulativeBances.map(solde=> a=a+solde.balance)
+                        let user1 =JSON.parse(JSON.stringify(this.state.col.solde));
+                        if(this.state.col.solde.cumulativeBances!=null){
+                            this.state.col.solde.cumulativeBances.map(solde=> a=a+solde.balance)
+                            console.log(a + "  "+b)
                         if(a>b){
-                            user1.solde.cumulativeBances.map(solde=>
+                            user1.cumulativeBances.map(solde=>
                                 {
                                if(solde.balance>a){
                                  solde.balance=solde.balance-a; 
@@ -69,14 +83,15 @@ class Request extends Component {
                          
                            
                          }else{
-                           
-                           user1.solde.cumulativeBances.map(solde=>solde.balance=0)
-                             user1.solde.annualBalance=this.state.annual-(b-a)
+                           user1.cumulativeBances.map(solde=>solde.balance=0)
+                             user1.annualBalance=user1.annualBalance-(b-a)
                            }
                         } else{
-                            user1.solde.annualBalance=user1.solde.annualBalance-(b)
+                            user1.annualBalance=user1.annualBalance-(b)
                         }
-                        CollaborateurServices.updateUser(user1,user1.id);
+                        this.state.col.solde=user1
+                        
+                        CollaborateurServices.updateUser(this.state.col,this.state.col.id);
                         }
                         
                  } , 1000);  
@@ -116,7 +131,7 @@ class Request extends Component {
     }
     RequestRejecte (id){
        
-        let Request ={statut:"refused"}
+        let Request ={statut:"refused",justification:this.state.justis[id]}
         PaidRequestService.statut(Request,id).then(res=>{
            
             PaidRequestService.getPaidRequest().then(res=>{
@@ -188,13 +203,19 @@ class Request extends Component {
         });
     }
     checkStatut(value){
-        if(value==="processed"){
+        if(value==="Pending"){
             return(<td className="text-secondary">{value} </td> );
         }else if(value==="accepted"){
             return(<td className="text-success">{value} </td> );
         }else if(value==="refused"){
             return(<td className="text-danger">{value} </td> );
         }
+    }
+    changeJusti=index=> (event)=>{
+        
+       var justi = this.state.justis.slice(); // Make a copy of the emails first.
+        justi[index] = event.target.value; // Update it with the modified email.
+        this.setState({justis: justi}); 
     }
     lists(){
         return(
@@ -203,39 +224,44 @@ class Request extends Component {
                   this.state.paidRequest.map(
                    paidRequests => {
 
-                    if(paidRequests.collaborator.id===collaborators.id && paidRequests.statut==="processed"){
-
+                    if(paidRequests.collaborator.id===collaborators.id && paidRequests.statut==="Pending"){
                            return(
                             <tbody key = {collaborators.id }>
                                   {
                            <tr key = {paidRequests.id }>
-                           <td> {paidRequests.id}</td>
+                           
                            <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
                            
                           {this.checkStatut(paidRequests.statut)} 
                           <td>{paidRequests.typeOfTime}</td>
                           <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
-                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                            <td>
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>       
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.duration} </p>)}</td>
+                    <td><input key={paidRequests.id } className="form-control"  onChange={this.changeJusti(paidRequests.id)}/></td>
+                     <td>
                            <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.RequestRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
-                           <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.RequestSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
+                           <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.RequestSuccess(paidRequests.id,paidRequests.collaborator.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
                            </td>                         
                             </tr>
                              }
                             </tbody> 
                            )
-                            }else if(paidRequests.collaborator.team==="admin RH" && paidRequests.statut==="processed" && sessionStorage.getItem('role')==="Directeur")    {
+                            }else if(paidRequests.collaborator.team==="admin RH" && paidRequests.statut==="Pending" && sessionStorage.getItem('role')==="Directeur")    {
 
                                 return(
                                     <tbody>
                                           {
                                    <tr key = {paidRequests.id }>
-                                   <td> {paidRequests.id}</td>
+                                   
                                    <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
                                    
                                   {this.checkStatut(paidRequests.statut)} 
                                   <td>{paidRequests.typeOfTime}</td>
                                   <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
-                            <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                            <td>
+                            <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>       
+                            <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.duration} </p>)}</td>
+
+                     <td>
                                    <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.RequestRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
                                    <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.RequestSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
                                    </td>                         
@@ -254,20 +280,22 @@ class Request extends Component {
                           this.state.paidRequest.map(
                            paidRequests => {
 
-                          if(paidRequests.collaborator.team==="admin RH" && paidRequests.statut==="processed" && sessionStorage.getItem('role')==="Directeur") 
+                          if(paidRequests.collaborator.team==="admin RH" && paidRequests.statut==="Pending" && sessionStorage.getItem('role')==="Directeur") 
         
                                         return(
                                             <tbody>
                                                   {
                                            <tr key = {paidRequests.id}>
-                                           <td> {paidRequests.id}</td>
+                                           
                                            <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
                                            
                                           {this.checkStatut(paidRequests.statut)} 
                                           <td>{paidRequests.typeOfTime}</td>
                                           {paidRequests.datesRequest.map(dates=><td key={dates.id}> <p>{dates.startDate}</p> </td>)}
                                         
-                                        {paidRequests.datesRequest.map(dates=><td key={dates.id}><p> {dates.endDate} </p></td> )}                     
+                                        {paidRequests.datesRequest.map(dates=><td key={dates.id}><p> {dates.endDate} </p></td> )} 
+                                        <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.duration} </p>)}</td>
+
                                               <td>
                                            <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.RequestRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
                                            <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.RequestSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
@@ -286,19 +314,22 @@ class Request extends Component {
                         {
                         this.state.unPaidRequest.filter(val=>{if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){ return val}}).map(
                         paidRequests => {
-                            
-                         if(paidRequests.statut==="processed" ){
+                           
+                         if(paidRequests.statut==="Pending" && paidRequests.collaborator.team!="admin RH"){
                           
                                 return(
                                  
                                 <tr key = {paidRequests.id }>
-                                <td> {paidRequests.id}</td>
+                               
                                 <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
 
                                {this.checkStatut(paidRequests.statut)} 
                                <td>{paidRequests.typeOfTime}</td>
                                <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
-                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                                 <td>
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>       
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.duration} </p>)}</td>
+
+                          <td>
                                 <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.UnRequestRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
                                 <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.UnRequestSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
                                 </td>                         
@@ -320,18 +351,21 @@ class Request extends Component {
                         this.state.RecoveryRequest.filter(val=>{if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){ return val}}).map(
                         paidRequests => {
                             
-                         if(paidRequests.statut==="processed"){
+                         if(paidRequests.statut==="Pending" && paidRequests.collaborator.team!="admin RH"){
                           
                                 return(
                                  
                                 <tr key = {paidRequests.id }>
-                                <td> {paidRequests.id}</td>
+                               
                                 <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
 
                                {this.checkStatut(paidRequests.statut)} 
                                <td>{paidRequests.typeOfTime}</td>
                                <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
-                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                                 <td>
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>        
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.duration} </p>)}</td>
+
+                         <td>
                                 <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.RecoveryRequestRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
                                 <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.RecoveryRequestSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
                                 </td>                         
@@ -346,26 +380,28 @@ class Request extends Component {
                 )
                     
                                  }                 
-   exeptionnelList (){
+   exeptionnelList(){
     return(
-        
         <tbody>
             {
             this.state.exeptionnel.filter(val=>{if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){ return val}}).map(
             paidRequests => {
                 
-             if(paidRequests.statut==="processed"){
+             if(paidRequests.statut==="Pending" && paidRequests.collaborator.team!="admin RH"){
               
                     return(
                      
                     <tr key = {paidRequests.id }>
-                    <td> {paidRequests.id}</td>
+                   
                     <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
 
                    {this.checkStatut(paidRequests.statut)} 
                    <td>{paidRequests.typeOfTime}</td>
                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
-                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                     <td>
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>  
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.duration} </p>)}</td>
+
+                   <td>
                     <button style={{marginLeft: "10px"}} onClick={(e)=>{e.preventDefault();  this.exeptionnelRejecte(paidRequests.id)}} className="btn btn-danger">X </button>
                     <button style={{marginLeft: "10px"}} onClick={ (e) =>{e.preventDefault(); this.exeptionnelSuccess(paidRequests.id)}} className="btn btn-success"><div className="nc-icon nc-check-2"></div> </button>
                     </td>                         
@@ -388,12 +424,13 @@ class Request extends Component {
                         <table className = "table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>  {translate('Request Id')}</th>
+                                   
                                     <th>{translate('collaborator')}</th>
                                     <th> {translate('statut')}</th>
                                     <th>{translate('type of time')}</th>
                                     <th>{translate('Start Date')}</th>
                                     <th>{translate('End Date')}</th>
+                                    <th>{translate('duration')}</th>
                                     <th>action</th>
                                 </tr>
                             </thead>
@@ -401,6 +438,7 @@ class Request extends Component {
                             {this.lists1()}
                             {this.Unpaidlists()}
                             {this.Recoverylists()}
+                            {this.exeptionnelList()}
                         </table>
                         
                 </div>

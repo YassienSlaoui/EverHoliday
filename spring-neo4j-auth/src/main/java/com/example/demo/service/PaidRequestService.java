@@ -60,5 +60,13 @@ public class PaidRequestService {
 		PaidRequest updatedUser = PaidRequestRepository.save(b);
 		return ResponseEntity.ok(updatedUser);
 	}
-
+	public void updatejustif( Long id,  String a){
+		PaidRequest b = PaidRequestRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
+		
+		b.setJustification(a);
+		
+		 PaidRequestRepository.save(b);
+	
+	}
 }
