@@ -3,6 +3,7 @@ import PaidRequestService from '../../servicees/PaidRequestService'
 import ExeptionnelRequestService from '../../servicees/ExptionnelService'
 import UnPaidRequestService from '../../servicees/UnPaidRequestService';
 import RecoveryRequestService from '../../servicees/RecoveryRequestService';
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import translate from "../../i18nProvider/translate"
 
 import '../css/list.css';
@@ -37,6 +38,31 @@ class Historic extends Component {
     
    
     }
+    deleteun(id){
+        
+        UnPaidRequestService.deletUnPaidRequest(id).then( res => {
+                this.setState({unPaidRequest: this.state.unPaidRequest.filter(user => user.id !== id)});
+          });
+    
+   
+    }
+    deleteEx(id){
+        
+        ExeptionnelRequestService.deletExeptionnelRequest(id).then( res => {
+                this.setState({exptionnel: this.state.exptionnel.filter(user => user.id !== id)});
+          });
+    
+   
+    }
+    deleteRe(id){
+        
+        RecoveryRequestService.deletRecoveryRequest(id).then( res => {
+                this.setState({RecoveryRequest: this.state.RecoveryRequest.filter(user => user.id !== id)});
+          });
+    
+   
+    }
+       
        
    addHolidays(){
     this.props.history.push('/admin/unit/add');
@@ -70,7 +96,7 @@ class Historic extends Component {
            
                 <tbody>
                  {   
-                       this.state.paidRequest.filter(val =>{if(val.statut!="processed"){return val}}).sort(function(a, b) {
+                       this.state.paidRequest.filter(val =>{if(val.statut!="Pending"){return val}}).sort(function(a, b) {
                         var c = new Date(a.requestDate);
                         var d = new Date(b.requestDate);
                         return d.getTime()-c.getTime();
@@ -79,7 +105,7 @@ class Historic extends Component {
                             if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
                                 return(
                                     <tr key = {paidRequests.id }>
-                                <td> {paidRequests.id}</td>
+                                
                                 <td>{paidRequests.requestDate}</td>
                                 <td>Paid Request</td>
                                 
@@ -88,6 +114,8 @@ class Historic extends Component {
                                <td>{paidRequests.typeOfTime}</td>
                                 <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                                 <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
+                                <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteUser(paidRequests.id)} className="btn btn-danger">{translate('Delete')} </button> </td>
+
                                 </tr>
                                 )
                             }                     
@@ -104,7 +132,7 @@ class Historic extends Component {
             
             <tbody>
                 {
-                this.state.unPaidRequest.filter(val =>{if(val.statut!="processed"){return val}}).sort(function(a, b) {
+                this.state.unPaidRequest.filter(val =>{if(val.statut!="Pending"){return val}}).sort(function(a, b) {
                     var c = new Date(a.requestDate);
                     var d = new Date(b.requestDate);
                     return d.getTime()-c.getTime();
@@ -116,7 +144,7 @@ class Historic extends Component {
                         return(
                          
                         <tr key = {paidRequests.id }>
-                        <td> {paidRequests.id}</td>
+                       
                         <td>{paidRequests.requestDate}</td>
                        <td>Unpaid Request</td>
 
@@ -124,7 +152,8 @@ class Historic extends Component {
                        <td>{paidRequests.typeOfTime}</td>
                        <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                         <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
-                                               
+                        <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteun(paidRequests.id)} className="btn btn-danger">{translate('Delete')} </button> </td>                       
+
                          </tr> 
                          
                         );}})
@@ -140,7 +169,7 @@ class Historic extends Component {
     return(
         <tbody>
             {
-            this.state.exptionnel.filter(val =>{if(val.statut!="processed"){return val}}).sort(function(a, b) {
+            this.state.exptionnel.filter(val =>{if(val.statut!="Pending"){return val}}).sort(function(a, b) {
                 var c = new Date(a.requestDate);
                 var d = new Date(b.requestDate);
                 return d.getTime()-c.getTime();
@@ -152,14 +181,16 @@ class Historic extends Component {
                     return(
                      
                     <tr key = {paidRequests.id }>
-                    <td> {paidRequests.id}</td>
+                   
                     <td>{paidRequests.requestDate}</td>
                    <td>Exeptionnel Request</td>
 
                    {this.checkStatut(paidRequests.statut)} 
                    <td>{paidRequests.typeOfTime}</td>
                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
-                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>                    
+                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>  
+                    <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteEx(paidRequests.id)} className="btn btn-danger">{translate('Delete')} </button> </td>                       
+                  
                      </tr> 
                      
                     );}})
@@ -173,7 +204,7 @@ class Historic extends Component {
             
             <tbody>
                 {
-                this.state.RecoveryRequest.filter(val =>{if(val.statut!="processed"){return val}}).sort(function(a, b) {
+                this.state.RecoveryRequest.filter(val =>{if(val.statut!="Pending"){return val}}).sort(function(a, b) {
                     var c = new Date(a.requestDate);
                     var d = new Date(b.requestDate);
                     return d.getTime()-c.getTime();
@@ -185,7 +216,7 @@ class Historic extends Component {
                         return(
                          
                         <tr key = {paidRequests.id }>
-                        <td> {paidRequests.id}</td>
+                      
                         <td>{paidRequests.requestDate}</td>
                        <td>Recovery Request</td>
 
@@ -193,7 +224,8 @@ class Historic extends Component {
                        <td>{paidRequests.typeOfTime}</td>
                        <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                         <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
-                                               
+                        <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteRe(paidRequests.id)} className="btn btn-danger">{translate('Delete')} </button> </td>                       
+
                          </tr> 
                          
                         );}})
@@ -229,17 +261,26 @@ class Historic extends Component {
             <div>
                 <br></br>
                 <select className="custom-select" onChange={this.changeSelect} style={{width:"200px"}}>
-                                            <option defaultValue value="paidrequest">Paid vacation</option>
-                                            <option value="unpaid">Unpaid vacation</option>
-                                            <option value="recovery">Recovery vacation</option>
-                                            <option value="exceptional">Exceptional vacation</option>
+                                            
+                                            <FormattedMessage id='Paid vacation' key={'op' + '-' + 'b'}>
+                                              {(message) => <option defaultValue value="paidrequest">{message}</option>}
+                                             </FormattedMessage>
+                                            <FormattedMessage id='Unpaid vacation' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="unpaid">{message}</option>}
+                                            </FormattedMessage>
+                                            <FormattedMessage id='Recovery vacation' key={'op' + '-' + 'c'}>
+                                              {(message) => <option defaultValue value="recovery">{message}</option>}
+                                             </FormattedMessage>
+                                            <FormattedMessage id='Exceptional vacation' key={'op' + '-' + 'fa'}>
+                                              {(message) => <option value="exceptional">{message}</option>}
+                                            </FormattedMessage>
                                             
                  </select>
                 <div className = "row">
                         <table className = "table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>  {translate('Request Id')}</th>
+                                    
                                     <th>Request date</th>
                                     <th>{translate('Type')}</th>
                                     <th> {translate('statut')}</th>

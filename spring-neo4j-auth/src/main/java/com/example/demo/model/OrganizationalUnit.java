@@ -58,9 +58,11 @@ public class OrganizationalUnit {
 	public ArrayList<Collaborator> getCollaborators1() {
 		return collaborators;
 		
+	
 	}
 	public void setCollaborators(ArrayList<Collaborator> collaborators) {
 		this.collaborators = collaborators;
 	}
+	
 	
 }

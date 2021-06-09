@@ -41,6 +41,14 @@ public class ExeptionnelRequest extends VacacionRequest{
 	public void setVacacioType(TypeOfVaction vacacioType) {
 		this.vacacioType = vacacioType;
 	}
-	
+	private String justification ;
+	public String getJustification() {
+		return justification;
+	}
+
+	public void setJustification(String justification) {
+		this.justification = justification;
+	}
+
 	
 }

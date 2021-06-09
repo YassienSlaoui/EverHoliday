@@ -62,6 +62,7 @@ public String getTypeOfTime() {
 public void setTypeOfTime(String typeOfTime) {
 	this.typeOfTime = typeOfTime;
 }
+
 }
 
 

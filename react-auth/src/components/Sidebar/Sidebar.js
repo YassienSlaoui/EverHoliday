@@ -17,15 +17,12 @@
 */
 import React, { Component } from "react";
 import { useLocation, NavLink } from "react-router-dom";
-
 import { Nav ,Dropdown,DropdownButton,ButtonGroup,NavDropdown} from "react-bootstrap";
-import logo from "assets/img/reactlogo.png";
+import logo from "../../layouts/bg.jpg";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
-
 function Sidebar({ color, image, routes, path, path2, path3, path4 }) {
   const userDetaile = JSON.parse(sessionStorage.getItem('user1')).firstname +" "+ JSON.parse(sessionStorage.getItem('user1')).lastname
-
   const location = useLocation();
   const activeRoute = (routeName) => {
     return location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -43,11 +40,11 @@ function Sidebar({ color, image, routes, path, path2, path3, path4 }) {
   } 
   return (
     
-    <div className="sidebar"   style={{overflow: "hidden"}}>
+    <div className="sidebar" data-image={logo}  style={{overflow: "hidden"}}>
       <div
         className="sidebar-background"
         style={{
-          
+          backgroundImage: "url(" + logo + ")",
         }}
       />
       <div className="sidebar-wrapper" style={{overflow: "hidden",backgroundColor:"#111",backgroundImage:`url('../../layouts/bg.jpg')`}}>

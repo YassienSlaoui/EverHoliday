@@ -5,6 +5,7 @@ import RecoveryRequestService from '../../servicees/RecoveryRequestService';
 import Calendar from '../calendor/calendar6';
 import dateFormat from "dateformat";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import translate from "../../i18nProvider/translate"
 import {
     Button,
@@ -119,7 +120,7 @@ dates(){
 calculeBalance(){
   let a = 0 ;
   if(this.state.list!=[]){
-    if(this.state.selectedType==="FullDay"){
+    if(this.state.selectedType==="Full Day"){
   this.state.list.map(lists=>
     a=a+lists[2]
     
@@ -142,7 +143,7 @@ saveRequest= (e) =>{
      totalDays :this.calculeBalance(),
      datesRequest:this.state.list1,
      requestDate:dateFormat((new Date()), "yyyy-mm-dd"),
-     statut: "processed",
+     statut: "Pending",
      typeOfTime:this.state.selectedType
   }
   RecoveryRequestService.createRecoveryRequest(Request).then(res=>{
@@ -189,8 +190,12 @@ componentDidMount(){
                       <Col className="pr-4" md="12">
                         <Form.Group style={{display:"inline-block",paddingTop: "10px"}}>
                            <select className="custom-select" onChange={this.changeSelect} style={{width:"200px"}}>
-                                          <option defaultValue value="FullDay">Full-Day</option>
-                                          <option value="HalfDay">Half-Day</option>
+                                            <FormattedMessage id='Full Day' key={'op' + '-' + 'b'}>
+                                              {(message) => <option defaultValue value="Full Day">{message}</option>}
+                                            </FormattedMessage>
+                                            <FormattedMessage id='Half Day' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day">{message}</option>}
+                                            </FormattedMessage>
                                           
                            </select>
                         </Form.Group>
