@@ -16,7 +16,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/rest/neo4j/auth**",
             "/rest/neo4j/auth/user**",
             "/rest/neo4j/auth/role**",
-            "/rest/neo4j/collaborator**"
+            "/rest/neo4j/collaborator**",
+            "/rest/neo4j/collaborator/email**",
+            "/rest/neo4j/forgotpass/email**"
+            
+            
     };
     
     @Bean
