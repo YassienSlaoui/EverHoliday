@@ -6,6 +6,8 @@ import Addholiday from './com/add/addHoliday';
 import Holidaylist from './com/list/holidaylist';
 import UnitList from './com/list/UnitList';
 import myRequest from './com/list/myRequest';
+//import myRequest from './com/vacationrequest/alt';
+
 import Request from './com/list/Request';
 import addUnit from './com/add/addUnit';
 import changePassword from './com/add/changePassword';
@@ -23,28 +25,28 @@ const dashboardRoutes = [
   
   {
     path: "/Home",
-    icon: "nc-icon nc-album-2",
+    class:"IoIosHome",
     name: "Home",
-    component: Home,
+    component: calendar,
     layout: "/admin",
-  },{
+  }/*,{
     path: "/calendar",
     name: "calendar",
     icon: "nc-icon nc-chart-pie-35",
     component: calendar,
     layout: "/admin",
-  },
+  }*/,
   {
     path: "/Request",
     name: "REQUEST",
-    icon: "nc-icon nc-chart-pie-35",
+    class:"FaHourglassEnd",
     component: Request,
     layout: "/admin/validator",
   },
   {
     path: "/MyRequest",
     name: "MY REQUEST",
-    icon: "nc-icon nc-chart-pie-35",
+    class: "IoIosPaper",
     component: myRequest,
     layout: "/admin",
   },
@@ -59,21 +61,22 @@ const dashboardRoutes = [
   {
     path: "/collaborator",
     name: "List Users",
-    icon: "nc-icon nc-paper-2",
+    
+    class: "IoIosPeople",
     component: listCollaborator,
     layout: "/admin/list",
   },
   {
     path: "/add-user/:id",
     name: "Add employees",
-    icon: "nc-icon nc-simple-add",
+    class: "IoIosPersonAdd",
     component: addCollaborator,
     layout: "/admin/list",
   },
   {
     path: "/holidays",
     name: "Holidays",
-    icon: "nc-icon nc-album-2",
+    class:"IoCalendar",
     component: Holidaylist,
     layout: "/admin",
   },{
@@ -85,7 +88,7 @@ const dashboardRoutes = [
   {
     path: "/list",
     name: "Organizational Unit",
-    icon: "nc-icon nc-badge",
+    class: "unit",
     component: UnitList,
     layout: "/admin/units",
   },{
@@ -102,14 +105,14 @@ const dashboardRoutes = [
   {
     path: "/solde",
     name: "Collaborator balance",
-    icon: "nc-icon nc-badge",
+    class: "MdAccountBalanceWallet",
     component: CollaboratorSolde,
     layout: "/admin/validator",
   },
   {
     path: "/vacationrequests",
     name:"Vacation Request",
-    icon: "nc-icon nc-send",
+    class: "FiSend",
     component: Vacationrequest,
     layout: "/admin",
   },
@@ -148,7 +151,7 @@ const dashboardRoutes = [
     name:"Type of vacation",
     icon: "nc-icon nc-send",
     component: TypeOfVacation,
-    layout: "/admin/list",
+    layout: "/admin/vacationrequest",
   },
   {
     path: "/:id",

@@ -9,7 +9,7 @@ import ExeptionnelRequestService from '../../servicees/ExptionnelService'
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 import '../css/list.css';
-
+import { FormattedMessage} from 'react-intl';
 class Request extends Component {
     constructor(props) {
         super(props)
@@ -22,7 +22,8 @@ class Request extends Component {
             exeptionnel:[],
             RecoveryRequest:[],
             justis:[],
-            col:""
+            col:"",
+            select:"paidrequest"
 
         }
         this.lists=this.lists.bind(this)
@@ -226,13 +227,13 @@ class Request extends Component {
 
                     if(paidRequests.collaborator.id===collaborators.id && paidRequests.statut==="Pending"){
                            return(
-                            <tbody key = {collaborators.id }>
+                            
+                                <tbody key = {collaborators.id }>
                                   {
                            <tr key = {paidRequests.id }>
                            
                            <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
                            
-                          {this.checkStatut(paidRequests.statut)} 
                           <td>{paidRequests.typeOfTime}</td>
                           <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                     <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>       
@@ -244,18 +245,21 @@ class Request extends Component {
                            </td>                         
                             </tr>
                              }
-                            </tbody> 
+                            
+                                    </tbody> 
+                                   
+                             
                            )
                             }else if(paidRequests.collaborator.team==="admin RH" && paidRequests.statut==="Pending" && sessionStorage.getItem('role')==="Directeur")    {
 
                                 return(
-                                    <tbody>
+                                    
+                                        <tbody>
                                           {
                                    <tr key = {paidRequests.id }>
                                    
                                    <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
                                    
-                                  {this.checkStatut(paidRequests.statut)} 
                                   <td>{paidRequests.typeOfTime}</td>
                                   <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                             <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>       
@@ -268,28 +272,35 @@ class Request extends Component {
                                     </tr>
                                      }
                                     </tbody> 
+                                   
+                                    
+                           
+                                    
                                    )
                             }else{
 
-                            }          
-                   }    
-               ))   )               
-            }
+                            }       }   
+                       
+               ))                  
+            )}
             lists1(){
                 return(
+                   
+
+                                                
                           this.state.paidRequest.map(
                            paidRequests => {
 
                           if(paidRequests.collaborator.team==="admin RH" && paidRequests.statut==="Pending" && sessionStorage.getItem('role')==="Directeur") 
         
                                         return(
-                                            <tbody>
+                                           
+                                                <tbody>
                                                   {
                                            <tr key = {paidRequests.id}>
                                            
                                            <td> {paidRequests.collaborator.firstname +" "+ paidRequests.collaborator.lastname}</td>
                                            
-                                          {this.checkStatut(paidRequests.statut)} 
                                           <td>{paidRequests.typeOfTime}</td>
                                           {paidRequests.datesRequest.map(dates=><td key={dates.id}> <p>{dates.startDate}</p> </td>)}
                                         
@@ -303,13 +314,30 @@ class Request extends Component {
                                             </tr>
                                              }
                                             </tbody> 
+                                            
+                                            
                                            )
                                             
-                           }    
-                       ))               
+                             })
+                       )              
                     }
             Unpaidlists(){
-                return(
+               
+                return( 
+                <div className = "row">
+                <table className = "table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                           
+                            <th>{translate('collaborator')}</th>
+                            <th> {translate('statut')}</th>
+                            <th>{translate('type of time')}</th>
+                            <th>{translate('Start Date')}</th>
+                            <th>{translate('End Date')}</th>
+                            <th>{translate('duration')}</th>
+                            <th>action</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         {
                         this.state.unPaidRequest.filter(val=>{if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){ return val}}).map(
@@ -339,14 +367,34 @@ class Request extends Component {
 
                                 }
                     </tbody>
+                </table>
+                
+        </div>
+                   
 
 
                 )
                     
                                  }  
         Recoverylists(){
-                return(
-                    <tbody>
+            
+                return(<div className = "row">
+            <table className = "table table-striped table-bordered">
+                <thead>
+                    <tr>
+                       
+                        <th>{translate('collaborator')}</th>
+                        <th> {translate('statut')}</th>
+                        <th>{translate('type of time')}</th>
+                        <th>{translate('Start Date')}</th>
+                        <th>{translate('End Date')}</th>
+                        <th>{translate('duration')}</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>action</th>
+                    </tr>
+                </thead>
+                <tbody>
                         {
                         this.state.RecoveryRequest.filter(val=>{if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){ return val}}).map(
                         paidRequests => {
@@ -375,6 +423,10 @@ class Request extends Component {
 
                                 }
                     </tbody>
+            </table>
+            
+    </div>
+                   
 
 
                 )
@@ -382,7 +434,22 @@ class Request extends Component {
                                  }                 
    exeptionnelList(){
     return(
-        <tbody>
+        <div className = "row">
+        <table className = "table table-striped table-bordered">
+            <thead>
+                <tr>
+                   
+                    <th>{translate('collaborator')}</th>
+                    <th> {translate('statut')}</th>
+                    <th>{translate('type of time')}</th>
+                    <th>{translate('type of vacation')}</th>
+                    <th>{translate('Start Date')}</th>
+                    <th>{translate('End Date')}</th>
+                    <th>{translate('duration')}</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>
             {
             this.state.exeptionnel.filter(val=>{if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){ return val}}).map(
             paidRequests => {
@@ -397,6 +464,7 @@ class Request extends Component {
 
                    {this.checkStatut(paidRequests.statut)} 
                    <td>{paidRequests.typeOfTime}</td>
+                   <td>{paidRequests.vacacioType.name}</td>
                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                     <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>  
                     <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.duration} </p>)}</td>
@@ -411,38 +479,121 @@ class Request extends Component {
 
                     }
         </tbody>
+        </table>
+        
+</div>
+       
 
 
     )
-   }                             
+   }        
+   list(a){
+    if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){
+        if(a==="paidrequest"){
+            return(
+                <div className = "row">
+                <table className = "table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                           
+                            <th>{translate('collaborator')}</th>
+                            
+                            <th>{translate('type of time')}</th>
+                            <th>{translate('Start Date')}</th>
+                            <th>{translate('End Date')}</th>
+                            <th>{translate('duration')}</th>
+                            <th>{translate('justification')}</th>
+                            <th>action</th>
+                        </tr>
+                    </thead>
+                    {this.lists() }
+                    {this.lists1() }
+                  </table>
+                   </div>
+                
+                )
+            
+        }else if(a==="unpaid"){
+            return this.Unpaidlists()
+        }else if(a==="recovery"){
+            return this.Recoverylists()
+        }else if(a==="exceptional"){
+            return this.exeptionnelList()
+        }
+    }else{
+        return(
+            <div>
+                 
+                <table className = "table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                           
+                            <th>{translate('collaborator')}</th>
+                            <th> {translate('statut')}</th>
+                            <th>{translate('type of time')}</th>
+                            <th>{translate('Start Date')}</th>
+                            <th>{translate('End Date')}</th>
+                            <th>{translate('duration')}</th>
+                            <th>action</th>
+                        </tr>
+                    </thead>
+                {this.lists() }
+                {this.lists1() }
+                </table>
+                   </div>
+            )
+    }
+    
+}           
+changeSelect=(event)=>{
+    this.setState({select:event.target.value})
+}           
+
+select(){
+    if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){
+       return(
+           <div>
+               <select className="custom-select" onChange={this.changeSelect} style={{width:"200px"}}>
+                                            
+                                            <FormattedMessage id='Paid vacation' key={'op' + '-' + 'b'}>
+                                              {(message) => <option defaultValue value="paidrequest">{message}</option>}
+                                             </FormattedMessage>
+                                            <FormattedMessage id='Unpaid vacation' key={'op' + '-' + 'a'}>
+                                              {(message) => {if(sessionStorage.getItem('role')==="RH" ||sessionStorage.getItem('role')==="RH grp"){return (<option value="unpaid">{message}</option>)} }}
+                                            </FormattedMessage>
+                                            <FormattedMessage id='Recovery vacation' key={'op' + '-' + 'c'}>
+                                              {(message) => <option defaultValue value="recovery">{message}</option>}
+                                             </FormattedMessage>
+                                            <FormattedMessage id='Exceptional vacation' key={'op' + '-' + 'fa'}>
+                                              {(message) => <option value="exceptional">{message}</option>}
+                                            </FormattedMessage>
+                                            
+                 </select>
+           </div>
+
+
+       ) 
+    }else{
+        return(
+            <div>
+               <select className="custom-select" onChange={this.changeSelect} style={{width:"200px"}}>                                           
+                                            <FormattedMessage id='Paid vacation' key={'op' + '-' + 'b'}>
+                                              {(message) => <option defaultValue value="paidrequest">{message}</option>}
+                                             </FormattedMessage>                                            
+                 </select>
+           </div>
+        )
+    }
+    
+}
     render() {
         return (
             
             <div>
                 <br></br>
-                <div className = "row">
-                        <table className = "table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                   
-                                    <th>{translate('collaborator')}</th>
-                                    <th> {translate('statut')}</th>
-                                    <th>{translate('type of time')}</th>
-                                    <th>{translate('Start Date')}</th>
-                                    <th>{translate('End Date')}</th>
-                                    <th>{translate('duration')}</th>
-                                    <th>action</th>
-                                </tr>
-                            </thead>
-                            {this.lists()}
-                            {this.lists1()}
-                            {this.Unpaidlists()}
-                            {this.Recoverylists()}
-                            {this.exeptionnelList()}
-                        </table>
-                        
-                </div>
-            
+                {this.select()}
+                 {this.list(this.state.select)}
+               
                
                </div>
         );

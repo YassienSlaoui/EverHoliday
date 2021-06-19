@@ -184,7 +184,7 @@ componentDidMount(){
           
           <Container fluid>
           <Row>
-            <Col md="6">
+            <Col lg="12" xl="6">
               <Card>
                 <Card.Header>
                   <Card.Title as="h4">{translate('Unpaid vacation')}</Card.Title>
@@ -198,9 +198,13 @@ componentDidMount(){
                            <FormattedMessage id='Full Day' key={'op' + '-' + 'b'}>
                                               {(message) => <option defaultValue value="Full Day">{message}</option>}
                                             </FormattedMessage>
-                                            <FormattedMessage id='Half Day' key={'op' + '-' + 'a'}>
-                                              {(message) => <option value="Half Day">{message}</option>}
-                                            </FormattedMessage>
+                                            <FormattedMessage id='Half Day morning' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day morning">{message}</option>}
+                              </FormattedMessage>
+                              <FormattedMessage id='Half Day afternoon' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day afternoon">{message}</option>}
+                              </FormattedMessage>
+                                            
                                           
                            </select>
                         </Form.Group>
@@ -234,7 +238,7 @@ componentDidMount(){
             </Col>
 
 
-            <Col md="5">
+            <Col lg="12" xl="6">
               
               <Calendar state={this.state.calendarState} ref= {this.childRef } onChange={this.calendarChange}/>
               

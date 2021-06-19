@@ -5,19 +5,9 @@ import UnPaidRequestService from '../../servicees/UnPaidRequestService';
 import RecoveryRequestService from '../../servicees/RecoveryRequestService';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import translate from "../../i18nProvider/translate"
-import {
-    Badge,
-    Button,
-    Card,
-    Form,
-    Navbar,
-    Nav,
-    Container,
-    Row,
-    Col,
-  } from "react-bootstrap";
+
 import '../css/list.css';
-class myRequest extends Component {
+class alt extends Component {
     constructor(props) {
         super(props)
 
@@ -215,7 +205,6 @@ return(
                 <th>{translate('Type')}</th>
                 <th> {translate('statut')}</th>
                 <th>{translate('type of time')}</th>
-                <th>{translate('type of vacation')}</th>
                 <th>{translate('Start Date')}</th>
                 <th>{translate('End Date')}</th>
                 <th>Action</th>
@@ -237,7 +226,6 @@ return(
 
                {this.checkStatut(paidRequests.statut)} 
                <td>{paidRequests.typeOfTime}</td>
-               <td>{paidRequests.vacacioType.name}</td>
                <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                 <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>   
                 <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.duration} </p>)}</td>
@@ -384,4 +372,5 @@ Recoverylists(){
         );
     }
 }
-export default myRequest;
+
+export default alt;
