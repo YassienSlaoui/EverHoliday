@@ -93,8 +93,20 @@ class Historic extends Component {
     lists(){
        
             return(
-           
-                <tbody>
+                <div className = "row">
+                <table className = "table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            
+                            <th>Request date</th>
+                            <th>{translate('Type')}</th>
+                            <th> {translate('statut')}</th>
+                            <th>{translate('type of time')}</th>
+                            <th>{translate('Start Date')}</th>
+                            <th>{translate('End Date')}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                  {   
                        this.state.paidRequest.filter(val =>{if(val.statut!="Pending"){return val}}).sort(function(a, b) {
                         var c = new Date(a.requestDate);
@@ -122,15 +134,34 @@ class Historic extends Component {
                         }    
                     )                  
                  }
-                  </tbody>                   
+                  </tbody> 
+                    
+                   
+                </table>
+                
+        </div>
+                                  
             )
         
         
     }
     Unpaidlists(){
         return(
-            
-            <tbody>
+            <div className = "row">
+                        <table className = "table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>Request date</th>
+                                    <th>{translate('Type')}</th>
+                                    <th> {translate('statut')}</th>
+                                    <th>{translate('type of time')}</th>
+                                    <th>{translate('Start Date')}</th>
+                                    <th>{translate('End Date')}</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
                 {
                 this.state.unPaidRequest.filter(val =>{if(val.statut!="Pending"){return val}}).sort(function(a, b) {
                     var c = new Date(a.requestDate);
@@ -160,6 +191,11 @@ class Historic extends Component {
 
                         }
             </tbody>
+                           
+                        </table>
+                        
+                </div>
+           
 
 
         )
@@ -167,7 +203,22 @@ class Historic extends Component {
  }
   ExpionnelList(){
     return(
-        <tbody>
+        <div className = "row">
+                        <table className = "table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>Request date</th>
+                                    <th>{translate('Type')}</th>
+                                    <th> {translate('statut')}</th>
+                                    <th>{translate('type of time')}</th>
+                                    <th>{translate('type of vacation')}</th>
+                                    <th>{translate('Start Date')}</th>
+                                    <th>{translate('End Date')}</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
             {
             this.state.exptionnel.filter(val =>{if(val.statut!="Pending"){return val}}).sort(function(a, b) {
                 var c = new Date(a.requestDate);
@@ -187,6 +238,7 @@ class Historic extends Component {
 
                    {this.checkStatut(paidRequests.statut)} 
                    <td>{paidRequests.typeOfTime}</td>
+                   <td>{paidRequests.vacacioType.name}</td>
                    <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                     <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td>  
                     <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteEx(paidRequests.id)} className="btn btn-danger">{translate('Delete')} </button> </td>                       
@@ -197,12 +249,32 @@ class Historic extends Component {
 
                     }
         </tbody>
+                           
+                        </table>
+                        
+                </div>
+       
     )       
     }
     Recoverylists(){
         return(
-            
-            <tbody>
+            <div className = "row">
+                        <table className = "table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>Request date</th>
+                                    <th>{translate('Type')}</th>
+                                    <th> {translate('statut')}</th>
+                                    <th>{translate('type of time')}</th>
+                                    <th>{translate('Start Date')}</th>
+                                    <th>{translate('End Date')}</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
                 {
                 this.state.RecoveryRequest.filter(val =>{if(val.statut!="Pending"){return val}}).sort(function(a, b) {
                     var c = new Date(a.requestDate);
@@ -224,6 +296,8 @@ class Historic extends Component {
                        <td>{paidRequests.typeOfTime}</td>
                        <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                         <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
+                        <td>{paidRequests.startHour}</td>
+                    <td>{paidRequests.endHour}</td>
                         <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteRe(paidRequests.id)} className="btn btn-danger">{translate('Delete')} </button> </td>                       
 
                          </tr> 
@@ -232,6 +306,11 @@ class Historic extends Component {
 
                         }
             </tbody>
+                           
+                        </table>
+                        
+                </div>
+           
 
 
         )
@@ -276,25 +355,7 @@ class Historic extends Component {
                                             </FormattedMessage>
                                             
                  </select>
-                <div className = "row">
-                        <table className = "table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    
-                                    <th>Request date</th>
-                                    <th>{translate('Type')}</th>
-                                    <th> {translate('statut')}</th>
-                                    <th>{translate('type of time')}</th>
-                                    <th>{translate('Start Date')}</th>
-                                    <th>{translate('End Date')}</th>
-                                </tr>
-                            </thead>
-                            
-                            {this.list(this.state.select)}
-                           
-                        </table>
-                        
-                </div>
+                 {this.list(this.state.select)}
             
               {/* <div className="backdiv">
                    

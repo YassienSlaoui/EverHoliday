@@ -45,6 +45,8 @@ export default {
     'Paid vacation':'Paid vacation',
     'Full Day':'Full Day',
     'Half Day':'Half Day',
+    "Half Day morning":"Half Day morning",
+    "Half Day afternoon":"Half Day afternoon",
     'Add':'Add',
     'Total days':'Total days',
     'Select the type of vacation':'Select the type of vacation',
@@ -87,6 +89,7 @@ export default {
     "birthday":"birthday",
     "Birth leave":"Birth leave",
     "Type of vacation":"Type of vacation",
-    "Add":"Add"
+    "Add":"Add",
+    "Hour":"Hour"
   },
 };

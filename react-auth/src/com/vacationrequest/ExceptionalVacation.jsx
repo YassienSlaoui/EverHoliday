@@ -52,6 +52,7 @@ class ExceptionVacation extends Component {
       this.changeSelect=this.changeSelect.bind(this);
       this.calculeBalance=this.calculeBalance.bind(this);
       this.selectRH=this.selectRH.bind(this)
+      this.addRH=this.addRH.bind(this)
 
   }
     add(){
@@ -225,9 +226,20 @@ selectRH(){
   }
   
 }
+addRH(){
+  if(sessionStorage.getItem('role')==="RH"){
+    return(
+      <Button className="btn btn-success" onClick={this.go.bind(this)} style={{marginLeft: "10px",float:"right"}}> +</Button>
+    )
+  }
+  
+}
 changevalidatorHandler= (users) => {
   this.setState({users:users});
   
+}
+go(){
+  this.props.history.push('/admin/vacationrequest/Type');
 }
 componentDidMount(){
   collaboratorService.getUserById(sessionStorage.getItem("user")).then( (res) =>{
@@ -251,6 +263,7 @@ ExeptionnelRequestService.getType().then(res=>{
 
 }
 
+
     render() {console.log(this.state.duration)
      let options =this.state.option.map(
         user => 
@@ -259,7 +272,7 @@ ExeptionnelRequestService.getType().then(res=>{
           
           <Container fluid>
           <Row>
-            <Col md="6">
+            <Col lg="12" xl="6">
               <Card>
                 <Card.Header>
                   <Card.Title as="h4">{translate('Exceptional vacation')}</Card.Title>
@@ -272,10 +285,13 @@ ExeptionnelRequestService.getType().then(res=>{
                            <select className="custom-select" onChange={this.changeSelect} style={{width:"200px"}}>
                            <FormattedMessage id='Full Day' key={'op' + '-' + 'b'}>
                                               {(message) => <option defaultValue value="Full Day">{message}</option>}
-                            </FormattedMessage>
-                                            <FormattedMessage id='Half Day' key={'op' + '-' + 'a'}>
-                                              {(message) => <option value="Half Day">{message}</option>}
-                            </FormattedMessage>
+                                              </FormattedMessage>
+                             <FormattedMessage id='Half Day morning' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day morning">{message}</option>}
+                              </FormattedMessage>
+                              <FormattedMessage id='Half Day afternoon' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day afternoon">{message}</option>}
+                              </FormattedMessage>
                                           
                            </select>
                           {this.selectRH()}
@@ -300,7 +316,14 @@ ExeptionnelRequestService.getType().then(res=>{
                                         </Col>
                         <Col className="pr-1" md="12">
                           <Form.Group  style={{display:"inline-block",paddingTop: "10px",width:"75%"}}>
-                                <Select onChange={this.changeSelectType} options={options} />   
+                            <Row>
+                              <Col md="9">
+                              <Select onChange={this.changeSelectType} options={options} styles={{display:"inline-block"}}/> 
+                              </Col>
+                              <Col md="2">
+                                {this.addRH()}
+                              </Col>
+                            </Row>
                           </Form.Group>
                         </Col>
                     <Row>
@@ -320,7 +343,7 @@ ExeptionnelRequestService.getType().then(res=>{
             </Col>
 
 
-            <Col md="5">
+            <Col lg="12" xl="5">
               
               <Calendar state={this.state.calendarState} ref= {this.childRef } onChange={this.calendarChange}/>
               

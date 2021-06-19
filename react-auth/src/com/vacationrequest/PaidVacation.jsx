@@ -220,7 +220,7 @@ class PaidVacation extends Component {
       }
       let balance =(this.state.annual+this.calculeCumulativeBalance())
       let differenceBtwnDate= this.state.list[0][0].getMonth()-(new Date()).getMonth()
-      if(balance+differenceBtwnDate>this.calculeBalance()+this.state.allrequest){
+      if(balance+differenceBtwnDate>=this.calculeBalance()+this.state.allrequest){
         PaidRequestService.createPaidRequest(Request).then(res=>{
           this.props.history.push('/admin/Home');
          
@@ -257,7 +257,7 @@ class PaidVacation extends Component {
           
         <Container fluid>
             <Row>
-              <Col md="6">
+              <Col lg="12" xl="6">
                 <Card>
                   <Card.Header>
                     <Card.Title as="h4">{translate('Paid vacation')}</Card.Title>
@@ -272,8 +272,11 @@ class PaidVacation extends Component {
                                             <FormattedMessage id='Full Day' key={'op' + '-' + 'b'}>
                                               {(message) => <option defaultValue value="Full Day">{message}</option>}
                                             </FormattedMessage>
-                                            <FormattedMessage id='Half Day' key={'op' + '-' + 'a'}>
-                                              {(message) => <option value="Half Day">{message}</option>}
+                                            <FormattedMessage id='Half Day morning' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day morning">{message}</option>}
+                                            </FormattedMessage>
+                                            <FormattedMessage id='Half Day afternoon' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day afternoon">{message}</option>}
                                             </FormattedMessage>
                                             
                              </select>
@@ -325,7 +328,7 @@ class PaidVacation extends Component {
               </Col>
 
 
-              <Col md="5">
+              <Col xl="5" lg="12">
                 
                 <Calendar state={this.state.calendarState} ref= {this.childRef } onChange={this.calendarChange}/>
                 

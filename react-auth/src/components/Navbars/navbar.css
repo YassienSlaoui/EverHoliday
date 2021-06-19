@@ -4,3 +4,6 @@
 .icon {
   color: "#93A603";
 }
+.dropdown-menu{
+  margin-left:"-25px" !important
+}

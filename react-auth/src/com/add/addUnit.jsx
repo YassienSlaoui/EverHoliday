@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import UnitService from '../../servicees/UnitService';
 import collaboratorService from '../../servicees/CollaborateurServices';
 import Select from 'react-select';
-import {FormattedMessage} from "react-intl";
-import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 class addUnit extends Component {
     constructor(props) {
@@ -42,13 +40,12 @@ class addUnit extends Component {
         }else{
             UnitService. getunitById(this.state.id).then( (res) =>{
                 let user = res.data;
-                console.log(this.state.options)
                 this.setState({
                     id:user.id,
                     name:user.name,
                     validator:user.validator,
                     collaborators: user.collaborators1,
-                    value :this.state.options.filter(option => option.label === user.validator.firstname +" "+user.validator.lastname),
+                    value :this.state.options.filter(option => option.value.id === user.validator.id)[0],
                     value1:this.state.options.filter(option=>{
                         for (const element of user.collaborators1){
                             if(element.id===option.value.id)
@@ -68,7 +65,7 @@ class addUnit extends Component {
             e.preventDefault();
             let holiday = {
                     name:this.state.name,
-                    validator:this.state.value[0].value,
+                    validator:this.state.value.value,
                     collaborators:this.state.value1.map(user => user.value)
             };     
             console.log(holiday)
@@ -96,7 +93,7 @@ class addUnit extends Component {
         this.props.history.push('/admin/units/list');
     }
     render() {
-        console.log(this.state.value.length)
+        
         return (
             <div>
                 <br></br>

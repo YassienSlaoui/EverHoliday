@@ -44,7 +44,6 @@ class Historic extends Component {
     });
     }
     eventStyleGetter=(event, start, end, isSelected) =>{
-      console.log(event);
       if(event.type=="paid"){
         var backgroundColor = '#3174ad' ;
       }else if(event.type=="Unpaid"){
@@ -105,17 +104,22 @@ class Historic extends Component {
     const event4= this.state.RecoveryRequest.filter(val =>{for (const element of this.state.collaborator) {
       if(val.statut==="accepted" && element.id===val.collaborator.id )
     {return val}}}).map((paidRequest)=>{
+      
       return {
         id: paidRequest.id,
         title: paidRequest.collaborator.firstname+" "+paidRequest.collaborator.lastname,
-        start: new Date(paidRequest.datesRequest[0].startDate),
-        end: new Date(paidRequest.datesRequest[0].endDate),
-        allDay: true,
+        start: new Date(new Date(paidRequest.datesRequest[0].startDate).getTime()+ ((paidRequest.startHour-1)*60*60*1000)),
+        end: new Date(new Date(paidRequest.datesRequest[0].endDate).getTime()+ ((paidRequest.endHour-1)*60*60*1000)),
+        allDay: false,
         type:"recovery"
       }
     })
+   
     const events = event1.concat(event2,event3,event4)
-    
+    const formats = {
+      eventTimeRangeFormat: range =>
+        `${format(range.start, 'HH:mm')} – ${format(range.end, 'HH:mm')}`,
+    };
     return (
         <Calendar 
         localizer={localizer}
@@ -125,6 +129,7 @@ class Historic extends Component {
         views={['month', 'day', 'week']}
         style={{height: 450}}
         eventPropGetter={this.eventStyleGetter}
+        
         />
         )}
 }

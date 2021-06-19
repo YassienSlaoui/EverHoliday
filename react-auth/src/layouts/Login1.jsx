@@ -77,7 +77,7 @@ import { withRouter } from 'react-router-dom';
                     <div className="">
                     <div className="card  ">
                         <div className="card-header ">
-                            <img src={Logo} alt="Logo" />
+                            <img src={Logo} alt="Logo" style={{width:"50%"}}/>
                         </div>
                         <div className="card-body">
                                 <div className="form-group">

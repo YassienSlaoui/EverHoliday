@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Collaborator;
-import com.example.demo.model.PaidRequest;
 import com.example.demo.model.RecoveryRequest;
-import com.example.demo.service.PaidRequestService;
 import com.example.demo.service.RecoveryRequestService;
 
 @CrossOrigin(origins = "http://localhost:3000")
