@@ -28,9 +28,14 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import Login from 'layouts/Login1';
 import ForgetPassword from 'layouts/ForgetPassword'
+import CodePin from 'layouts/forgotpassword/CodePin'
+import NewPassword from 'layouts/forgotpassword/NewPassword'
 import AdminLayout from "layouts/Admin.js";
 
 import { I18nPropvider, LOCALES } from '../src/i18nProvider';
+import { Provider } from "react-redux";
+import configureStore from "./store";
+
 
 const getlangue = () =>{
   if (sessionStorage.getItem('lang')==="En"){
@@ -44,6 +49,7 @@ const getlangue = () =>{
   }
 }
 ReactDOM.render(
+  <Provider store={configureStore()}>
   <I18nPropvider locale={getlangue()}>
   <BrowserRouter>
     <Switch>
@@ -51,10 +57,11 @@ ReactDOM.render(
      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
      <Route exact path="/"><Login/></Route>
      <Route exact path="/hy">< ForgetPassword/></Route>
-     
+     <Route exact path="/codepin">< CodePin/></Route>
+     <Route exact path="/newpassword">< NewPassword/></Route>
     </Switch>
   </BrowserRouter>
   </I18nPropvider>
-  ,
+  </Provider>,
   document.getElementById("root")
 );
