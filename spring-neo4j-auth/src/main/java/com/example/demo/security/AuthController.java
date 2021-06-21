@@ -19,7 +19,7 @@ import com.example.demo.service.OrganizationalUintService;
 @Component
 @RestController
 @RequestMapping(value = "/rest/neo4j/auth")
-public class AuthController {
+public class AuthController{
 
     @Autowired
     private TokenUtil tokenUtil;

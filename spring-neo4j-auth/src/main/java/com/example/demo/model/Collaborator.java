@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Node
 public class Collaborator implements UserDetails{
+	
 	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue
 	private Long id;
@@ -39,6 +40,7 @@ public class Collaborator implements UserDetails{
     private LocalDate startDate;
     private LocalDate leaveDate;
     
+    
     private String resetPasswordToken;
     private String role;
     @Relationship(type = "a", direction = Relationship.Direction.INCOMING)
@@ -50,8 +52,10 @@ public class Collaborator implements UserDetails{
 	private Collaborator sup;
 	@Relationship(type = "assignment", direction = Relationship.Direction.INCOMING)
 	private ArrayList<Collaborator> Collaborators;
+	private Long codeValidation;
 	public Collaborator( Integer age, String firstname, String lastname, String adresse,
-			String username, String country, String password,int experience,String email,LocalDate startDate,LocalDate birthday) {
+			String username, String country, String password,int experience,String email,
+			LocalDate startDate,LocalDate birthday) {
 		this.age = age;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -63,6 +67,7 @@ public class Collaborator implements UserDetails{
 		this.email=email;
 		this.startDate=startDate;
 		this.birthday=birthday;
+		
 	}
 	public Collaborator() {}
 	public LocalDate getStartDate() {
@@ -251,7 +256,12 @@ public class Collaborator implements UserDetails{
 		this.birthday = birthday;
 	}
 	
-	
+	public Long getCodeValidation() {
+		return codeValidation;
+	}
+	public void setCodeValidation(Long codeValidation) {
+		this.codeValidation = codeValidation;
+	}
 
 
 }

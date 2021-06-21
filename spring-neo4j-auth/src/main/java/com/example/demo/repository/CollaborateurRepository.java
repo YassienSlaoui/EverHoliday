@@ -11,8 +11,13 @@ public interface CollaborateurRepository extends Neo4jRepository<Collaborator, L
 	void makeRelation();*/
 	@Query("MATCH(n:Collaborator {username:$username}) RETURN n ")
 	Collaborator logins(@Param("username")String username);
+	
 	@Query("MATCH(n:Collaborator {email:$email}) RETURN n ")
     public Collaborator findByEmail(@Param("email")String email); 
+	
+	@Query("MATCH(n:Collaborator {CodeValidation:$CodeValidation}) RETURN n ")
+    public Collaborator findByCodeValidation(String CodeValidation);
+	
 	@Query("MATCH(n:Collaborator {reset_token:$reset_token}) RETURN n ")
     public Collaborator findByResetPasswordToken(String token);
 	
