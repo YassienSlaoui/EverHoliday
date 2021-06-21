@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import UnitService from '../../servicees/UnitService';
 import collaboratorService from '../../servicees/CollaborateurServices';
 import Select from 'react-select';
-import {FormattedMessage} from "react-intl";
-import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 class addUnit extends Component {
     constructor(props) {
@@ -14,31 +12,29 @@ class addUnit extends Component {
             id: this.props.match.params.id,
             name: '',
             validator: '',
-            collaborators:'',
-            selected:'',
-            collaborator: []
+            collaborators:[],
+            selected:[],
+            options:[],
+            value5: [],
+            value:[],
+            value1:[],
+            collaborator: [],
         }
-        
         this.changenameHandler = this.changenameHandler.bind(this);
         this.changevalidatorHandler = this.changevalidatorHandler.bind(this);
         this.changecollaboratorHandler = this.changecollaboratorHandler.bind(this);
         this.saveOrUpdateHoliday = this.saveOrUpdateHoliday.bind(this);
     }
-
-    // step 3
-    
     componentDidMount(){
-        // step 4
-        
         collaboratorService.getUser().then((res) => {
-            this.setState({ collaborator: res.data});
+            this.setState({ collaborator: res.data,
+                options : res.data.map(
+                    user => {
+                        return { value: user, label: user.firstname+" "+user.lastname };
+                    }
+            )
         });
-        
-        const options = [
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' }
-        ];
+    })
         if(this.state.id === 'add'){
             return
         }else{
@@ -48,27 +44,32 @@ class addUnit extends Component {
                     id:user.id,
                     name:user.name,
                     validator:user.validator,
-                    collaborators:user.collaborators,
-                   // selected:{value:user.validator,label:user.validator.firstname +" "+user.validator.lastname}
+                    collaborators: user.collaborators1,
+                    value :this.state.options.filter(option => option.value.id === user.validator.id)[0],
+                    value1:this.state.options.filter(option=>{
+                        for (const element of user.collaborators1){
+                            if(element.id===option.value.id)
+                            return option
+                        }     
+                    })
                 });
+               
             });
         }
     }
         saveOrUpdateHoliday = (e) => {
             
-            if(this.state.collaborators[0].value===undefined||this.state.validator.value===undefined){
+            if(this.state.value1.length==0||this.state.value.length==0){
                 alert('-----------------')
             }else{
-
-            
             e.preventDefault();
             let holiday = {
                     name:this.state.name,
-                    validator:this.state.validator.value,
-                    collaborators:this.state.collaborators.map(user => user.value)
+                    validator:this.state.value.value,
+                    collaborators:this.state.value1.map(user => user.value)
             };     
             console.log(holiday)
-                if(this.state.id === "add"){
+              if(this.state.id === "add"){
                     UnitService.createunit(holiday).then(res =>{
                         this.props.history.push('/admin/units/list');
                     });
@@ -76,43 +77,23 @@ class addUnit extends Component {
                     UnitService.updateunit(holiday, this.state.id).then( res => {
                         this.props.history.push('/admin/units/list');
                     });
-                }   }
+                }  }
         }
-    
-    
     changenameHandler= (event) => {
         this.setState({name: event.target.value});
     }
-
     changevalidatorHandler= (validator) => {
-        this.setState({validator});
+        this.setState({value:validator});
         
     }
-
-    changecollaboratorHandler= (collaborators) => {
-        this.setState({collaborators});
-        
-        
+    changecollaboratorHandler= (collaborators1) => {
+        this.setState({value1:collaborators1});
     }
-
     cancel(){
         this.props.history.push('/admin/units/list');
     }
-
-    
     render() {
         
-        /*let options = this.state.collaborator.map(
-            user => {
-                console.log(user)
-                return { value: user, label: user.firstname };
-            }
-            value={options.filter(option => option.label === this.state.validator.firstname +" "+this.state.validator.lastname)}
-          )*/
-          
-         let options = this.state.collaborator.map(
-            user => 
-           {return { value: user, label: user.firstname +" "+user.lastname }; })
         return (
             <div>
                 <br></br>
@@ -129,10 +110,9 @@ class addUnit extends Component {
                                         <div className = "form-group">
                                             <label> {translate('validator')} </label>
                                             <Select 
-                                                    
-                                                 onChange={this.changevalidatorHandler}
-                                              
-                                                 options={options}
+                                                value={this.state.value}
+                                                 onChange={change=>this.changevalidatorHandler(change)}
+                                                 options={this.state.options}
                                                  />
                                                 
                                         </div>
@@ -141,12 +121,14 @@ class addUnit extends Component {
                                            
                                                  <Select 
                                                  isMulti
-                                                 onChange={this.changecollaboratorHandler}
-                                                 options={options}
+                                                 onChange={change=>this.changecollaboratorHandler(change)}
+                                                value={this.state.value1}
+
+                                                 options={this.state.options}
                                                  />
                                             
                                         </div>
-
+                                        
                                         <button className="btn btn-success" onClick={this.saveOrUpdateHoliday}>{translate('Save')}</button>
                                         <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>{translate('Cancel')}</button>
                                     </form>

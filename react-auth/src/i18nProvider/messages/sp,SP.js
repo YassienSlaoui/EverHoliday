@@ -48,9 +48,12 @@ export default {
     'Paid vacation':'Vacaciones pagadas',
     'Full Day':'Día completo',
     'Half Day':'Medio día',
+    "Half Day morning":"Medio día Mañana",
+    "Half Day afternoon":"Medio día tarde",
     'Add':'Añadir',
     'Total days':'total de días',
     'Select the type of vacation':'Seleccione el tipo de licencia',
+    "type of vacation":"tipo de licencia",
     'Sick leave':'Licencia por enfermedad',
     'Birth leave':'Licencia por nacimiento',
     'Marriage leave':'licencia por matrimonio',
@@ -87,7 +90,8 @@ export default {
     'Years':'Años',
     'Home':"bienvenida",
     "Vacation Request":"Solicitud  vacaciones",
-    "Type of vacation":"tipo de licencia"
+    "Type of vacation":"tipo de licencia",
+    "Hour":"Hour"
 
   },
 };

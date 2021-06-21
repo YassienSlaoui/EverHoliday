@@ -45,9 +45,12 @@ export default {
     'Paid vacation':'Congés payés',
     'Full Day':'Journée complète',
     'Half Day':'demi-journée',
+    "Half Day morning":"demi-journée matin",
+    "Half Day afternoon":"demi-journée aprés midi",
     'Add':'Ajouter',
     'Total days':'Nombre total de jours',
     'Select the type of vacation':'Sélectionnez le type de congé',
+    "type of vacation":"type de congé",
     'Sick leave':'Congé de maladie',
     'Birth leave':'Congé de naissance',
     'Marriage leave':'Congé de mariage',
@@ -88,6 +91,7 @@ export default {
     "Vacation Request":"demande de congé",
     "Experience":"Experience",
     "Type of vacation":"type de congé",
-    "Add":"Ajouter"
+    "Add":"Ajouter",
+    "Hour":"Hour"
   },
 };

@@ -5,6 +5,7 @@ import Calendar from '../calendor/calendor4'
 import dateFormat from "dateformat";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import '../css/Request.css';
 import Select from 'react-select';
 import {
@@ -37,7 +38,10 @@ class ExceptionVacation extends Component {
           UnpaidRequest:[],
           SelectTypeVacacion:"",
           duration:0,
-          option:[]
+          option:[],
+          collaborators:[],
+          options:[],
+          users:""
       }
       this.calendarChange=this.calendarChange.bind(this)
       this.childRef= React.createRef();
@@ -46,12 +50,14 @@ class ExceptionVacation extends Component {
       this.saveRequest=this.saveRequest.bind(this)
       this.descrptionChange=this.descrptionChange.bind(this);
       this.changeSelect=this.changeSelect.bind(this);
-      this.calculeBalance=this.calculeBalance.bind(this)
+      this.calculeBalance=this.calculeBalance.bind(this);
+      this.selectRH=this.selectRH.bind(this)
+      this.addRH=this.addRH.bind(this)
 
   }
     add(){
       const element = this.childRef.current;
-      b=new Date(element.state.startDate.getTime());
+      const b=new Date(element.state.startDate.getTime());
       b.setDate(element.state.startDate.getDate()+this.state.duration-1)
       if(element.state.startDate!=null ){
         if(this.state.duration!=0){
@@ -121,7 +127,7 @@ dates(){
 calculeBalance(){
   let a = 0 ;
   if(this.state.list!=[]){
-    if(this.state.selectedType==="FullDay"){
+    if(this.state.selectedType==="Full Day"){
   this.state.list.map(lists=>
     a=a+lists[2]
     
@@ -137,22 +143,62 @@ calculeBalance(){
 }
 saveRequest= (e) =>{
   e.preventDefault();
-  let Request = {
-     collaborator : this.state.user,
-     description : this.state.description,
-     totalDays :this.calculeBalance(),
-     datesRequest:this.state.list1,
-     requestDate:dateFormat((new Date()).toLocaleDateString(), "yyyy-mm-dd"),
-     statut: "processed",
-     typeOfTime:this.state.selectedType,
-     vacacioType:this.state.SelectTypeVacacion.value
-  }
-  
-  ExeptionnelRequestService.creatExeptionnelRequest(Request).then(res=>{
-      this.props.history.push('/admin/Home');
+  if(this.state.list1.length!=0){
+    if(sessionStorage.getItem('role')!="RH"){
+      let Request = {
+        collaborator : this.state.user,
+        description : this.state.description,
+        totalDays :this.calculeBalance(),
+        datesRequest:this.state.list1,
+        requestDate:dateFormat((new Date()).toLocaleDateString(), "yyyy-mm-dd"),
+        statut: "Pending",
+        typeOfTime:this.state.selectedType,
+        vacacioType:this.state.SelectTypeVacacion.value
+     }
+     console.log(Request)
      
-    })
-
+     ExeptionnelRequestService.creatExeptionnelRequest(Request).then(res=>{
+         this.props.history.push('/admin/Home');
+        
+       })
+    }else if(sessionStorage.getItem('role')==="RH" && this.state.users===""){
+      let Request = {
+        collaborator : this.state.user,
+        description : this.state.description,
+        totalDays :this.calculeBalance(),
+        datesRequest:this.state.list1,
+        requestDate:dateFormat((new Date()).toLocaleDateString(), "yyyy-mm-dd"),
+        statut: "accepted",
+        typeOfTime:this.state.selectedType,
+        vacacioType:this.state.SelectTypeVacacion.value
+     }
+     
+     ExeptionnelRequestService.creatExeptionnelRequest(Request).then(res=>{
+         this.props.history.push('/admin/Home');
+        
+       })
+    }else if(sessionStorage.getItem('role')==="RH" && this.state.users!=""){
+      let Request = {
+        collaborator : this.state.users.value,
+        description : this.state.description,
+        totalDays :this.calculeBalance(),
+        datesRequest:this.state.list1,
+        requestDate:dateFormat((new Date()).toLocaleDateString(), "yyyy-mm-dd"),
+        statut: "accepted",
+        typeOfTime:this.state.selectedType,
+        vacacioType:this.state.SelectTypeVacacion.value
+     }
+     console.log(Request)
+     
+     ExeptionnelRequestService.creatExeptionnelRequest(Request).then(res=>{
+         this.props.history.push('/admin/Home');
+        
+       })
+    }
+  
+  }else{
+    alert('aa')
+  }
   
 }
 descrptionChange = (event) =>{
@@ -165,22 +211,58 @@ changeSelectType= (SelectTypeVacacion) =>{
   this.setState({SelectTypeVacacion})
   this.setState({duration:SelectTypeVacacion.value.duration})
 }  
+selectRH(){
+  if(sessionStorage.getItem('role')==="RH"){
+    return(
+      <div className = "form-group">
+      <label> {translate('Collaborator')} </label>
+      <Select 
+           onChange={change=>this.changevalidatorHandler(change)}
+           options={this.state.options}
+           />
+          
+      </div>
+    )
+  }
+  
+}
+addRH(){
+  if(sessionStorage.getItem('role')==="RH"){
+    return(
+      <Button className="btn btn-success" onClick={this.go.bind(this)} style={{marginLeft: "10px",float:"right"}}> +</Button>
+    )
+  }
+  
+}
+changevalidatorHandler= (users) => {
+  this.setState({users:users});
+  
+}
+go(){
+  this.props.history.push('/admin/vacationrequest/Type');
+}
 componentDidMount(){
   collaboratorService.getUserById(sessionStorage.getItem("user")).then( (res) =>{
-    
     let user = res.data;
     this.setState({
-      
       user:user,
-       
-    })
+    })})
+  collaboratorService.getUser().then((res)=>{
+      this.setState({ collaborators: res.data,
+        options : res.data.map(
+            user => {
+                return { value: user, label: user.firstname+" "+user.lastname };
+            }
+    )
    
+});
 });
 ExeptionnelRequestService.getType().then(res=>{
   this.setState({option:res.data})
 })
 
 }
+
 
     render() {console.log(this.state.duration)
      let options =this.state.option.map(
@@ -190,7 +272,7 @@ ExeptionnelRequestService.getType().then(res=>{
           
           <Container fluid>
           <Row>
-            <Col md="6">
+            <Col lg="12" xl="6">
               <Card>
                 <Card.Header>
                   <Card.Title as="h4">{translate('Exceptional vacation')}</Card.Title>
@@ -201,10 +283,18 @@ ExeptionnelRequestService.getType().then(res=>{
                       <Col className="pr-4" md="12">
                         <Form.Group style={{display:"inline-block",paddingTop: "10px"}}>
                            <select className="custom-select" onChange={this.changeSelect} style={{width:"200px"}}>
-                                          <option defaultValue value="FullDay">Full Day</option>
-                                          <option value="HalfDay">Half Day</option>
+                           <FormattedMessage id='Full Day' key={'op' + '-' + 'b'}>
+                                              {(message) => <option defaultValue value="Full Day">{message}</option>}
+                                              </FormattedMessage>
+                             <FormattedMessage id='Half Day morning' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day morning">{message}</option>}
+                              </FormattedMessage>
+                              <FormattedMessage id='Half Day afternoon' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day afternoon">{message}</option>}
+                              </FormattedMessage>
                                           
                            </select>
+                          {this.selectRH()}
                         </Form.Group>
                         <Button className="btn btn-success" onClick={this.add.bind(this)} style={{marginLeft: "10px",float:"right"}}> {translate('Add')}</Button>
                       </Col>
@@ -226,7 +316,14 @@ ExeptionnelRequestService.getType().then(res=>{
                                         </Col>
                         <Col className="pr-1" md="12">
                           <Form.Group  style={{display:"inline-block",paddingTop: "10px",width:"75%"}}>
-                                <Select onChange={this.changeSelectType} options={options} />   
+                            <Row>
+                              <Col md="9">
+                              <Select onChange={this.changeSelectType} options={options} styles={{display:"inline-block"}}/> 
+                              </Col>
+                              <Col md="2">
+                                {this.addRH()}
+                              </Col>
+                            </Row>
                           </Form.Group>
                         </Col>
                     <Row>
@@ -246,7 +343,7 @@ ExeptionnelRequestService.getType().then(res=>{
             </Col>
 
 
-            <Col md="5">
+            <Col lg="12" xl="5">
               
               <Calendar state={this.state.calendarState} ref= {this.childRef } onChange={this.calendarChange}/>
               

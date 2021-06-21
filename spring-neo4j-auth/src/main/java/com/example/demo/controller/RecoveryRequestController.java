@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Collaborator;
-import com.example.demo.model.PaidRequest;
 import com.example.demo.model.RecoveryRequest;
-import com.example.demo.service.PaidRequestService;
 import com.example.demo.service.RecoveryRequestService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -68,8 +66,8 @@ public class RecoveryRequestController {
 		return RecoveryRequestService.deletePaidRequest(id);
 	}
 	@PutMapping("/RecoveryRequest/statut/{id}")
-	public ResponseEntity<RecoveryRequest> updateStatut(@PathVariable Long id, @RequestBody PaidRequest user){
-		
+	public ResponseEntity<RecoveryRequest> updateStatut(@PathVariable Long id, @RequestBody RecoveryRequest user){
+		RecoveryRequestService.updatejustif(id, user.getJustification());
 		return RecoveryRequestService.updateStatut(id,user.getStatut());
 	}
 }

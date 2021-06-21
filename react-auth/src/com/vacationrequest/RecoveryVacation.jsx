@@ -5,7 +5,10 @@ import RecoveryRequestService from '../../servicees/RecoveryRequestService';
 import Calendar from '../calendor/calendar6';
 import dateFormat from "dateformat";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import translate from "../../i18nProvider/translate"
+import Select from 'react-select';
+
 import {
     Button,
     Card,
@@ -32,7 +35,9 @@ class RecoveryVacation extends Component {
             description:"",
             soldes:"",
             selectedType:"FullDay",
-            RecoveryRequest:[]
+            RecoveryRequest:[],
+            startHour:"",
+            endHour:""
         }
         this.calendarChange=this.calendarChange.bind(this)
         this.childRef= React.createRef();
@@ -42,7 +47,9 @@ class RecoveryVacation extends Component {
         this.descrptionChange=this.descrptionChange.bind(this);
         this.changeSelect=this.changeSelect.bind(this);
         this.calculeBalance=this.calculeBalance.bind(this)
-
+        this.changeStartHourHandler=this.changeStartHourHandler.bind(this);
+        this.changeEndHoursHandler=this.changeEndHoursHandler.bind(this);
+        this.hourselect=this.hourselect.bind(this)
     }
 
     // step 3
@@ -119,7 +126,7 @@ dates(){
 calculeBalance(){
   let a = 0 ;
   if(this.state.list!=[]){
-    if(this.state.selectedType==="FullDay"){
+    if(this.state.selectedType==="Full Day"){
   this.state.list.map(lists=>
     a=a+lists[2]
     
@@ -135,29 +142,37 @@ calculeBalance(){
 }
 saveRequest= (e) =>{
   e.preventDefault();
+  if(this.state.list1.length!=0){
   let Request = {
      collaborator : this.state.user,
      description : this.state.description,
      totalDays :this.calculeBalance(),
      datesRequest:this.state.list1,
      requestDate:dateFormat((new Date()), "yyyy-mm-dd"),
-     statut: "processed",
-     typeOfTime:this.state.selectedType
+     statut: "Pending",
+     typeOfTime:this.state.selectedType,
+     startHour:this.state.startHour,
+     endHour:this.state.endHour
   }
-  
   RecoveryRequestService.createRecoveryRequest(Request).then(res=>{
       this.props.history.push('/admin/Home');
-     
     })
-
-  
+  }else{
+    alert('not')
+  }
 }
 descrptionChange = (event) =>{
   this.setState({description: event.target.value})
 }
 changeSelect= (event) =>{
   this.setState({selectedType: event.target.value})
-}    
+} 
+changeStartHourHandler= (start) => {
+  this.setState({startHour:start.value});
+}   
+changeEndHoursHandler= (end) => {
+  this.setState({endHour:end.value});
+}  
 componentDidMount(){
   collaboratorService.getUserById(sessionStorage.getItem("user")).then( (res) =>{
     
@@ -171,9 +186,57 @@ componentDidMount(){
 });
 
 }
-    
+hourselect(){
+  const options = [
+    {value:1, label:"1 am"},
+    {value:2, label:"2 am"},
+    {value:3, label:"3 am"},
+    {value:4, label:"4 am"},
+    {value:5, label:"5 am"},
+    {value:6, label:"6 am"},
+    {value:7, label:"7 am"},
+    {value:8, label:"8 am"},
+    {value:9, label:"9 am"},
+    {value:10, label:"10 am"},
+    {value:11, label:"11 am"},
+    {value:12, label:"12 am"},
+    {value:13, label:"1 pm"},
+    {value:14, label:"2 pm"},
+    {value:15, label:"3 pm"},
+    {value:16, label:"4 pm"},
+    {value:17, label:"5 pm"},
+    {value:18, label:"6 pm"},
+    {value:19, label:"7 pm"},
+    {value:20, label:"8 pm"},
+    {value:21, label:"9 pm"},
+    {value:22, label:"10 pm"},
+    {value:23, label:"11 pm"},
+    {value:24, label:"12 pm"},
+]
+  if(this.state.selectedType==="Hour")
+  return(
+    <div>
+    <Form.Group style={{display:"inline-block",paddingTop: "10px",width:'20%',paddingRight:'10px'}}>
+    <Select 
+    onChange={change=>this.changeStartHourHandler(change)}
+     options={options}
+      />
+       
+    </Form.Group>
+    <Form.Group style={{display:"inline-block",paddingTop: "10px" ,width:'20%',paddingRight:'10px'}}>
+    <Select 
+    onChange={change=>this.changeEndHoursHandler(change)}
+     options={options}
+      />
+       
+    </Form.Group></div>
+  )
+}
     
     render() {
+      console.log(this.state.startHour)
+      console.log(this.state.endHour)
+
         return (
           
           <Container fluid>
@@ -187,13 +250,26 @@ componentDidMount(){
                   <Form>
                     <Row>
                       <Col className="pr-4" md="12">
-                        <Form.Group style={{display:"inline-block",paddingTop: "10px"}}>
+                        <Form.Group style={{display:"inline-block",paddingTop: "10px",paddingRight:'10px'}}>
                            <select className="custom-select" onChange={this.changeSelect} style={{width:"200px"}}>
-                                          <option defaultValue value="FullDay">Full-Day</option>
-                                          <option value="HalfDay">Half-Day</option>
+                                            <FormattedMessage id='Full Day' key={'op' + '-' + 'b'}>
+                                              {(message) => <option defaultValue value="Full Day">{message}</option>}
+                                            </FormattedMessage>
+                                            <FormattedMessage id='Half Day morning' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day morning">{message}</option>}
+                                            </FormattedMessage>
+                                            <FormattedMessage id='Half Day afternoon' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day afternoon">{message}</option>}
+                                            </FormattedMessage>
+                                            <FormattedMessage id='Hour' key={'op' + '-' + 'c'}>
+                                              {(message) => <option value="Hour">{message}</option>}
+                                            </FormattedMessage>
                                           
                            </select>
+                           
                         </Form.Group>
+                        {this.hourselect()}
+                                        
                         <Button className="btn btn-success" onClick={this.add.bind(this)} style={{marginLeft: "10px",float:"right"}}> {translate('Add')}</Button>
                       </Col>
                       <Col>

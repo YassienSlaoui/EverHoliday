@@ -4,12 +4,9 @@ import SupervisorService from '../servicees/supervisorServices'
 import { I18nPropvider, LOCALES } from '../i18nProvider';
 import translate from "../i18nProvider/translate"
 import {
-    Badge,
     Button,
     Card,
     Form,
-    Navbar,
-    Nav,
     Container,
     Row,
     Col,
@@ -200,7 +197,7 @@ class Profile extends Component {
               <Col md="4">
                 <Card className="card-user">
                   <div className="card-image">
-                    <img alt="..." src={ require("assets/img/photo-1431578500526-4d9613015464.jpeg") .default } ></img>
+                    
                   </div>
                   <Card.Body>
                     <div className="author">

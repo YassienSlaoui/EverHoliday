@@ -93,7 +93,7 @@ package com.example.demo.controller;
 		}
 		@PutMapping("/ExeptionnelRequest/statut/{id}")
 		public ResponseEntity<ExeptionnelRequest> updateStatut(@PathVariable Long id, @RequestBody ExeptionnelRequest user){
-			
+			ExeptionnelRequestService.updatejustif(id, user.getJustification());
 			return ExeptionnelRequestService.updateStatut(id,user.getStatut());
 		}
 	

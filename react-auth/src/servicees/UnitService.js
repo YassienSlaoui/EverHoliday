@@ -23,6 +23,9 @@ class UnitService {
     collaborators(user){
         return axios.get(User_API_BASE_URL + '/solde/' +user);
     }
+    team(user){
+        return axios.get(User_API_BASE_URL + '/team/' +user);
+    }
 }
 
 export default new UnitService()

@@ -12,8 +12,8 @@ public class RecoveryRequest extends VacacionRequest{
 private Long id;
 	private String description;
 	private int totalDays;
-
-
+	private int startHour;
+	private int endHour;
 public RecoveryRequest(LocalDate requestDate, String statut, String typeOfTime, List<DatesRequest> datesRequest,
 			Collaborator collaborator, String description, int totalDays) {
 		super(requestDate, statut, typeOfTime, datesRequest, collaborator);
@@ -46,6 +46,35 @@ public int getTotalDays() {
 
 public void setTotalDays(int totalDays) {
 	this.totalDays = totalDays;
+}
+private String justification ;
+public String getJustification() {
+	return justification;
+}
+
+public void setJustification(String justification) {
+	this.justification = justification;
+}
+
+
+public int getStartHour() {
+	return startHour;
+}
+
+
+public void setStartHour(int startHour) {
+	this.startHour = startHour;
+}
+
+
+public int getEndHour() {
+	return endHour;
+}
+
+
+
+public void setEndHour(int endHour) {
+	this.endHour = endHour;
 }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.Collaborator;
 import com.example.demo.model.ExeptionnelRequest;
 import com.example.demo.model.TypeOfVaction;
+import com.example.demo.model.UnpaidRequest;
 import com.example.demo.repository.ExeptionnelRequestRepository;
 import com.example.demo.repository.TypeOfVacationRepository;
 @Service
@@ -75,7 +76,7 @@ public class ExeptionnelRequestService {
 		ExeptionnelRequest user = ExeptionnelRequestRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(" not exist  :" + id));
 		
-		ExeptionnelRequestRepository.delete(user);
+		ExeptionnelRequestRepository.deleteAll(id);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
@@ -88,5 +89,14 @@ public class ExeptionnelRequestService {
 		
 		ExeptionnelRequest updatedUser = ExeptionnelRequestRepository.save(b);
 		return ResponseEntity.ok(updatedUser);
+	}
+	public void updatejustif( Long id,  String a){
+		ExeptionnelRequest b = ExeptionnelRequestRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
+		
+		b.setJustification(a);
+		
+		ExeptionnelRequestRepository.save(b);
+	
 	}
 }

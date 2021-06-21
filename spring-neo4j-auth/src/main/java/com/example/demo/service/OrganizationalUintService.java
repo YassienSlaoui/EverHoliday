@@ -60,6 +60,23 @@ public class OrganizationalUintService {
 		}
 		return x ;
 	}
+	public boolean checkRH(Collaborator collaborator){
+		boolean x = false; 
+	
+		for (OrganizationalUnit unit : getAll()) {
+			
+			if (unit.getName().equals("RH")) {
+				
+				for(Collaborator col : unit.getCollaborators1()) {
+					if(col.getId()==collaborator.getId()) {
+						x=true;
+					}
+				}
+				
+			}
+		}
+		return x ;
+	}
 	public Collaborator findValidator(Collaborator collaborator){
 		Collaborator x = null; 
 	
@@ -85,6 +102,40 @@ public class OrganizationalUintService {
 				A.addAll(unit.getCollaborators1());
 			}
 		}
+		Collection<Collaborator> newList = new ArrayList<Collaborator>();
+		  
+        
+        for (Collaborator element : A) {
+  
+           
+            if (!newList.contains(element)) {
+  
+                newList.add(element);
+            }
+        }
+  
+        // return the new list
+        return newList;
+	
+	}
+	
+	public Collection<Collaborator> CollaboratorUnit(Long validator){
+		Collection<Collaborator> A=new ArrayList<Collaborator>();
+		
+		for (OrganizationalUnit unit : getAll()) {
+			
+			if (unit.getValidator().getId()==validator) {
+				A.addAll(unit.getCollaborators1());
+				A.add(unit.getValidator());
+			}
+		}
+		for (OrganizationalUnit unit : getAll()) {
+			for (Collaborator collaborator : unit.getCollaborators1()) {
+			if (collaborator.getId()==validator) {
+				A.addAll(unit.getCollaborators1());
+				A.add(unit.getValidator());
+			}
+		}}
 		Collection<Collaborator> newList = new ArrayList<Collaborator>();
 		  
         

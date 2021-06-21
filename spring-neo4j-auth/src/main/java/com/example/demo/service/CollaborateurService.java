@@ -45,10 +45,8 @@ public boolean findByUserName(String username) {
 
 public boolean findByEmails(String email) {
 	System.out.println(CollaborateurRepository.findByEmail(email));
-	//System.out.println(email);
 	email = email.replace("%40","@");
 	email = email.replace("=","");
-	/* System.out.println(email); */
 	if(CollaborateurRepository.findByEmail(email)!=null) {
 		System.out.println(" "+CollaborateurRepository.findByEmail(email).getId());
 		return true;
@@ -100,9 +98,7 @@ public ResponseEntity<Map<String, Boolean>> deleteEmployee(Long id){
 	response.put("deleted", Boolean.TRUE);
 	return ResponseEntity.ok(response);
 }
-/*public void UpdateRealation() {
-	CollaborateurRepository.makeRelation();
-}*/
+
 
 @Bean
 private PasswordEncoder passwordEncoder5() {
@@ -132,15 +128,7 @@ public static int random_int(int Min, int Max)
 }
 
 
-/*public long ResetPassword(String email){
-	
-	int code = random_int(10000, 99999);
-	if(CollaborateurRepository.findByEmail(email)!= null) {
-		EmailService.sendSimpleMessage(email, "saisir le code suivant"+ code ,"pour changer votre mot de pass ");
-	
-	}	
-	return code;
-}*/
+
 	public long CodeValidationAleatoire(){
 		
 		return random_int(10000, 99999);

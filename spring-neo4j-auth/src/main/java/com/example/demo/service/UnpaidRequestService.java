@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.Collaborator;
 import com.example.demo.model.PaidRequest;
 import com.example.demo.model.UnpaidRequest;
-import com.example.demo.repository.PaidRequestRepository;
+import com.example.demo.model.VacacionFactory;
 import com.example.demo.repository.UnpaidRequestRepository;
 
 
@@ -24,7 +24,9 @@ public class UnpaidRequestService {
 		  return UnpaidRequestRepository.findAll();
 	 }		    
 	public UnpaidRequest createPaidRequest( UnpaidRequest A) {
-		return UnpaidRequestRepository.save(A);
+		VacacionFactory a =new VacacionFactory();
+		UnpaidRequest a1 =(UnpaidRequest) a.getProduitA(2, null, A);
+		return UnpaidRequestRepository.save(a1);
 	}
 	public ResponseEntity<UnpaidRequest> getPaidRequestById(Long id) {
 		UnpaidRequest a = UnpaidRequestRepository.findById(id)
@@ -48,7 +50,7 @@ public class UnpaidRequestService {
 		UnpaidRequest user = UnpaidRequestRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(" not exist  :" + id));
 		
-		UnpaidRequestRepository.delete(user);
+		UnpaidRequestRepository.deleteAll(id);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
@@ -62,6 +64,14 @@ public class UnpaidRequestService {
 		UnpaidRequest updatedUser = UnpaidRequestRepository.save(b);
 		return ResponseEntity.ok(updatedUser);
 	}
-
+	public void updatejustif( Long id,  String a){
+		UnpaidRequest b = UnpaidRequestRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
+		
+		b.setJustification(a);
+		
+		UnpaidRequestRepository.save(b);
+	
+	}
 }
 

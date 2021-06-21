@@ -60,7 +60,7 @@ class UnitList extends Component {
                                         unit => 
                                         <tr key = {unit.id }>
                                             <td> {unit.name}</td>
-                                            <td> {unit.validator.firstname +" "+ unit.validator.lastname}</td>
+                                            <td>{unit.validator.firstname +" "+ unit.validator.lastname}</td>
                                             <td>{unit.collaborators.map(user => <p key = {user}>{user}</p>)} </td> 
                                              
                                          <td>

@@ -6,6 +6,7 @@ import Calendar from '../calendor/calendar6';
 import dateFormat from "dateformat";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {
     Button,
     Card,
@@ -119,7 +120,7 @@ dates(){
 calculeBalance(){
   let a = 0 ;
   if(this.state.list!=[]){
-    if(this.state.selectedType==="FullDay"){
+    if(this.state.selectedType==="Full Day"){
   this.state.list.map(lists=>
     a=a+lists[2]
     
@@ -135,13 +136,15 @@ calculeBalance(){
 }
 saveRequest= (e) =>{
   e.preventDefault();
+  if(this.state.list1.length!=0){
+  
   let Request = {
      collaborator : this.state.user,
      description : this.state.description,
      totalDays :this.calculeBalance(),
      datesRequest:this.state.list1,
      requestDate:dateFormat((new Date()), "yyyy-mm-dd"),
-     statut: "processed",
+     statut: "Pending",
      typeOfTime:this.state.selectedType
   }
   
@@ -149,7 +152,9 @@ saveRequest= (e) =>{
       this.props.history.push('/admin/Home');
      
     })
-
+  }else{
+    alert('aa')
+  }
   
 }
 descrptionChange = (event) =>{
@@ -171,14 +176,15 @@ componentDidMount(){
 });
 
 }
-    
+
     
     render() {
+      const { intl } = this.props
         return (
           
           <Container fluid>
           <Row>
-            <Col md="6">
+            <Col lg="12" xl="6">
               <Card>
                 <Card.Header>
                   <Card.Title as="h4">{translate('Unpaid vacation')}</Card.Title>
@@ -189,8 +195,16 @@ componentDidMount(){
                       <Col className="pr-4" md="12">
                         <Form.Group style={{display:"inline-block",paddingTop: "10px"}}>
                            <select className="custom-select" onChange={this.changeSelect} style={{width:"200px"}}>
-                                          <option defaultValue value="FullDay">Full-Day</option>
-                                          <option value="HalfDay">Half-Day</option>
+                           <FormattedMessage id='Full Day' key={'op' + '-' + 'b'}>
+                                              {(message) => <option defaultValue value="Full Day">{message}</option>}
+                                            </FormattedMessage>
+                                            <FormattedMessage id='Half Day morning' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day morning">{message}</option>}
+                              </FormattedMessage>
+                              <FormattedMessage id='Half Day afternoon' key={'op' + '-' + 'a'}>
+                                              {(message) => <option value="Half Day afternoon">{message}</option>}
+                              </FormattedMessage>
+                                            
                                           
                            </select>
                         </Form.Group>
@@ -224,7 +238,7 @@ componentDidMount(){
             </Col>
 
 
-            <Col md="5">
+            <Col lg="12" xl="6">
               
               <Calendar state={this.state.calendarState} ref= {this.childRef } onChange={this.calendarChange}/>
               
@@ -236,4 +250,4 @@ componentDidMount(){
     }
 }
 
-export default UnpaidVacation 
+export default injectIntl(UnpaidVacation) 

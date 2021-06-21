@@ -1,20 +1,4 @@
-/*!
 
-=========================================================
-* Light Bootstrap Dashboard React - v2.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Component } from "react";
 import { useLocation } from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button ,SplitButton,ButtonGroup} from "react-bootstrap";
@@ -22,6 +6,10 @@ import 'components/Navbars/navbar.css'
 import routes from "routes.js";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
+import { BsBellFill } from "react-icons/bs"
+import { IoLanguageSharp } from "react-icons/io5"
+import { FaUser } from "react-icons/fa"
+
 function Header() {
   const location = useLocation();
   const userDetaile = JSON.parse(sessionStorage.getItem('user1')).firstname +" "+ JSON.parse(sessionStorage.getItem('user1')).lastname
@@ -36,15 +24,7 @@ function Header() {
     };
     document.body.appendChild(node);
   };
-  const handleClick = (e) => {
-    if(e){
-    sessionStorage.setItem('user','');
-    sessionStorage.setItem('token','');
-    sessionStorage.setItem('role','');
-    e.preventDefault()
-    }
-    
-  }
+  
   const getBrandText = () => {
     for (let i = 0; i < routes.length; i++) {
       if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
@@ -87,30 +67,41 @@ function Header() {
                 className="m-0"
               >
                 
-                <span className="d-lg-none ml-1">Dashboard</span>
+               
               </Nav.Link>
             </Nav.Item>
      
           </Nav>
+        
           <Nav className="ml-auto" navbar>
- 
-          <Dropdown as={ButtonGroup}>
-            <Button style={{border:"none",fontSize: "17px"}} >{userDetaile}</Button>
-            <Dropdown.Toggle split variant="muted" style={{border:"none",top: "-8px"}}  id="dropdown-custom-2" />
-            <Dropdown.Menu className="super-colors">
-              <Dropdown.Item eventKey="1" href="/admin/password/user">{translate('Profile')}</Dropdown.Item>
-              <Dropdown.Item eventKey="2" href="/admin/password/change">{translate('Change password')}</Dropdown.Item>
+         <Dropdown as={ButtonGroup}>  
+              <Dropdown.Toggle split variant="muted" style={{ border: "none", top: "-8px"
+             }} id="dropdown-custom-2" ><BsBellFill className="icon" style={{color:'#93A603',fontSize:'25px'}}/></Dropdown.Toggle>
+            
+          </Dropdown>
+            <Dropdown as={ButtonGroup}>  
+            <Dropdown.Toggle split variant="muted" style={{border:"none",top: "-8px"}}  id="dropdown-custom-2" ><IoLanguageSharp className="icon" style={{color:'#93A603',fontSize:'25px'}}/></Dropdown.Toggle>
+            <Dropdown.Menu className="super-colors"style={{ left:"-80px"}}>
               <Dropdown.Item eventKey="3" >
                 <Button onClick={()=>{window.location.reload();sessionStorage.setItem('lang','En')}} variant="light">En</Button>
                 <Button onClick={()=>{window.location.reload();sessionStorage.setItem('lang','Fr')}} variant="light">Fr</Button>
                 <Button onClick={()=>{window.location.reload();sessionStorage.setItem('lang','Sp')}} variant="light">Sp</Button>
               </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item eventKey="4" href="/" onClick={()=> sessionStorage.clear()}>{translate('Log out')}</Dropdown.Item>
-            </Dropdown.Menu>
+             </Dropdown.Menu>
           </Dropdown>
- 
+          <Dropdown as={ButtonGroup}>
+              
+            <Dropdown.Toggle split variant="muted" style={{border:"none",top: "-8px" }}  id="dropdown-custom-2" ><FaUser className="icon" style={{color:'#93A603',fontSize:'25px'}}/></Dropdown.Toggle>
+            <Dropdown.Menu className="super-colors" style={{ left:"-65px"}}>
+              <Dropdown.Item eventKey="1" href="/admin/password/user">{translate('Profile')}</Dropdown.Item>
+              <Dropdown.Item eventKey="2" href="/admin/password/change">{translate('Change password')}</Dropdown.Item>
+              <Dropdown.Item eventKey="3" href="/" onClick={()=> sessionStorage.clear()}>{translate('Log out')}</Dropdown.Item>
+             </Dropdown.Menu>
+          </Dropdown>
+
+            
           </Nav>
+          
         </Navbar.Collapse>
       </Container>
     </Navbar>

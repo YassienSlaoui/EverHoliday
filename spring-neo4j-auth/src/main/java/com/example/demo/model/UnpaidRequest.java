@@ -47,5 +47,13 @@ public int getTotalDays() {
 public void setTotalDays(int totalDays) {
 	this.totalDays = totalDays;
 }
+private String justification ;
+public String getJustification() {
+	return justification;
+}
+
+public void setJustification(String justification) {
+	this.justification = justification;
+}
 
 }

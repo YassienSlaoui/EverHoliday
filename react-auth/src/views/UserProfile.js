@@ -1,4 +1,11 @@
-import React from "react";
+import React, { Component } from 'react'
+import collaboratorService from '../servicees/CollaborateurServices';
+import SupervisorService from '../servicees/supervisorServices'
+import { I18nPropvider, LOCALES } from '../i18nProvider';
+import translate from "../i18nProvider/translate"
+import { showLoader } from "actions/application";
+import { hideLoader } from "actions/application";
+
 
 // react-bootstrap components
 import {
@@ -12,8 +19,18 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import {connect} from 'react-redux';
 
 function User() {
+  updateProfile = () =>{
+  this.props.dispatch( showLoader() )
+
+  
+    setTimeout(() => {
+      this.props.dispatch( hideLoader() )
+    }, 2000); 
+
+  }
   return (
     <>
       <Container fluid>
@@ -143,7 +160,8 @@ function User() {
                     className="btn-fill pull-right"
                     type="submit"
                     variant="info"
-                  >
+                    
+                  >{/*onClick ={this.updateProfile}*/}
                     Update Profile
                   </Button>
                   <div className="clearfix"></div>
@@ -214,5 +232,6 @@ function User() {
     </>
   );
 }
-
+//const mapStateToProps = stat =>({})
 export default User;
+//export default connect(mapStateToProps)(User);

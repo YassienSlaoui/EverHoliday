@@ -26,7 +26,9 @@ class Vacationrequest extends Component {
         this.paid=this.paid.bind(this);
         this.unpaid=this.unpaid.bind(this)
         this.exception=this.exception.bind(this)
-        this.recovery=this.recovery.bind(this)}
+        this.recovery=this.recovery.bind(this)
+        this.history=this.history.bind(this)
+      }
 
     // step 3
     
@@ -39,8 +41,8 @@ class Vacationrequest extends Component {
     }
     
 
-    cancel(){
-        this.props.history.push('/admin/RequestVacation/History');
+    history(){
+        this.props.history.push('/admin/vacationrequest/History');
     }
     paid(){
         this.props.history.push('/admin/vacationrequest/paid');
@@ -80,7 +82,7 @@ class Vacationrequest extends Component {
                       <Button  className="btn-fill pull-right" type="submit" variant="success" onClick={this.recovery}>{translate('Recovery vacation')} </Button>
                       <br></br>
                       <br></br>
-                      <Button className="btn-fill pull-right" type="submit" variant="success" >{translate('Historic')}</Button>
+                      <Button className="btn-fill pull-right" type="submit" variant="success" onClick={this.history} >{translate('Historic')}</Button>
                     </Form>
                   </Card.Body>
                 </Card>
