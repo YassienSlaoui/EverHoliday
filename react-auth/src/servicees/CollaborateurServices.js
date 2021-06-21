@@ -38,6 +38,12 @@ class collaboratorService {
     password(user,userId){
         return axios.put(User_API_BASE_URL + '/password/'+userId, user);
     }
+    user(email){
+        return axios.post(User_API_BASE_URL+"/email",{email});
+    }
+  
+    
+
 }
 
 export default new collaboratorService()
