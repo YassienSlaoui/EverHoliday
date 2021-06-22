@@ -1,9 +1,39 @@
 import React from 'react'
 import 'layouts/Login1.css'
 import Logo from '../logo.png'
-export default class NewPassword extends React.Component{
-
+import { withRouter } from 'react-router-dom'
+import ForgotService from '../../servicees/ForgotServices';
+ class NewPassword extends React.Component{
+    constructor(props) {
+        super(props)
+  
+      this.state = { 
+        newpassword:'',
+        retypepassword:'',
+        }
+        this.changenewpasswordHandler=this.changenewpasswordHandler.bind(this);
+        this.changereytpepasswordHandler=this.changereytpepasswordHandler.bind(this);
+        this.changereytpepasswordHandler=this.changereytpepasswordHandler.bind(this)
+    }
+        changenewpasswordHandler= (event) =>{
+            this.setState({newpassword: event.target.value});
+        }
+        changereytpepasswordHandler= (event) =>{
+            this.setState({retypepassword: event.target.value});
+        }
+        saveOrUpdatePassword = (e) => {
+            e.preventDefault();
+            console.log(this.state.newpassword === this.state.retypepassword )
+            if(this.state.newpassword === this.state.retypepassword&& this.state.newpassword!=""){
+              ForgotService.ResetPassword(sessionStorage.getItem('email'),this.state.newpassword).then(res=>{ this.props.history.push('/');sessionStorage.clear();})
+            
+            }else{
+                alert('password no the some')
+            }
+        }
     render() {
+        console.log(this.state.newpassword === this.state.retypepassword)
+        console.log(sessionStorage.getItem('email'))
         return (
             <div className="body">
                    <div className="propre-container ">
@@ -26,17 +56,17 @@ export default class NewPassword extends React.Component{
                                         NEW PASSWORD
                                         </label>
                                         <div className="container-sm element-margin">
-                                             <input type="password" name="passwordN" className="form-control"  />
+                                             <input type="password" name="passwordN" className="form-control" onChange={this.changenewpasswordHandler}  />
                                         </div>
                                         <label>
                                         RETYPE PASSWORD
                                         </label>
                                         <div className="container-sm element-margin">
-                                             <input type="password" name="passwordNR" className="form-control"  />
+                                             <input type="password" name="passwordNR" className="form-control" onChange={this.changereytpepasswordHandler}   />
                                         </div>
                                          
                                             <div className="container-sm element-margin">
-                                             <button type="submit" className="btn btn-success" name="singIn" ><a href="/"> OK </a></button>
+                                             <button type="submit" className="btn btn-success" name="singIn" onClick={this.saveOrUpdatePassword} > OK </button>
                                     </div>
                                
                                 
@@ -62,3 +92,4 @@ export default class NewPassword extends React.Component{
 
 
 }
+export default withRouter(NewPassword)

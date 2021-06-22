@@ -25,7 +25,7 @@ import com.example.demo.service.PaidRequestService;
 @Component
 @RestController
 @RequestMapping("/rest/neo4j/")
-public class PaidRequestController {
+public class PaidRequestController{
 	@Autowired
     PaidRequestService PaidRequestService;
     

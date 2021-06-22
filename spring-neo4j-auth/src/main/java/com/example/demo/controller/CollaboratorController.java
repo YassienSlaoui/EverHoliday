@@ -23,7 +23,7 @@ import com.example.demo.service.CollaborateurService;
 @Component
 @RestController
 @RequestMapping("/rest/neo4j/")
-public class CollaboratorController {
+public class CollaboratorController{
 
 	    @Autowired
 	    CollaborateurService CollaborateurService;
@@ -50,6 +50,7 @@ public class CollaboratorController {
 	     * 
 	     * 
 	     * **/
+	    
 	    @Bean
 		  private PasswordEncoder passwordEncoder1() {
 		      return new BCryptPasswordEncoder();
@@ -72,6 +73,7 @@ public class CollaboratorController {
 			
 			return CollaborateurService.findByUserName(username);
 		}
+		
 		@GetMapping("/collaborator/email/{email}")
 		public boolean getEmployeeByEmail(@PathVariable String email) {
 			return CollaborateurService.findByEmails(email);
@@ -81,7 +83,6 @@ public class CollaboratorController {
 		public ResponseEntity<Collaborator> getEmployeeById(@PathVariable Long id) {
 			return CollaborateurService.getEmployeeById(id);
 		}
-		
 		
 		
 		@PutMapping("/collaborator/{id}")
@@ -101,14 +102,5 @@ public class CollaboratorController {
 			return CollaborateurService.deleteEmployee(id);
 		}
 		
-		
-		/*
-		@PostMapping("/collaborator/login")
-		public ResponseEntity<Collaborator> login(@RequestBody LoginRequest login){
-			
-			return CollaborateurService.login(login.getUsername(),login.getPassword());
-		}*/
-		
-	   
 		
 	}

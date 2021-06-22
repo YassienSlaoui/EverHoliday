@@ -20,6 +20,6 @@ public class SpringNeo4jSecurityApplication {
 	public void triggerWhenStarted() {
 		EmailService.sendSimpleMessage("bo.essabri@gmail.com", "msg from EverHolday", "Bonjour Yassine Slaoui, \n Votre demande sera enregistre du date 5-18-2021. \n Cordialement.");
 		
-	}*/
-
+	}
+*/
 }

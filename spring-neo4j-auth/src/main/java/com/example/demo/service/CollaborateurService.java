@@ -45,8 +45,8 @@ public boolean findByUserName(String username) {
 
 public boolean findByEmails(String email) {
 	System.out.println(CollaborateurRepository.findByEmail(email));
-	System.out.println(email);
-	
+	email = email.replace("%40","@");
+	email = email.replace("=","");
 	if(CollaborateurRepository.findByEmail(email)!=null) {
 		System.out.println(" "+CollaborateurRepository.findByEmail(email).getId());
 		return true;
@@ -98,9 +98,7 @@ public ResponseEntity<Map<String, Boolean>> deleteEmployee(Long id){
 	response.put("deleted", Boolean.TRUE);
 	return ResponseEntity.ok(response);
 }
-/*public void UpdateRealation() {
-	CollaborateurRepository.makeRelation();
-}*/
+
 
 @Bean
 private PasswordEncoder passwordEncoder5() {
@@ -130,14 +128,45 @@ public static int random_int(int Min, int Max)
 }
 
 
-public long ResetPassword(String email){
+
+	public long CodeValidationAleatoire(){
+		
+		return random_int(10000, 99999);
+	}   
 	
-	int code = random_int(10000, 99999);
-	if(CollaborateurRepository.findByEmail(email)!= null) {
-		EmailService.sendSimpleMessage(email, "saisir le code suivant"+ code ,"pour changer votre mot de pass ");
+	public void UpdateCodeV(String email,Long Code){
+		
+		Collaborator customer = CollaborateurRepository.findByEmail(email);
+	    if (customer != null) {
+			Collaborator customer1 = CollaborateurRepository.findById(customer.getId()).orElseThrow(() -> new ResourceNotFoundException("not exist with id :"));
+	        customer1.setCodeValidation(Code);
+	        CollaborateurRepository.save(customer1);
+	        
+	    } 
+	}
+	public boolean VerifieCodeV(long code,String email) {
+		//System.out.println(email);
+		email = email.replace("%40","@");
+		email = email.replace("=","");
+		Collaborator a =  CollaborateurRepository.findByEmail(email);
+		//System.out.println("fff"+a.getCodeValidation());
+		if(a.getCodeValidation().equals(code)) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+	public void resetpassword( String email,  String password){
+		email = email.replace("%40","@");
+		email = email.replace("=","");
+		
+		Collaborator b = CollaborateurRepository.findByEmail(email);
+		Collaborator customer1 = CollaborateurRepository.findById(b.getId()).orElseThrow(() -> new ResourceNotFoundException("not exist with id :"));
+		customer1.setPassword("{bcrypt}"+passwordEncoder5().encode(password));
+		
+		CollaborateurRepository.save(customer1);
+		
+	}
 	
-	}	
-	return code;
-}
-	    
 }
