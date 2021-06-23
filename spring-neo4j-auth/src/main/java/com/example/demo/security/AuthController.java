@@ -71,6 +71,6 @@ public class AuthController {
         else {
         	return "Collaborator";
         }
-        
+         
         }
 }
