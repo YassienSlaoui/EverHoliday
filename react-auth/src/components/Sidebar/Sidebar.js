@@ -88,7 +88,7 @@ function Sidebar({ color, image, routes, path, path2, path3, path4 ,path5}) {
               <img
                 src={require("assets/img/logo.png").default}
                 alt="..."
-                style={{maxWidth:100+"%",maxHeight:60+"px",width:"50%"}}
+                style={{maxWidth: "76%",maxHeight: "70px"}}
               />
              <p style={{width:"86%",margin: "16px 0px 0px 14px",textAlign:"initial"}}> {userDetaile} </p>
             </div>

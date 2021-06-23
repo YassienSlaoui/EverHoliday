@@ -47,5 +47,11 @@ public class CustomrService implements UserDetailsService {
         }*/
 	      return user;
 	  }
- 
+	 
+		 public Collaborator loadUserByEmail(String email) {
+			  
+		 Collaborator user = CollaborateurRepository.findByEmail(email);
+		 return user;
+		    
+		  }
 }

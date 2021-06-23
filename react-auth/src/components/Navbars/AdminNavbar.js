@@ -76,11 +76,11 @@ function Header() {
           <Nav className="ml-auto" navbar>
          <Dropdown as={ButtonGroup}>  
               <Dropdown.Toggle split variant="muted" style={{ border: "none", top: "-8px"
-             }} id="dropdown-custom-2" ><BsBellFill className="icon" style={{color:'#93A603',fontSize:'25px'}}/></Dropdown.Toggle>
+             }} id="dropdown-custom-2" ><BsBellFill className="icon" style={{color:'rgb(36, 153, 158)',fontSize:'25px'}}/></Dropdown.Toggle>
             
           </Dropdown>
             <Dropdown as={ButtonGroup}>  
-            <Dropdown.Toggle split variant="muted" style={{border:"none",top: "-8px"}}  id="dropdown-custom-2" ><IoLanguageSharp className="icon" style={{color:'#93A603',fontSize:'25px'}}/></Dropdown.Toggle>
+            <Dropdown.Toggle split variant="muted" style={{border:"none",top: "-8px"}}  id="dropdown-custom-2" ><IoLanguageSharp className="icon" style={{color:'rgb(36, 153, 158)',fontSize:'25px'}}/></Dropdown.Toggle>
             <Dropdown.Menu className="super-colors"style={{ left:"-80px"}}>
               <Dropdown.Item eventKey="3" >
                 <Button onClick={()=>{window.location.reload();sessionStorage.setItem('lang','En')}} variant="light">En</Button>
@@ -91,7 +91,7 @@ function Header() {
           </Dropdown>
           <Dropdown as={ButtonGroup}>
               
-            <Dropdown.Toggle split variant="muted" style={{border:"none",top: "-8px" }}  id="dropdown-custom-2" ><FaUser className="icon" style={{color:'#93A603',fontSize:'25px'}}/></Dropdown.Toggle>
+            <Dropdown.Toggle split variant="muted" style={{border:"none",top: "-8px" }}  id="dropdown-custom-2" ><FaUser className="icon" style={{color:'rgb(36, 153, 158)',fontSize:'25px'}}/></Dropdown.Toggle>
             <Dropdown.Menu className="super-colors" style={{ left:"-65px"}}>
               <Dropdown.Item eventKey="1" href="/admin/password/user">{translate('Profile')}</Dropdown.Item>
               <Dropdown.Item eventKey="2" href="/admin/password/change">{translate('Change password')}</Dropdown.Item>

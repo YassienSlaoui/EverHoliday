@@ -29,3 +29,7 @@ img {
   color: red;
   font-size: 15px;
 }
+.forget_password:hover{
+  color: #87CB16;
+  font-size: 15px;
+}

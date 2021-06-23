@@ -63,10 +63,10 @@ public class ActivitiProcess {
 		data.put("RequestDates", p.getDatesRequest());
 		System.out.println("Process started successfully");
 		 runtimeService.startProcessInstanceByKey("EverHoliday", String.valueOf(p.getId()), data).getId();
-		 p.getCollaborator().getNotification().add(new Notification("Paid Request","Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
+		/* p.getCollaborator().getNotification().add(new Notification("Paid Request","Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
                 + " \n Votre demande de Congé payé du date "+PaidRequest.getRequestDate()+" est en attente de validation par : "
                         +validator.getLastname()+" "+validator.getFirstname()
-                + " \n Cordialement."));
+                + " \n Cordialement."));*/
 		 return p;
 	    }
 	
