@@ -75,7 +75,7 @@ export default {
     'Log out':'Déconnexion',
     'calendar':'calendrier',
     'REQUEST':'DEMANDE',
-    'MY REQUEST':'MA DEMANDE',
+    'MY REQUEST':'MES DEMANDES',
     'User Profile':"profil utilisateur",
     'List Users':'Lister des utilisateurs',
     'Add employees':'Ajouter des employés',
@@ -92,6 +92,7 @@ export default {
     "Experience":"Experience",
     "Type of vacation":"type de congé",
     "Add":"Ajouter",
-    "Hour":"Hour"
+    "Hour":"Hour",
+    "justification":"justification"
   },
 };

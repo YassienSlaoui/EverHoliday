@@ -29,13 +29,13 @@ const dashboardRoutes = [
     name: "Home",
     component: calendar,
     layout: "/admin",
-  }/*,{
+  },/*{
     path: "/calendar",
     name: "calendar",
     icon: "nc-icon nc-chart-pie-35",
     component: calendar,
     layout: "/admin",
-  }*/,
+  },*/
   {
     path: "/Request",
     name: "REQUEST",

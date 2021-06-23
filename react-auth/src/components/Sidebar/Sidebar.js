@@ -86,11 +86,11 @@ function Sidebar({ color, image, routes, path, path2, path3, path4 ,path5}) {
           >
             <div className="logo-img">
               <img
-                src={require("assets/img/everis.png").default}
+                src={require("assets/img/logo.png").default}
                 alt="..."
                 style={{maxWidth:100+"%",maxHeight:60+"px",width:"50%"}}
               />
-             <p style={{width:"86%"}}> {userDetaile} </p>
+             <p style={{width:"86%",margin: "16px 0px 0px 14px",textAlign:"initial"}}> {userDetaile} </p>
             </div>
           </a>
           

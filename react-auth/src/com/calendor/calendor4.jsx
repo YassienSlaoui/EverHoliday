@@ -43,9 +43,13 @@ class calendar extends Component {
       
       this.state.holidays.map(map=>{
         
-        if (date.getDay()==6|| date.getDay()==0||dateFormat(date, "yyyy-mm-dd")==map.date){
+        for(var i =0;i<=map.duration;i++){
+          var a =new Date(map.date)
+          var c = dateFormat(new Date(a.getTime()+(1000 * 3600 * 24)*i),"yyyy-mm-dd")
+          if (date.getDay()==6|| date.getDay()==0||dateFormat(date, "yyyy-mm-dd")==c){
           show =true
          
+        }
         }
       })
           

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import '../css/Request.css';
 import collaboratorService from '../../servicees/CollaborateurServices';
 import RecoveryRequestService from '../../servicees/RecoveryRequestService';
-import Calendar from '../calendor/calendar6';
+import Calendar from '../calendor/calendar5';
 import dateFormat from "dateformat";
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
@@ -241,7 +241,7 @@ hourselect(){
           
           <Container fluid>
           <Row>
-            <Col md="6">
+            <Col lg="12" xl="6">
               <Card>
                 <Card.Header>
                   <Card.Title as="h4">{translate('Recovery vacation')}</Card.Title>
@@ -300,7 +300,7 @@ hourselect(){
             </Col>
 
 
-            <Col md="5">
+            <Col lg="12" xl="5">
               
               <Calendar state={this.state.calendarState} ref= {this.childRef } onChange={this.calendarChange}/>
               

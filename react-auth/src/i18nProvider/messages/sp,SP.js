@@ -91,7 +91,8 @@ export default {
     'Home':"bienvenida",
     "Vacation Request":"Solicitud  vacaciones",
     "Type of vacation":"tipo de licencia",
-    "Hour":"Hour"
+    "Hour":"Hour",
+    "justification":"justificación"
 
   },
 };

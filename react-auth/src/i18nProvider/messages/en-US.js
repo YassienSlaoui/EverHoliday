@@ -90,6 +90,7 @@ export default {
     "Birth leave":"Birth leave",
     "Type of vacation":"Type of vacation",
     "Add":"Add",
-    "Hour":"Hour"
+    "Hour":"Hour",
+    "justification":"justification"
   },
 };

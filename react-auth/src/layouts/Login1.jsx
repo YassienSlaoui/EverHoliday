@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Logo from './logo.png'
+import Logo from './logo3.png'
 import AuthService from '../servicees/AuthServices';
 import '../layouts/Login1.css' 
 import { withRouter } from 'react-router-dom';

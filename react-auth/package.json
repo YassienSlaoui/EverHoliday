@@ -21,6 +21,8 @@
     "gulp-append-prepend": "1.0.8",
     "material-ui": "^0.20.2",
     "mdbreact": "^5.0.2",
+    "moment-range": "^4.0.2",
+    "moment-timezone": "^0.5.33",
     "node-sass": "4.14.1",
     "react": "17.0.1",
     "react-big-calendar": "^0.33.4",
