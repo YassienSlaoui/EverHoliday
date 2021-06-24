@@ -48,7 +48,7 @@ const dashboardRoutes = [
     name: "MY REQUEST",
     class: "IoIosPaper",
     component: myRequest,
-    layout: "/admin",
+    layout: "/admin/collaborator",
   },
   {
     path: "/user",

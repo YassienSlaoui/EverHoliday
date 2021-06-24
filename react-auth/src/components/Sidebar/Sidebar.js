@@ -11,7 +11,7 @@ import { AiFillHome } from "react-icons/ai"
 import { FaHourglassEnd } from "react-icons/fa"
 import {MdAccountBalanceWallet} from "react-icons/md"
 import {FiSend} from "react-icons/fi"
-function Sidebar({ color, image, routes, path, path2, path3, path4 ,path5}) {
+function Sidebar({ color, image, routes, path, path2, path3, path4,path5 ,path6}) {
   const userDetaile = JSON.parse(sessionStorage.getItem('user1')).firstname +" "+ JSON.parse(sessionStorage.getItem('user1')).lastname
   const location = useLocation();
   const activeRoute = (routeName) => {
@@ -97,7 +97,7 @@ function Sidebar({ color, image, routes, path, path2, path3, path4 ,path5}) {
         </div>
         <Nav>
           {routes.map((prop, key) => {
-            if (prop.layout === path || prop.layout === path2|| prop.layout === path3|| prop.layout ===path4 ){
+            if (prop.layout === path || prop.layout === path2|| prop.layout === path3|| prop.layout ===path4 ||prop.layout==path6){
            
               if(prop.path != path5 && prop.class!=undefined){
                   
