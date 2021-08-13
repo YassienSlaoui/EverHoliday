@@ -4,6 +4,7 @@ import '../css/list.css';
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 import collaboratorService from '../../servicees/CollaborateurServices';
+// holdays list with option give to RH option to change in the list
 class Holidaylist extends Component {
     constructor(props) {
         super(props)
@@ -11,28 +12,17 @@ class Holidaylist extends Component {
         this.state = {
                 holidays: []
         }
-        //this.addUser = this.addUser.bind(this);
+        
         this.editHoliday = this.editHoliday.bind(this);
         this.checkRh=this.checkRh.bind(this)
         this.checkRhbtn=this.checkRhbtn.bind(this)
-      //  this.deleteUser = this.deleteUser.bind(this);
+      
     }
-/*
-    deleteUser(id){
-        collaboratorService.deleteUser(id).then( res => {
-            this.setState({collaborator: this.state.collaborator.filter(user => user.id !== id)});
-        });
-    }
-    */
+
     editHoliday(id){
         this.props.history.push(`/admin/holiday/${id}`);
     }
-    /*
-    addUser(){
-        this.props.history.push('/add-user/_add');
-    }
-       
-    */
+    
    addHolidays(){
     this.props.history.push('/admin/holiday/add');
    }

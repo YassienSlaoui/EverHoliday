@@ -4,6 +4,7 @@ import '../css/list.css';
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 import collaboratorService from '../../servicees/CollaborateurServices';
+//show to validator his collaborators solde
 class CollaboratorSolde extends Component {
     constructor(props) {
         super(props)
@@ -15,7 +16,7 @@ class CollaboratorSolde extends Component {
         
     }
 
-    
+    //get info of his collaborators
     componentDidMount(){
         let user1 = {
             id:parseInt(sessionStorage.getItem('user'))
@@ -24,6 +25,7 @@ class CollaboratorSolde extends Component {
             this.setState({ collaborator: res.data});
         });
     }
+    //caclule sum of cumulative balance
     calculeCumulativeBalance (soldes) {
         let a=0
         if(soldes!=[] && soldes!=null){

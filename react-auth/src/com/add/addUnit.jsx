@@ -25,6 +25,7 @@ class addUnit extends Component {
         this.changecollaboratorHandler = this.changecollaboratorHandler.bind(this);
         this.saveOrUpdateHoliday = this.saveOrUpdateHoliday.bind(this);
     }
+    // get collaborator and unit if user click in update
     componentDidMount(){
         collaboratorService.getUser().then((res) => {
             this.setState({ collaborator: res.data,

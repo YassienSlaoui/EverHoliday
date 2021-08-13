@@ -10,7 +10,7 @@ class UnitList extends Component {
         this.state = {
                 units: []
         }
-        //this.addUser = this.addUser.bind(this);
+        
         this.editHoliday = this.editHoliday.bind(this);
         
      this.deleteUser = this.deleteUser.bind(this);
@@ -25,12 +25,7 @@ class UnitList extends Component {
     editHoliday(id){
         this.props.history.push(`/admin/unit/${id}`);
     }
-    /*
-    addUser(){
-        this.props.history.push('/add-user/_add');
-    }
-       
-    */
+   
    addHolidays(){
     this.props.history.push('/admin/unit/add');
    }

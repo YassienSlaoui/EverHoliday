@@ -55,6 +55,7 @@ class ExceptionVacation extends Component {
       this.addRH=this.addRH.bind(this)
 
   }
+  // Add day with his start and end date with his duration
     add(){
       const element = this.childRef.current;
       const b=new Date(element.state.startDate.getTime());
@@ -84,12 +85,14 @@ calendarChange = (calendarState) => {
   }));
  
 }
+//delete date selected 
 deletelist(i){
       
   this.state.list.splice(i,1)
   this.state.list1.splice(i,1)
   this.setState({list:this.state.list,list1:this.state.list1})
 }    
+// Table of date
 dates(){
   if(this.state.list!=[]){
     
@@ -124,6 +127,7 @@ dates(){
   
 }
 }
+// function to calcule balance use in vancatoin
 calculeBalance(){
   let a = 0 ;
   if(this.state.list!=[]){
@@ -141,6 +145,7 @@ calculeBalance(){
   }
     return a
 }
+// Save vacation request
 saveRequest= (e) =>{
   e.preventDefault();
   if(this.state.list1.length!=0){
@@ -211,6 +216,7 @@ changeSelectType= (SelectTypeVacacion) =>{
   this.setState({SelectTypeVacacion})
   this.setState({duration:SelectTypeVacacion.value.duration})
 }  
+// if user is RH he can create Expetionnal vacacion to Collaborator
 selectRH(){
   if(sessionStorage.getItem('role')==="RH"){
     return(
@@ -226,6 +232,10 @@ selectRH(){
   }
   
 }
+//butoon to Rh add a vacacion type
+go(){
+  this.props.history.push('/admin/vacationrequest/Type');
+}
 addRH(){
   if(sessionStorage.getItem('role')==="RH"){
     return(
@@ -234,13 +244,14 @@ addRH(){
   }
   
 }
+
+
+
 changevalidatorHandler= (users) => {
   this.setState({users:users});
   
 }
-go(){
-  this.props.history.push('/admin/vacationrequest/Type');
-}
+
 componentDidMount(){
   collaboratorService.getUserById(sessionStorage.getItem("user")).then( (res) =>{
     let user = res.data;

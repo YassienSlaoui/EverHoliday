@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Collaborator;
 import com.example.demo.model.PaidRequest;
 import com.example.demo.model.UnpaidRequest;
+import com.example.demo.proceessImpl.ActivitiProcess;
 import com.example.demo.service.PaidRequestService;
 import com.example.demo.service.UnpaidRequestService;
 
@@ -29,7 +30,8 @@ public class UnpaidRequestController {
 	@Autowired
     UnpaidRequestService UnpaidRequestService;
     
-    
+	@Autowired
+	private ActivitiProcess activitiProcess;
 
     @GetMapping("/UnpaidRequest")
     public Collection<UnpaidRequest> getAll() {
@@ -41,7 +43,7 @@ public class UnpaidRequestController {
 	@PostMapping("/UnpaidRequest")
 	public UnpaidRequest adduser(@RequestBody UnpaidRequest PaidRequest) {
 		
-		return UnpaidRequestService.createPaidRequest(PaidRequest);
+		return (UnpaidRequest) activitiProcess.startProcess(PaidRequest,"UnPAID");
 		
 	}
 	

@@ -18,9 +18,10 @@ package com.example.demo.controller;
 
 	import com.example.demo.model.Collaborator;
 	import com.example.demo.model.ExeptionnelRequest;
-	import com.example.demo.model.TypeOfVaction;
-	
-	import com.example.demo.service.ExeptionnelRequestService;
+import com.example.demo.model.RecoveryRequest;
+import com.example.demo.model.TypeOfVaction;
+import com.example.demo.proceessImpl.ActivitiProcess;
+import com.example.demo.service.ExeptionnelRequestService;
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@Component
@@ -29,7 +30,8 @@ package com.example.demo.controller;
 	public class ExeptionnelRequestController {
 		@Autowired
 		ExeptionnelRequestService ExeptionnelRequestService;
-	    
+		@Autowired
+		private ActivitiProcess activitiProcess;
 	    
 
 	    @GetMapping("/ExeptionnelRequest")
@@ -47,7 +49,7 @@ package com.example.demo.controller;
 		@PostMapping("/ExeptionnelRequest")
 		public ExeptionnelRequest adduser(@RequestBody ExeptionnelRequest PaidRequest) {
 			
-			return ExeptionnelRequestService.createPaidRequest(PaidRequest);
+			return (ExeptionnelRequest) activitiProcess.startProcess(PaidRequest,"EXEPTIONEL");
 			
 		}
 		@PostMapping("/ExeptionnelRequest/typeofVaction")

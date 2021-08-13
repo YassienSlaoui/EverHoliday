@@ -10,6 +10,7 @@ import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 import '../css/list.css';
 import { FormattedMessage} from 'react-intl';
+// request list with option give to RH option to valiate recovery-exeptionnel-recuperation vacation
 class Request extends Component {
     constructor(props) {
         super(props)

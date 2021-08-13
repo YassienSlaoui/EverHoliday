@@ -5,7 +5,7 @@ import '../css/list.css';
 import { I18nPropvider, LOCALES } from '../../i18nProvider';
 import translate from "../../i18nProvider/translate"
 import UnitService from '../../servicees/UnitService';
-
+// collaborator list with option give to RH option to change in the list
 class listCollaborator extends Component {
     constructor(props) {
         super(props)

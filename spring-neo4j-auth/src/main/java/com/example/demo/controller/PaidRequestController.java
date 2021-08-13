@@ -42,7 +42,7 @@ public class PaidRequestController{
 	@PostMapping("/PaidRequest")
 	public PaidRequest adduser(@RequestBody PaidRequest PaidRequest) {
 
-		 return activitiProcess.startProcess(PaidRequest);
+		 return (PaidRequest) activitiProcess.startProcess(PaidRequest,"PAID");
 
 
 		

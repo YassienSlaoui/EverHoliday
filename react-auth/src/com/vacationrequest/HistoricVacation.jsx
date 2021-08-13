@@ -29,7 +29,7 @@ class Historic extends Component {
         this.transl=this.transl.bind(this)
     }
 
-   
+   //Cancel paid vacation
     deleteUser(id){
         
         PaidRequestService.deletPaidRequest(id).then( res => {
@@ -38,6 +38,7 @@ class Historic extends Component {
     
    
     }
+    //Cancel Unpaid vacation
     deleteun(id){
         
         UnPaidRequestService.deletUnPaidRequest(id).then( res => {
@@ -46,6 +47,7 @@ class Historic extends Component {
     
    
     }
+    //Cancel exeptionnel vacation
     deleteEx(id){
         
         ExeptionnelRequestService.deletExeptionnelRequest(id).then( res => {
@@ -54,6 +56,7 @@ class Historic extends Component {
     
    
     }
+    //Cancel recovery vacation
     deleteRe(id){
         
         RecoveryRequestService.deletRecoveryRequest(id).then( res => {
@@ -64,9 +67,7 @@ class Historic extends Component {
     }
        
        
-   addHolidays(){
-    this.props.history.push('/admin/unit/add');
-   }
+  
     componentDidMount(){
         PaidRequestService.getPaidRequest().then((res) => {
             this.setState({ paidRequest: res.data});
@@ -81,6 +82,7 @@ class Historic extends Component {
             this.setState({ RecoveryRequest: res.data});
         });
     }
+    //write stat of vacacion using colors
     checkStatut(value){
         if(value==="processed"){
             return(<td className="text-secondary">{value} </td> );
@@ -90,6 +92,7 @@ class Historic extends Component {
             return(<td className="text-danger">{value} </td> );
         }
     }
+    //list of paid request
     lists(){
        
             return(
@@ -145,6 +148,7 @@ class Historic extends Component {
         
         
     }
+    //list of unpaid request
     Unpaidlists(){
         return(
             <div className = "row">
@@ -201,6 +205,7 @@ class Historic extends Component {
         )
             
  }
+ //list of exeptionnel request
   ExpionnelList(){
     return(
         <div className = "row">
@@ -256,6 +261,8 @@ class Historic extends Component {
        
     )       
     }
+     //list of recovery request
+
     Recoverylists(){
         return(
             <div className = "row">
@@ -316,9 +323,11 @@ class Historic extends Component {
         )
         
     }  
+    //select type of vacacion
     changeSelect=(event)=>{
         this.setState({select:event.target.value})
     }
+    //show list of vacacion depend select option
     list(a){
         if(a==="paidrequest"){
             return this.lists()
@@ -357,28 +366,7 @@ class Historic extends Component {
                  </select>
                  {this.list(this.state.select)}
             
-              {/* <div className="backdiv">
-                   
-                   <Row style={{margin:"10px"}}>
-                        <Col md="4">
-                            <img src={require("assets/img/default-avatar.png").default} className="img1" alt=""/>
-                            <p>Yassine Slaoui</p>
-
-                        </Col>
-                        <Col md="7">
-                            <p>Type of Request:Paid Vacacion</p>
-                            <p>Timing from 10/12/10 to 10/20/10</p>
-                            <p>Days: 12</p>
-
-                        </Col>
-                        <Col>
-                        <button style={{marginLeft: "10px", float:"right",border:"none"}}  className="btn btn-danger">Refuse</button>
-                           <button style={{marginLeft: "10px",float:"right",border:"none"}} className="btn btn-success">Validate</button> 
-                        </Col>
-                        
-                   </Row>
-                    
-               </div>*/}
+              
         </div>
         );
     }

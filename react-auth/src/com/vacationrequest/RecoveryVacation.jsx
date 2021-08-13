@@ -52,8 +52,8 @@ class RecoveryVacation extends Component {
         this.hourselect=this.hourselect.bind(this)
     }
 
-    // step 3
-    add(){
+      // Add day with his start and end date with his duration
+      add(){
       const element = this.childRef.current;
       if(this.state.list=[]){
       if(element.state.startDate!=null ){
@@ -82,13 +82,17 @@ calendarChange = (calendarState) => {
     calendarState: { ...state.calendarState, ...calendarState }
   }));
  
-}
+}   
+ // delete date 
+
 deletelist(i){
       
   this.state.list.splice(i,1)
   this.state.list1.splice(i,1)
   this.setState({list:this.state.list,list1:this.state.list1})
-}    
+}   
+    // Table of date
+
 dates(){
   if(this.state.list!=[]){
     
@@ -123,6 +127,8 @@ dates(){
   
 }
 }
+    // function to calcule balance use in vancaton
+
 calculeBalance(){
   let a = 0 ;
   if(this.state.list!=[]){

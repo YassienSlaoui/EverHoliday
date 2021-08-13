@@ -17,7 +17,7 @@ class AddType extends Component {
         this.saveOrUpdateType = this.saveOrUpdateType.bind(this);
     }
 
-    // step 3
+    // get Type formation if user click in update
     
     componentDidMount(){
       
@@ -61,7 +61,7 @@ class AddType extends Component {
         this.setState({duration: event.target.value});
     }
     cancel(){
-        this.props.history.push('/admin/list/Type');
+        this.props.history.push('/admin/vacationrequest/Type');
     }
 
     

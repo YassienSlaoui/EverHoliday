@@ -26,7 +26,7 @@
     <parallelGateway id="parallelgateway3" name="Parallel Gateway"></parallelGateway>
     <sequenceFlow id="flow7" sourceRef="servicetask3" targetRef="parallelgateway3"></sequenceFlow>
     <sequenceFlow id="flow9" sourceRef="parallelgateway3" targetRef="sid-F9F8A5C3-AE8B-4689-ABB8-6296900AA8C2"></sequenceFlow>
-    <serviceTask id="servicetask1" name="send email  to validator" activiti:expression="#{activitiProcess.sendMailValidator(paidRequest)}"></serviceTask>
+    <serviceTask id="servicetask1" name="send email  to validator" activiti:expression="#{activitiProcess.sendMailValidator(paidRequest,Type)}"></serviceTask>
     <serviceTask id="servicetask2" name="send email  to collaborator" activiti:expression="#{activitiProcess.sendMailOwner(paidRequest)} "></serviceTask>
     <serviceTask id="servicetask3" name="Send email to Collaborator" activiti:expression="#{activitiProcess.sendMailValidationOwner(id ,validation)} "></serviceTask>
     <serviceTask id="servicetask5" name="send email to Collaborator" activiti:expression="#{activitiProcess.sendMailValidationOwner(id,validation)} "></serviceTask>

@@ -48,7 +48,7 @@ class PaidVacation extends Component {
        
         this.calendarChange=this.calendarChange.bind(this)
         this.childRef= React.createRef();
-        this.start=this.start.bind(this);
+       
         this.dates=this.dates.bind(this);
         this.deletelist=this.deletelist.bind(this);
         this.calculeBalance=this.calculeBalance.bind(this)
@@ -85,7 +85,7 @@ class PaidVacation extends Component {
 });
     }
     
-    
+    //show to collaborator his cumulative balance
     calculeCumulativeBalance () {
       let a=0
       if(this.state.soldes!=[] && this.state.soldes!=null){
@@ -94,6 +94,7 @@ class PaidVacation extends Component {
       }
       return a
     }
+    // calacule Duration of request with knowing holiday
     calculeAtt(a,b){
       let z = Math.ceil(((a.getTime()-b.getTime())/(1000 * 3600 * 24)+1))
       let i =new Date(b.getTime());
@@ -109,8 +110,9 @@ class PaidVacation extends Component {
       }
       return z
     }
+  // Add day with his start and end date with his duration
     add(){
-     
+
           const element = this.childRef.current;
           if(this.state.list=[]){
           if(element.state.startDate!=null ){
@@ -139,20 +141,15 @@ class PaidVacation extends Component {
       }));
      
     }
-    start(){
-      
-      if(this.state.startDate==="" || this.state.startDate===null){
-        return "";
-      }else{
-        return dateFormat(this.state.startDate.toLocaleDateString(), "yyyy-mm-dd")
-      }
-    }
+    // delete date 
     deletelist(i){
       
       this.state.list.splice(i,1)
       this.state.list1.splice(i,1)
       this.setState({list:this.state.list,list1:this.state.list1})
     }
+    // function to calcule balance use in vancaton
+
     calculeBalance(){
       let a = 0 ;
       if(this.state.list!=[]){
@@ -170,7 +167,7 @@ class PaidVacation extends Component {
       }
         return a
     }
-    
+    // Table of date
     dates(){
       if(this.state.list!=[]){
         
@@ -241,16 +238,7 @@ class PaidVacation extends Component {
     render() {
    var a  =JSON.parse(JSON.stringify(this.state.user));
     
-  const msg = defineMessages({
-      firstoption: {
-          id: 'mycomponent.firstoption',
-          defaultMessage: 'Coffee',
-      },
-      secondoption: {
-          id: 'mycomponent.secondoption',
-          defaultMessage: 'Tea',
-      }
-  });
+      
   
  
         return (

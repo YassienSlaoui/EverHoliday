@@ -21,11 +21,11 @@ class Addholiday extends Component {
         this.saveOrUpdateHoliday = this.saveOrUpdateHoliday.bind(this);
     }
 
-    // step 3
     
+    // get holiday formation if user click in update
     componentDidMount(){
       
-        // step 4
+       
         if(this.state.id === 'add'){
             return
         }else{

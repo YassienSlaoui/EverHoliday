@@ -21,7 +21,7 @@ class changePassword extends Component {
         this.changepasswordHandler=this.changepasswordHandler.bind(this);
         this.changereytpepasswordHandler=this.changereytpepasswordHandler.bind(this);
         this.saveOrUpdatePassword=this.saveOrUpdatePassword.bind(this);
-        this.check=this.check.bind(this)
+      
 
     }
 
@@ -38,21 +38,15 @@ class changePassword extends Component {
     cancel(){
         this.props.history.push('/admin/calendar');
     }
+    //get old password
     componentDidMount(){
         collaboratorService.getUserById(this.state.id).then( (res) =>{
             let user = res.data;
             this.setState({userp: user.password,
            });
     }); }
-    async check(){
-        var bcrypt = require('bcryptjs');
-        const match = await bcrypt.compare(this.state.password, this.state.userp.slice(8))
-        if(match){
-            console.log('yes')
-        }else{
-            console.log('no')
-        }   
-    }
+    
+    //check password is correct and change
      saveOrUpdatePassword = (e) => {
         e.preventDefault();
         
@@ -76,7 +70,7 @@ class changePassword extends Component {
         }
     }
     render() {
-        console.log(this.state.newpassword)
+        
         return (
             
             <div>

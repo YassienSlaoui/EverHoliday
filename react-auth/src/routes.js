@@ -11,7 +11,6 @@ import myRequest from './com/list/myRequest';
 import Request from './com/list/Request';
 import addUnit from './com/add/addUnit';
 import changePassword from './com/add/changePassword';
-import Home from './components/Home/Home'
 import Vacationrequest from "com/vacationrequest/Vacationrequest";
 import CollaboratorSolde from './com/list/CollaboratorSolde';
 import PaidVacation from "com/vacationrequest/PaidVacation";

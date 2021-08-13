@@ -17,6 +17,7 @@ import {
     Col,
   } from "react-bootstrap";
 import '../css/list.css';
+// Request of user list 
 class myRequest extends Component {
     constructor(props) {
         super(props)
@@ -121,6 +122,7 @@ class myRequest extends Component {
              {   
                    this.state.paidRequest.filter(val =>{if(val.statut==="Pending"){return val}}).map(
                     paidRequests => {
+                        console.log(paidRequests)
                         if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
                             return(
                                 <tr key = {paidRequests.id }>

@@ -9,6 +9,7 @@ import {
     Button
    
   } from "react-bootstrap";
+  
 class addCollaborator extends Component {
     constructor(props) {
         super(props)
@@ -54,10 +55,10 @@ class addCollaborator extends Component {
 
     }
 
-    // step 3
+    // get collaborator formation if user click in update
     componentDidMount(){
         this._isMounted = true;
-        // step 4
+        
         if(this.state.id === ':id'){
             return
         }else{
@@ -85,6 +86,7 @@ class addCollaborator extends Component {
             });
         }
     }
+    //errors for  formation not inputed
     errors = (x) =>{
            
             document.querySelector('.'+x).style.display = "block";  
@@ -136,7 +138,6 @@ class addCollaborator extends Component {
         
         };
 
-        // step 5
         
             if (this.state.id === ":id") {
                 user.password = this.state.password;
@@ -244,6 +245,7 @@ class addCollaborator extends Component {
             return <h3 className="text-center"></h3>
         }
     }
+    //table of comulative balance
     soldess(){
         if(this.state.soldes!=[] && this.state.soldes!=null){
           
@@ -276,10 +278,12 @@ class addCollaborator extends Component {
         
       }
       }
+      //delete a comulative balance
       deletelist(i){
         this.state.soldes.splice(i,1)
         this.setState({soldes:this.state.soldes})
       }
+      //add comuulative balance
       add(){
         
             

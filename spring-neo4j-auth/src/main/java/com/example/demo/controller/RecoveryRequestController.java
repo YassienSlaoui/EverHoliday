@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Collaborator;
 import com.example.demo.model.RecoveryRequest;
+import com.example.demo.model.UnpaidRequest;
+import com.example.demo.proceessImpl.ActivitiProcess;
 import com.example.demo.service.RecoveryRequestService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -27,7 +29,8 @@ public class RecoveryRequestController {
 	@Autowired
     RecoveryRequestService RecoveryRequestService;
     
-    
+	@Autowired
+	private ActivitiProcess activitiProcess;
 
     @GetMapping("/RecoveryRequest")
     public Collection<RecoveryRequest> getAll() {
@@ -39,7 +42,7 @@ public class RecoveryRequestController {
 	@PostMapping("/RecoveryRequest")
 	public RecoveryRequest adduser(@RequestBody RecoveryRequest PaidRequest) {
 		
-		return RecoveryRequestService.createPaidRequest(PaidRequest);
+		return (RecoveryRequest) activitiProcess.startProcess(PaidRequest,"RECOVERY");
 		
 	}
 	
