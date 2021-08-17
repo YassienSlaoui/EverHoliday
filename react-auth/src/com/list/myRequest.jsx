@@ -122,7 +122,6 @@ class myRequest extends Component {
              {   
                    this.state.paidRequest.filter(val =>{if(val.statut==="Pending"){return val}}).map(
                     paidRequests => {
-                        console.log(paidRequests)
                         if(paidRequests.collaborator.id===JSON.parse(sessionStorage.getItem('user'))){
                             return(
                                 <tr key = {paidRequests.id }>

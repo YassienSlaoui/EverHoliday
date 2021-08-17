@@ -18,23 +18,31 @@ class Historic extends Component {
             RecoveryRequest: [],
             select:"paidrequest"
         }
-        this.lists=this.lists.bind(this)
+        this.PaidList=this.PaidList.bind(this)
         this.Unpaidlists=this.Unpaidlists.bind(this)
         this.ExpionnelList=this.ExpionnelList.bind(this)
         this.Recoverylists=this.Recoverylists.bind(this)
         this.checkStatut=this.checkStatut.bind(this)
-        this.deleteUser=this.deleteUser.bind(this)
+        this.deletePaidRequest=this.deletePaidRequest.bind(this)
         this.changeSelect=this.changeSelect.bind(this)
         this.list=this.list.bind(this)
         this.transl=this.transl.bind(this)
     }
 
    //Cancel paid vacation
-    deleteUser(id){
-        
+    deletePaidRequest(id,startDate){
+        let actuelDate = new Date()
+        actuelDate.setDate(actuelDate.getDate()+15)
+        let startDateRequest = new Date(startDate[0].startDate)
+        console.log(actuelDate.getTime()+" "+startDateRequest.getTime())
+       if(startDateRequest.getTime()>actuelDate.getTime()){
         PaidRequestService.deletPaidRequest(id).then( res => {
-                this.setState({paidRequest: this.state.paidRequest.filter(user => user.id !== id)});
-          });
+            this.setState({paidRequest: this.state.paidRequest.filter(user => user.id !== id)});
+      });
+       }else{
+           alert("not Deleted")
+       }
+        
     
    
     }
@@ -93,7 +101,7 @@ class Historic extends Component {
         }
     }
     //list of paid request
-    lists(){
+    PaidList(){
        
             return(
                 <div className = "row">
@@ -129,7 +137,7 @@ class Historic extends Component {
                                <td>{paidRequests.typeOfTime}</td>
                                 <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                                 <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
-                                <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteUser(paidRequests.id)} className="btn btn-danger">{translate('Delete')} </button> </td>
+                                <td><button style={{marginLeft: "10px"}} onClick={ () => this.deletePaidRequest(paidRequests.id,paidRequests.datesRequest)} className="btn btn-danger">{translate('Delete')} </button> </td>
 
                                 </tr>
                                 )
@@ -330,7 +338,7 @@ class Historic extends Component {
     //show list of vacacion depend select option
     list(a){
         if(a==="paidrequest"){
-            return this.lists()
+            return this.PaidList()
         }else if(a==="unpaid"){
             return this.Unpaidlists()
         }else if(a==="recovery"){
