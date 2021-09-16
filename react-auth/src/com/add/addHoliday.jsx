@@ -35,7 +35,8 @@ class Addholiday extends Component {
                     id:user.id,
                     name:user.name,
                     date:user.date,
-                    duration:user.duration
+                    duration:user.duration,
+                    country:sessionStorage.getItem("country")
                 });
             });
         }
@@ -45,7 +46,8 @@ class Addholiday extends Component {
             let holiday = {
                     name:this.state.name,
                     date:this.state.date,
-                    duration:this.state.duration
+                    duration:this.state.duration,
+                    country:sessionStorage.getItem("country")
             };     
                 if(this.state.id === "add"){
                     HolidayService.createholiday(holiday).then(res =>{
@@ -78,6 +80,7 @@ class Addholiday extends Component {
 
     
     render() {
+  
         return (
             <div>
                 <br></br>
@@ -101,6 +104,7 @@ class Addholiday extends Component {
                                             <input placeholder="duration" name="duration" className="form-control" 
                                                 value={this.state.duration} onChange={this.changedurationHandler}/>
                                         </div>
+                                      
 
                                         <button className="btn btn-success" onClick={this.saveOrUpdateHoliday}>{translate('Save')}</button>
                                         <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>{translate('Cancel')}</button>

@@ -94,32 +94,36 @@ class listCollaborator extends Component {
                             <tbody>
                                 {
                                     this.state.collaborator.filter((val)=>{
-                                       if(parseInt(sessionStorage.getItem('user'))!=this.state.RHadmin.id){
-                                           let a=false;
-                                            this.state.teamRh.map(res=>{
-                                                
-                                            if( val.id == res.id ){
-                                              a =true
-                                             
-                                            }
-                                        }) 
                                         
-                                        console.log(a==false)
-                                        if(a ==false &&this.state.search == "" && val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
-                                                   
-                                            return val
-                                        }else if (a ==false &&val.firstname.toLowerCase().includes(this.state.search.toLowerCase())&&val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
-                                          return val
-                                            }
-                                        
-                                        }else{
-                                            if(this.state.search == ""&&val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
-                                                
-                                                return val
-                                            }else if (val.firstname.toLowerCase().includes(this.state.search.toLowerCase())&&val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
-                                                return val
-                                                }  
-                                        }
+                                      if('"'+val.country+'"'===sessionStorage.getItem("country")){
+                                        if(parseInt(sessionStorage.getItem('user'))!=this.state.RHadmin.id){
+                                            let a=false;
+                                             this.state.teamRh.map(res=>{
+                                                 
+                                             if( val.id == res.id ){
+                                               a =true
+                                              
+                                             }
+                                         }) 
+                                         
+                                         console.log(a==false)
+                                         if(a ==false &&this.state.search == "" && val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
+                                                    
+                                             return val
+                                         }else if (a ==false &&val.firstname.toLowerCase().includes(this.state.search.toLowerCase())&&val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
+                                           return val
+                                             }
+                                         
+                                         }else{
+                                             if(this.state.search == ""&&val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
+                                                 
+                                                 return val
+                                             }else if (val.firstname.toLowerCase().includes(this.state.search.toLowerCase())&&val.id!=this.state.RHadmin.id&&val.team !="Directeur"){
+                                                 return val
+                                                 }  
+                                         }
+                                      }
+                                      
                                         
                                         }).map(
                                         user => 

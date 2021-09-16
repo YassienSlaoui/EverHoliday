@@ -11,34 +11,41 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.CollaboratorDTO;
+import com.example.demo.dto.OrganizationalUnitDTO;
 import com.example.demo.model.Collaborator;
 import com.example.demo.model.OrganizationalUnit;
 import com.example.demo.repository.OrganizationalUnitRepository;
+import com.example.demo.transformer.UnitTransfomer;
 
 @Service
 public class OrganizationalUintService {
 
 	@Autowired
 	OrganizationalUnitRepository OrganizationalUnitRepository;
-	public Collection<OrganizationalUnit> getAll() {
-        return OrganizationalUnitRepository.findAll();
+	 
+	UnitTransfomer unitTransfomer = new UnitTransfomer();
+	public Collection<OrganizationalUnitDTO> getAll() {
+        return unitTransfomer.entitytransferListToDTO(OrganizationalUnitRepository.findAll());
     }
-	public OrganizationalUnit createUnit( OrganizationalUnit Holiday) {
-		return OrganizationalUnitRepository.save(Holiday);
+	public OrganizationalUnitDTO createUnit( OrganizationalUnitDTO Holiday) {
+		OrganizationalUnit unit = unitTransfomer.entityTranferFromDTO(Holiday);
+		return unitTransfomer.entityTranferToDTO(OrganizationalUnitRepository.save(unit));
 	}
-	public ResponseEntity<OrganizationalUnit> getUnitById(Long id) {
+	public ResponseEntity<OrganizationalUnitDTO> getUnitById(Long id) {
 		OrganizationalUnit a = OrganizationalUnitRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(" not exist with id :" + id));
-		return ResponseEntity.ok(a);
+		return ResponseEntity.ok(unitTransfomer.entityTranferToDTO(a));
 	}
-	public ResponseEntity<OrganizationalUnit> updateUnit( Long id,  OrganizationalUnit a){
+	public ResponseEntity<OrganizationalUnitDTO> updateUnit( Long id,  OrganizationalUnitDTO unit){
+		OrganizationalUnit a =unitTransfomer.entityTranferFromDTO(unit);
 		OrganizationalUnit b = OrganizationalUnitRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
 		b.setName(a.getName());
 		b.setValidator(a.getValidator());
 		b.setCollaborators(a.getCollaborators1());
 		OrganizationalUnit updatedUser = OrganizationalUnitRepository.save(b);
-		return ResponseEntity.ok(updatedUser);
+		return ResponseEntity.ok(unitTransfomer.entityTranferToDTO(updatedUser));
 	}
 	public ResponseEntity<Map<String, Boolean>> deleteEmployee(Long id){
 		OrganizationalUnit user = OrganizationalUnitRepository.findById(id)
@@ -49,10 +56,10 @@ public class OrganizationalUintService {
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
-	public int checkValidator(Collaborator validator){
+	public int checkValidator(CollaboratorDTO validator){
 		int x = 0; 
 	
-		for (OrganizationalUnit unit : getAll()) {
+		for (OrganizationalUnitDTO unit : getAll()) {
 			
 			if (unit.getValidator().getId()==validator.getId()) {
 				x=1;
@@ -60,14 +67,14 @@ public class OrganizationalUintService {
 		}
 		return x ;
 	}
-	public boolean checkRH(Collaborator collaborator){
+	public boolean checkRH(CollaboratorDTO collaborator){
 		boolean x = false; 
 	
-		for (OrganizationalUnit unit : getAll()) {
+		for (OrganizationalUnitDTO unit : getAll()) {
 			
 			if (unit.getName().equals("RH")) {
 				
-				for(Collaborator col : unit.getCollaborators1()) {
+				for(CollaboratorDTO col : unit.getCollaborators1()) {
 					if(col.getId()==collaborator.getId()) {
 						x=true;
 					}
@@ -77,11 +84,11 @@ public class OrganizationalUintService {
 		}
 		return x ;
 	}
-	public Collaborator findValidator(Collaborator collaborator){
-		Collaborator x = null; 
+	public CollaboratorDTO findValidator(CollaboratorDTO collaborator){
+		CollaboratorDTO x = null; 
 	
-		for (OrganizationalUnit unit : getAll()) {
-			for (Collaborator collaborators :unit.getCollaborators1()) {
+		for (OrganizationalUnitDTO unit : getAll()) {
+			for (CollaboratorDTO collaborators :unit.getCollaborators1()) {
 				if(collaborators.getId().equals(collaborator.getId())) {
 					x=unit.getValidator();break;				}
 //				if(collaborators.equals(collaborator)) {
@@ -93,19 +100,19 @@ public class OrganizationalUintService {
 		System.out.println("the validator is : "+x.getFirstname() +" "+ x.getLastname());
 		return x ;
 	}
-	public Collection<Collaborator> CollaboratorSolde(Long validator){
-		Collection<Collaborator> A=new ArrayList<Collaborator>();
+	public Collection<CollaboratorDTO> CollaboratorSolde(Long validator){
+		Collection<CollaboratorDTO> A=new ArrayList<CollaboratorDTO>();
 	
-		for (OrganizationalUnit unit : getAll()) {
+		for (OrganizationalUnitDTO unit : getAll()) {
 			
 			if (unit.getValidator().getId()==validator) {
 				A.addAll(unit.getCollaborators1());
 			}
 		}
-		Collection<Collaborator> newList = new ArrayList<Collaborator>();
+		Collection<CollaboratorDTO> newList = new ArrayList<CollaboratorDTO>();
 		  
         
-        for (Collaborator element : A) {
+        for (CollaboratorDTO element : A) {
   
            
             if (!newList.contains(element)) {
@@ -119,27 +126,27 @@ public class OrganizationalUintService {
 	
 	}
 	
-	public Collection<Collaborator> CollaboratorUnit(Long validator){
-		Collection<Collaborator> A=new ArrayList<Collaborator>();
+	public Collection<CollaboratorDTO> CollaboratorUnit(Long validator){
+		Collection<CollaboratorDTO> A=new ArrayList<CollaboratorDTO>();
 		
-		for (OrganizationalUnit unit : getAll()) {
+		for (OrganizationalUnitDTO unit : getAll()) {
 			
 			if (unit.getValidator().getId()==validator) {
 				A.addAll(unit.getCollaborators1());
 				A.add(unit.getValidator());
 			}
 		}
-		for (OrganizationalUnit unit : getAll()) {
-			for (Collaborator collaborator : unit.getCollaborators1()) {
+		for (OrganizationalUnitDTO unit : getAll()) {
+			for (CollaboratorDTO collaborator : unit.getCollaborators1()) {
 			if (collaborator.getId()==validator) {
 				A.addAll(unit.getCollaborators1());
 				A.add(unit.getValidator());
 			}
 		}}
-		Collection<Collaborator> newList = new ArrayList<Collaborator>();
+		Collection<CollaboratorDTO> newList = new ArrayList<CollaboratorDTO>();
 		  
         
-        for (Collaborator element : A) {
+        for (CollaboratorDTO element : A) {
   
            
             if (!newList.contains(element)) {

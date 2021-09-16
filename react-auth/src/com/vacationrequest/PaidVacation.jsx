@@ -75,7 +75,8 @@ class PaidVacation extends Component {
     });
     PaidRequestService.getPaidRequest().then((res) => {
       res.data.map(request=>{
-        if(request.collaborator.id===parseInt(sessionStorage.getItem('user'))&&request.statut==="processed")
+        console.log(request)
+        if(request.collaborator.id===parseInt(sessionStorage.getItem('user'))&&request.statut==="Pending")
               this.setState({allrequest:this.state.allrequest+request.balanceUsed})
       })
   });

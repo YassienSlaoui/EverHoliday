@@ -54,7 +54,8 @@ class calendar extends Component {
     
     
     render() {
-     
+     let bokkedDay=new Date()
+     bokkedDay.setDate(bokkedDay.getDate()+1)
       
         return (
             <Datepicker
@@ -63,7 +64,7 @@ class calendar extends Component {
                 startDate={this.state.startDate} // Date or null
                 endDate={this.state.endDate} // Date or null
                 focusedInput={this.state.focusedInput} // START_DATE, END_DATE or null
-                
+                minBookingDate={bokkedDay}
              />
         )
     }

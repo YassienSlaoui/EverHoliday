@@ -117,9 +117,9 @@ public class Collaborator implements UserDetails{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getSup() {
+	public Collaborator getSup() {
 		if(this.sup!= null)
-		return sup.getUsername();
+		return sup;
 		else 
 		return null;
 	}

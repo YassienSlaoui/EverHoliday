@@ -29,7 +29,6 @@ function Sidebar({ color, image, routes, path, path2, path3, path4,path5 ,path6}
     
   } 
   function icon(a){
-    console.log(a==="IoIosPersonAdd")
     if(a==="IoIosPeople"){
       return(
         <IoList className="icon" style={{fontSize: "30px",marginRight: "11px"}}/>

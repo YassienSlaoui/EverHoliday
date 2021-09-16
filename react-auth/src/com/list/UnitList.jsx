@@ -50,7 +50,7 @@ class UnitList extends Component {
                             </thead>
                             <tbody>
                                 {   
-                                    this.state.units.map(
+                                    this.state.units.filter(val=>{if(val.country===sessionStorage.getItem('country')){return val}}).map(
                                         
                                         unit => 
                                         <tr key = {unit.id }>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.SoldeDTO;
 import com.example.demo.model.Solde;
 import com.example.demo.service.SoldeService;
 @CrossOrigin(origins = "http://localhost:3000")
@@ -26,21 +27,21 @@ public class SoldeController {
 	    SoldeService SoldeService;
 	   
 	    @GetMapping("/Solde")
-	    public Collection<Solde> getAll() {
+	    public Collection<SoldeDTO> getAll() {
 	    	
 	        return SoldeService.getAll();
 	    }
 	    
 		
 		@PostMapping("/Solde")
-		public Solde addSolde (@RequestBody Solde Solde) {
+		public SoldeDTO addSolde (@RequestBody SoldeDTO Solde) {
 			
 			return SoldeService.createSolde(Solde);
 		}
 		
 		
 		@GetMapping("/Solde/{id}")
-		public ResponseEntity<Solde> getSoldeById(@PathVariable Long id) {
+		public ResponseEntity<SoldeDTO> getSoldeById(@PathVariable Long id) {
 			
 			return SoldeService.getSoldeById(id);
 		}
@@ -48,7 +49,7 @@ public class SoldeController {
 		
 		
 		@PutMapping("/Solde/{id}")
-		public ResponseEntity<Solde> updateSolde(@PathVariable Long id, @RequestBody Solde Solde){
+		public ResponseEntity<SoldeDTO> updateSolde(@PathVariable Long id, @RequestBody SoldeDTO Solde){
 			return SoldeService.updateSolde(id,Solde);
 		}
 		

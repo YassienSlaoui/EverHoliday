@@ -259,8 +259,11 @@ componentDidMount(){
       user:user,
     })})
   collaboratorService.getUser().then((res)=>{
-      this.setState({ collaborators: res.data,
-        options : res.data.map(
+      this.setState({ collaborators: res.data.filter((val)=>{
+if('"'+val.country+'"'===sessionStorage.getItem("country")){return val}}),
+        options : res.data.filter((val)=>{
+                                        console.log('"'+val.country+'"'===sessionStorage.getItem("country"))
+          if('"'+val.country+'"'===sessionStorage.getItem("country")){return val}}).map(
             user => {
                 return { value: user, label: user.firstname+" "+user.lastname };
             }

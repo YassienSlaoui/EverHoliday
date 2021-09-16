@@ -67,7 +67,8 @@ class addUnit extends Component {
             let holiday = {
                     name:this.state.name,
                     validator:this.state.value.value,
-                    collaborators:this.state.value1.map(user => user.value)
+                    collaborators:this.state.value1.map(user => user.value),
+                    country:sessionStorage.getItem('country')
             };     
             console.log(holiday)
               if(this.state.id === "add"){

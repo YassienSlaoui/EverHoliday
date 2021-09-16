@@ -16,12 +16,23 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.Collaborator;
 import com.example.demo.model.Notification;
 import com.example.demo.model.OrganizationalUnit;
+import com.example.demo.dto.CollaboratorDTO;
+import com.example.demo.dto.ExeptionnelRequestDTO;
+import com.example.demo.dto.OrganizationalUnitDTO;
+import com.example.demo.dto.PaidRequestDTO;
+import com.example.demo.dto.RecoveryRequestDTO;
+import com.example.demo.dto.UnpaidRequestDTO;
 import com.example.demo.model.*;
 import com.example.demo.model.UnpaidRequest;
 import com.example.demo.model.VacacionRequest;
 import com.example.demo.repository.PaidRequestRepository;
 import com.example.demo.service.NotificationService;
 import com.example.demo.service.OrganizationalUintService;
+import com.example.demo.transformer.CollaboratorTransformer;
+import com.example.demo.transformer.ExeptionnelTransformer;
+import com.example.demo.transformer.PaidTransformer;
+import com.example.demo.transformer.RecoveryTransformer;
+import com.example.demo.transformer.UnpaidTransfromer;
 import com.example.demo.service.*;
 @Service
 public class ActivitiProcess {
@@ -37,6 +48,16 @@ public class ActivitiProcess {
 	private PaidRequestService paidRequestService;
 	   @Autowired
 	  private  RuntimeService runtimeService;
+	   
+	   private ExeptionnelTransformer exeptionnelTransformer=new ExeptionnelTransformer();
+	   
+	   private RecoveryTransformer recoveryTransformer=new RecoveryTransformer();
+	   
+	   private PaidTransformer paidTransformer=new PaidTransformer();
+	   
+	   private UnpaidTransfromer unpaidTransfromer=new UnpaidTransfromer();
+	   
+	   private CollaboratorTransformer collaboratorTransformer=new CollaboratorTransformer() ;
 	   @Autowired
 		private OrganizationalUintService OrganizationalUintService;
 	   @Autowired
@@ -55,9 +76,10 @@ public class ActivitiProcess {
 		System.out.println(type=="PAID");
 		 
 		if(type=="PAID") {
-			PaidRequest p=paidRequestService.createPaidRequest((PaidRequest) PaidRequest);
+			PaidRequestDTO Paid = paidTransformer.entityTranferToDTO((PaidRequest) PaidRequest);
+			PaidRequest p=paidTransformer.entityTranferFromDTO(paidRequestService.createPaidRequest(Paid));
 			String username = p.getCollaborator().getUsername();
-			Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+			CollaboratorDTO validator = OrganizationalUintService.findValidator(Paid.getCollaborator());
 			
 			Map<String, Object> data = new HashMap<String, Object>() ;
 			data.put("paidRequest", p);
@@ -77,9 +99,10 @@ public class ActivitiProcess {
 			
 			 return p;
 		}else if(type=="UnPAID") {
-			UnpaidRequest p=unpaidRequestService.createPaidRequest((UnpaidRequest) PaidRequest);
+			
+			UnpaidRequest p=unpaidTransfromer.entityTranferFromDTO( unpaidRequestService.createPaidRequest(unpaidTransfromer.entityTranferToDTO((UnpaidRequest) PaidRequest)));
 			String username = p.getCollaborator().getUsername();
-			Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+			CollaboratorDTO validator = OrganizationalUintService.findValidator(collaboratorTransformer.entityTranferToDTO( PaidRequest.getCollaborator()));
 			
 			Map<String, Object> data = new HashMap<String, Object>() ;
 			data.put("paidRequest", p);
@@ -98,9 +121,10 @@ public class ActivitiProcess {
 			
 			 return p;
 		}else if(type=="EXEPTIONEL") {
-			ExeptionnelRequest p=exeptionnelRequestService.createPaidRequest((ExeptionnelRequest) PaidRequest);
+			ExeptionnelRequestDTO Paid = exeptionnelTransformer.entityTranferToDTO((ExeptionnelRequest) PaidRequest);
+			ExeptionnelRequest p=exeptionnelTransformer.entityTranferFromDTO(exeptionnelRequestService.createPaidRequest( Paid));
 			String username = p.getCollaborator().getUsername();
-			Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+			CollaboratorDTO validator = OrganizationalUintService.findValidator(Paid.getCollaborator());
 			
 			Map<String, Object> data = new HashMap<String, Object>() ;
 			data.put("paidRequest", p);
@@ -119,9 +143,10 @@ public class ActivitiProcess {
 			
 			 return p;
 		}else if(type=="RECOVERY") {
-			RecoveryRequest p=recoveryRequestService.createPaidRequest((RecoveryRequest) PaidRequest);
+			RecoveryRequestDTO paid=recoveryRequestService.createPaidRequest(recoveryTransformer.entityTranferToDTO((RecoveryRequest) PaidRequest));
+			RecoveryRequest p = recoveryTransformer.entityTranferFromDTO(paid);
 			String username = p.getCollaborator().getUsername();
-			Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+			CollaboratorDTO validator = OrganizationalUintService.findValidator(paid.getCollaborator());
 			
 			Map<String, Object> data = new HashMap<String, Object>() ;
 			data.put("paidRequest", p);
@@ -139,9 +164,10 @@ public class ActivitiProcess {
 			
 			 return p;
 		}else {
-			PaidRequest p=paidRequestService.createPaidRequest((PaidRequest) PaidRequest);
+			PaidRequestDTO paid=paidRequestService.createPaidRequest(paidTransformer.entityTranferToDTO((PaidRequest) PaidRequest));
+			PaidRequest p = paidTransformer.entityTranferFromDTO(paid);
 			String username = p.getCollaborator().getUsername();
-			Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+			CollaboratorDTO validator = OrganizationalUintService.findValidator(paid.getCollaborator());
 			
 			Map<String, Object> data = new HashMap<String, Object>() ;
 			data.put("paidRequest", p);
@@ -169,7 +195,7 @@ public class ActivitiProcess {
 	
 
     public void sendMailOwner(VacacionRequest PaidRequest) {
-        Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+        CollaboratorDTO validator = OrganizationalUintService.findValidator(collaboratorTransformer.entityTranferToDTO(PaidRequest.getCollaborator()));
         
         EmailService.sendSimpleMessage(PaidRequest.getCollaborator().getEmail(),
                 "EverHolday",
@@ -182,7 +208,7 @@ public class ActivitiProcess {
     }
     public void sendMailValidator(VacacionRequest PaidRequest,String Type) {
     	if(Type=="PAID") {
-    		Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+    		CollaboratorDTO validator = OrganizationalUintService.findValidator(collaboratorTransformer.entityTranferToDTO(PaidRequest.getCollaborator()));
     	EmailService.sendSimpleMessage(validator.getEmail(),
         		"EverHolday",
         		"Bonjour "+validator.getFirstname()+" "+validator.getLastname()+","
@@ -190,16 +216,16 @@ public class ActivitiProcess {
         		" a demandé une Congé payé dans la "+PaidRequest.getRequestDate() + " est en attente de votre validation "
         		+ " \n Cordialement.");
     	}else {
-    		ArrayList<Collaborator> listRH =new ArrayList<Collaborator>();
-            for(OrganizationalUnit unit:OrganizationalUintService.getAll()){
+    		ArrayList<CollaboratorDTO> listRH =new ArrayList<CollaboratorDTO>();
+            for(OrganizationalUnitDTO unit:OrganizationalUintService.getAll()){
                 if(unit.getName().equals("RH")) {
                     listRH.add(unit.getValidator()); 
-                    for(Collaborator col :unit.getCollaborators1()) {
+                    for(CollaboratorDTO col :unit.getCollaborators1()) {
                         listRH.add(col);
                     }
                 }
            };
-           for(Collaborator col : listRH) {
+           for(CollaboratorDTO col : listRH) {
                EmailService.sendSimpleMessage(col.getEmail(),
                        "EverHolday",
                        "Bonjour "+col.getFirstname()+" "+col.getLastname()+","
@@ -212,17 +238,17 @@ public class ActivitiProcess {
 
     }
     public void sendMailRH(VacacionRequest PaidRequest) {
-        ArrayList<Collaborator> listRH =new ArrayList<Collaborator>();
-         for(OrganizationalUnit unit:OrganizationalUintService.getAll()){
+        ArrayList<CollaboratorDTO> listRH =new ArrayList<CollaboratorDTO>();
+         for(OrganizationalUnitDTO unit:OrganizationalUintService.getAll()){
              if(unit.getName().equals("RH")) {
                  listRH.add(unit.getValidator()); 
-                 for(Collaborator col :unit.getCollaborators1()) {
+                 for(CollaboratorDTO col :unit.getCollaborators1()) {
                      listRH.add(col);
                  }
              }
         };
-        for(Collaborator col : listRH) {
-            Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+        for(CollaboratorDTO col : listRH) {
+            CollaboratorDTO validator = OrganizationalUintService.findValidator(collaboratorTransformer.entityTranferToDTO(PaidRequest.getCollaborator()));
             EmailService.sendSimpleMessage(col.getEmail(),
                     "EverHolday",
                     "Bonjour "+col.getFirstname()+" "+col.getLastname()+","
@@ -236,8 +262,8 @@ public class ActivitiProcess {
     public void sendMailValidationOwner(Long id ,String statut) {
         System.out.println("fff");
 
-    	PaidRequest PaidRequest = paidRequestService.getPaidRequestById(id);
-    	Collaborator validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
+    	PaidRequestDTO PaidRequest = paidRequestService.getPaidRequestById(id);
+    	CollaboratorDTO validator = OrganizationalUintService.findValidator(PaidRequest.getCollaborator());
     	EmailService.sendSimpleMessage(PaidRequest.getCollaborator().getEmail(),
     			"EverHolday",
         		"Bonjour "+PaidRequest.getCollaborator().getFirstname()+" "+PaidRequest.getCollaborator().getLastname()+","
@@ -251,10 +277,10 @@ public class ActivitiProcess {
                 .orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
         
         b.setStatut(a);
-        PaidRequest updatedUser = PaidRequestRepository.save(b);
+        PaidRequestDTO updatedUser =paidTransformer.entityTranferToDTO( PaidRequestRepository.save(b));
 
 
-        Collaborator validator=OrganizationalUintService.findValidator(b.getCollaborator());
+        CollaboratorDTO validator=OrganizationalUintService.findValidator(updatedUser.getCollaborator());
         
         
         TaskQuery tasks = taskService.createTaskQuery().taskAssignee(validator.getId().toString());
@@ -274,7 +300,7 @@ public class ActivitiProcess {
 
  
 
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(paidTransformer.entityTranferFromDTO(updatedUser));
 
 	}
  

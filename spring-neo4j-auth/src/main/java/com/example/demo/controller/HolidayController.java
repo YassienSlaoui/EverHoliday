@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dto.HolidayDTO;
 import com.example.demo.model.Holiday;
 import com.example.demo.service.HolidayService;
 @CrossOrigin(origins = "http://localhost:3000")
@@ -28,15 +30,15 @@ public class HolidayController {
 
 
     @GetMapping("/holiday")
-    public Collection<Holiday> getAll() {
+    public Collection<HolidayDTO> getAll() {
         return holidayService.getAll();
     }
     @PostMapping("/holiday")
-    public Holiday addHoliday(@RequestBody Holiday holiday) {
+    public HolidayDTO addHoliday(@RequestBody HolidayDTO holiday) {
     	return holidayService.createHoliday(holiday);
     }
     @GetMapping("/holiday/{id}")
-	public ResponseEntity<Holiday> getHolidayById(@PathVariable Long id) {
+	public ResponseEntity<HolidayDTO> getHolidayById(@PathVariable Long id) {
 		
 		return holidayService.getHolidayById(id);
 	}
@@ -44,7 +46,7 @@ public class HolidayController {
 	
 	
 	@PutMapping("/holiday/{id}")
-	public ResponseEntity<Holiday> updateHoliday(@PathVariable Long id, @RequestBody Holiday Solde){
+	public ResponseEntity<HolidayDTO> updateHoliday(@PathVariable Long id, @RequestBody HolidayDTO Solde){
 		return holidayService.updateHoliday(id,Solde);
 	}
 	@DeleteMapping("/holiday/{id}")

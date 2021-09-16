@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.CollaboratorDTO;
+import com.example.demo.dto.OrganizationalUnitDTO;
 import com.example.demo.model.Collaborator;
 import com.example.demo.model.Holiday;
 import com.example.demo.model.OrganizationalUnit;
@@ -30,15 +32,15 @@ public class OrganizatiojnalUnitController {
 	 @Autowired
 	 OrganizationalUintService OrganizationalUintService;
 	 @GetMapping("/unit")
-	    public Collection<OrganizationalUnit> getAll() {
+	    public Collection<OrganizationalUnitDTO> getAll() {
 	        return OrganizationalUintService.getAll();
 	    }
 	    @PostMapping("/unit")
-	    public OrganizationalUnit addHoliday(@RequestBody OrganizationalUnit holiday) {
+	    public OrganizationalUnitDTO addHoliday(@RequestBody OrganizationalUnitDTO holiday) {
 	    	return OrganizationalUintService.createUnit(holiday);
 	    }
 	    @GetMapping("/unit/{id}")
-		public ResponseEntity<OrganizationalUnit> getHolidayById(@PathVariable Long id) {
+		public ResponseEntity<OrganizationalUnitDTO> getHolidayById(@PathVariable Long id) {
 			
 			return OrganizationalUintService.getUnitById(id);
 		}
@@ -46,7 +48,7 @@ public class OrganizatiojnalUnitController {
 		
 		
 		@PutMapping("/unit/{id}")
-		public ResponseEntity<OrganizationalUnit> updateHoliday(@PathVariable Long id, @RequestBody OrganizationalUnit Solde){
+		public ResponseEntity<OrganizationalUnitDTO> updateHoliday(@PathVariable Long id, @RequestBody OrganizationalUnitDTO Solde){
 			return OrganizationalUintService.updateUnit(id,Solde);
 		}
 		@DeleteMapping("/unit/{id}")
@@ -55,15 +57,15 @@ public class OrganizatiojnalUnitController {
 			return OrganizationalUintService.deleteEmployee(id);
 		}
 		@PostMapping("/unit/check")
-		public int check( @RequestBody Collaborator Solde){
+		public int check( @RequestBody CollaboratorDTO Solde){
 			return OrganizationalUintService.checkValidator(Solde);
 		}
 		@GetMapping("/unit/solde/{id}")
-		public Collection<Collaborator> solde( @PathVariable Long id){
+		public Collection<CollaboratorDTO> solde( @PathVariable Long id){
 			return OrganizationalUintService.CollaboratorSolde(id);
 		}
 		@GetMapping("/unit/team/{id}")
-		public Collection<Collaborator> team( @PathVariable Long id){
+		public Collection<CollaboratorDTO> team( @PathVariable Long id){
 			return OrganizationalUintService.CollaboratorUnit(id);
 		}
 }

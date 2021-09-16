@@ -30,17 +30,21 @@ class Historic extends Component {
     }
 
    //Cancel paid vacation
-    deletePaidRequest(id,startDate){
+    deletePaidRequest(id,startDate,statut){
         let actuelDate = new Date()
         actuelDate.setDate(actuelDate.getDate()+15)
         let startDateRequest = new Date(startDate[0].startDate)
         console.log(actuelDate.getTime()+" "+startDateRequest.getTime())
-       if(startDateRequest.getTime()>actuelDate.getTime()){
+       if(startDateRequest.getTime()>actuelDate.getTime()&&statut==="accepted"){
+        PaidRequestService.deletPaidRequest(id).then( res => {
+            this.setState({paidRequest: this.state.paidRequest.filter(user => user.id !== id)});
+      });
+       }else if(statut==="refused"){
         PaidRequestService.deletPaidRequest(id).then( res => {
             this.setState({paidRequest: this.state.paidRequest.filter(user => user.id !== id)});
       });
        }else{
-           alert("not Deleted")
+           alert('15 days ')
        }
         
     
@@ -137,7 +141,7 @@ class Historic extends Component {
                                <td>{paidRequests.typeOfTime}</td>
                                 <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.startDate} </p>)}</td> 
                                 <td>{paidRequests.datesRequest.map(dates=><p key={dates.id}> {dates.endDate} </p>)}</td> 
-                                <td><button style={{marginLeft: "10px"}} onClick={ () => this.deletePaidRequest(paidRequests.id,paidRequests.datesRequest)} className="btn btn-danger">{translate('Delete')} </button> </td>
+                                <td><button style={{marginLeft: "10px"}} onClick={ () => this.deletePaidRequest(paidRequests.id,paidRequests.datesRequest,paidRequests.statut)} className="btn btn-danger">{translate('Delete')} </button> </td>
 
                                 </tr>
                                 )

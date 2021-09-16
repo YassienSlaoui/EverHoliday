@@ -14,6 +14,9 @@ public class TypeOfVaction {
 		this.name = name;
 		this.duration = duration;
 	}
+	public TypeOfVaction() {
+		// TODO Auto-generated constructor stub
+	}
 	public Long getId() {
 		return id;
 	}

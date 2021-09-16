@@ -50,59 +50,65 @@ class Request extends Component {
     }
     getcoltById(id){
         CollaborateurServices.getUserById(id).then(res=>{
-            
+
             this.setState({
              col:res.data
+             
          })
-         
+         console.log(this.state.col)
+
      })
     }
-    RequestSuccess (id,col){
-  
-        let Request ={statut:"accepted"}
-        PaidRequestService.statut(Request,id).then(res=>{
+    RequestSuccess (id,col1){
+      this.getcoltById(col1)
+      this.getrequestById(id)
+      console.log(this.state)
+      let Request ={statut:"accepted"}
+      setTimeout(() => {
+      let user1 =JSON.parse(JSON.stringify(this.state.col.solde));
+      console.log(user1)
+      console.log(this.state.col)
+        
+       PaidRequestService.statut(Request,id).then(res=>{
             PaidRequestService.getPaidRequest().then(res=>{
-                this.getrequestById(id)
-                this.getcoltById(col)
-                setTimeout(() => {
+                console.log(user1)
                     if(this.state.request!=""){
                         let b =this.state.request.balanceUsed
                         let a =0
-                        let user1 =JSON.parse(JSON.stringify(this.state.col.solde));
-                        if(this.state.col.solde.cumulativeBances!=null){
-                            this.state.col.solde.cumulativeBances.map(solde=> a=a+solde.balance)
+                      if(user1.cumulativeBances!=null){
+                        user1.cumulativeBances.map(solde=> a=a+solde.balance)
                             console.log(a + "  "+b)
                         if(a>b){
-                            user1.cumulativeBances.map(solde=>
+                           user1.cumulativeBances.map(solde=>
                                 {
-                               if(solde.balance>a){
-                                 solde.balance=solde.balance-a; 
-                                 return;
+                               if(solde.balance>b){
+                                 solde.balance=solde.balance-b; 
+                                 console.log(solde.balance)
                                }
-                               else{solde.balance=0; a=a-solde.balance;}
+                               else{solde.balance=0; b=b-solde.balance;}
                      
                              })
+                            
+ 
                          
-                           
-                         }else{
+                           }
+                           else{
                            user1.cumulativeBances.map(solde=>solde.balance=0)
                              user1.annualBalance=user1.annualBalance-(b-a)
                            }
                         } else{
                             user1.annualBalance=user1.annualBalance-(b)
                         }
+                        console.log(user1)
                         this.state.col.solde=user1
-                        
                         CollaborateurServices.updateUser(this.state.col,this.state.col.id);
                         }
                         
-                 } , 1000);  
+                   
                 this.setState({ paidRequest: res.data});
             })
         })
-         
-        
-      
+} , 1000);
         
     }
     UnRequestSuccess(id){

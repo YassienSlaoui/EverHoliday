@@ -10,9 +10,9 @@ public class PaidRequest extends VacacionRequest {
 @Id @GeneratedValue	
 private Long id;
 private String description;
-private int balanceUsed;
+private double balanceUsed;
 public PaidRequest(LocalDate requestDate, String statut, String typeOfTime, List<DatesRequest> datesRequest,
-		Collaborator collaborator, String description, int balanceUsed) {
+		Collaborator collaborator, String description, double balanceUsed) {
 	super(requestDate, statut, typeOfTime, datesRequest, collaborator);
 	this.description = description;
 	this.balanceUsed = balanceUsed;
@@ -35,11 +35,11 @@ public void setId(Long id) {
 	this.id = id;
 }
 
-public int getBalanceUsed() {
+public double getBalanceUsed() {
 	return balanceUsed;
 }
 
-public void setBalanceUsed(int balanceUsed) {
+public void setBalanceUsed(double balanceUsed) {
 	this.balanceUsed = balanceUsed;
 }
 private String justification ;

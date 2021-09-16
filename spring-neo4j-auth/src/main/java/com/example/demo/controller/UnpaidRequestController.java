@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.CollaboratorDTO;
+import com.example.demo.dto.UnpaidRequestDTO;
 import com.example.demo.model.Collaborator;
 import com.example.demo.model.PaidRequest;
 import com.example.demo.model.UnpaidRequest;
@@ -34,22 +36,22 @@ public class UnpaidRequestController {
 	private ActivitiProcess activitiProcess;
 
     @GetMapping("/UnpaidRequest")
-    public Collection<UnpaidRequest> getAll() {
+    public Collection<UnpaidRequestDTO> getAll() {
     	
         return UnpaidRequestService.getAll();
     }
     
 	
 	@PostMapping("/UnpaidRequest")
-	public UnpaidRequest adduser(@RequestBody UnpaidRequest PaidRequest) {
+	public UnpaidRequestDTO adduser(@RequestBody UnpaidRequestDTO PaidRequest) {
 		
-		return (UnpaidRequest) activitiProcess.startProcess(PaidRequest,"UnPAID");
+		return UnpaidRequestService.addPaid(PaidRequest);
 		
 	}
 	
 	
 	@GetMapping("/UnpaidRequest/{id}")
-	public ResponseEntity<UnpaidRequest> getEmployeeById(@PathVariable Long id) {
+	public ResponseEntity<UnpaidRequestDTO> getEmployeeById(@PathVariable Long id) {
 		
 		return UnpaidRequestService.getPaidRequestById(id);
 	}
@@ -57,11 +59,11 @@ public class UnpaidRequestController {
 	
 	
 	@PutMapping("/UnpaidRequest/{id}")
-	public ResponseEntity<UnpaidRequest> updateEmployee(@PathVariable Long id, @RequestBody UnpaidRequest user){
+	public ResponseEntity<UnpaidRequestDTO> updateEmployee(@PathVariable Long id, @RequestBody UnpaidRequestDTO user){
 		return UnpaidRequestService.updatePaidRequest(id,user);
 	}
 	@GetMapping("/UnpaidRequest/users")
-	public ResponseEntity<Collection<UnpaidRequest>> getPaidRequestByUser( @RequestBody Collaborator user){
+	public ResponseEntity<Collection<UnpaidRequestDTO>> getPaidRequestByUser( @RequestBody CollaboratorDTO user){
 		return UnpaidRequestService.getPaidRequestByUser(user);
 	}
 	@DeleteMapping("/UnpaidRequest/{id}")
@@ -70,7 +72,7 @@ public class UnpaidRequestController {
 		return UnpaidRequestService.deletePaidRequest(id);
 	}
 	@PutMapping("/UnpaidRequest/statut/{id}")
-	public ResponseEntity<UnpaidRequest> updateStatut(@PathVariable Long id, @RequestBody UnpaidRequest user){
+	public ResponseEntity<UnpaidRequestDTO> updateStatut(@PathVariable Long id, @RequestBody UnpaidRequestDTO user){
 		UnpaidRequestService.updatejustif(id, user.getJustification());
 		return UnpaidRequestService.updateStatut(id,user.getStatut());
 	}

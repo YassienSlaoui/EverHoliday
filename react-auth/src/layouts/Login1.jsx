@@ -32,6 +32,7 @@ import { withRouter } from 'react-router-dom';
           AuthService.user(this.state.username, this.state.password).then( res => {
             sessionStorage.setItem('user',JSON.stringify(res.data.id))
             sessionStorage.setItem('user1',JSON.stringify(res.data))
+            sessionStorage.setItem('country',JSON.stringify(res.data.country))
             console.log(res.data)
             
         },err=> {

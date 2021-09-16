@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.CollaboratorDTO;
+import com.example.demo.dto.PaidRequestDTO;
 import com.example.demo.model.Collaborator;
 import com.example.demo.model.PaidRequest;
 import com.example.demo.proceessImpl.ActivitiProcess;
@@ -31,27 +33,25 @@ public class PaidRequestController{
     
 	@Autowired
 	private ActivitiProcess activitiProcess;
+	
+	
 
     @GetMapping("/PaidRequest")
-    public Collection<PaidRequest> getAll() {
+    public Collection<PaidRequestDTO> getAll() {
     	
         return PaidRequestService.getAll();
     }
     
 	
 	@PostMapping("/PaidRequest")
-	public PaidRequest adduser(@RequestBody PaidRequest PaidRequest) {
+	public PaidRequestDTO adduser(@RequestBody PaidRequestDTO PaidRequest) {
+		 return PaidRequestService.addPaid(PaidRequest);
 
-		 return (PaidRequest) activitiProcess.startProcess(PaidRequest,"PAID");
-
-
-		
-		
 	}
 	
 	
 	@GetMapping("/PaidRequest/{id}")
-	public PaidRequest getEmployeeById(@PathVariable Long id) {
+	public PaidRequestDTO getEmployeeById(@PathVariable Long id) {
 		
 		return PaidRequestService.getPaidRequestById(id);
 	}
@@ -59,12 +59,12 @@ public class PaidRequestController{
 	
 	
 	@PutMapping("/PaidRequest/{id}")
-	public ResponseEntity<PaidRequest> updateEmployee(@PathVariable Long id, @RequestBody PaidRequest user){
+	public ResponseEntity<PaidRequestDTO> updateEmployee(@PathVariable Long id, @RequestBody PaidRequestDTO user){
 		
 		return PaidRequestService.updatePaidRequest(id,user);
 	}
 	@GetMapping("/PaidRequest/users")
-	public ResponseEntity<Collection<PaidRequest>> getPaidRequestByUser( @RequestBody Collaborator user){
+	public ResponseEntity<Collection<PaidRequestDTO>> getPaidRequestByUser( @RequestBody CollaboratorDTO user){
 		return PaidRequestService.getPaidRequestByUser(user);
 	}
 	@DeleteMapping("/PaidRequest/{id}")
@@ -73,9 +73,9 @@ public class PaidRequestController{
 		return PaidRequestService.deletePaidRequest(id);
 	}
 	@PutMapping("/PaidRequest/statut/{id}")
-	public ResponseEntity<PaidRequest> updateStatut(@PathVariable Long id, @RequestBody PaidRequest request){
-		PaidRequestService.updatejustif(id, request.getJustification());
-       return activitiProcess.updateStatut(id, request.getStatut());
+	public ResponseEntity<PaidRequestDTO> updateStatut(@PathVariable Long id, @RequestBody PaidRequestDTO request){
+		
+       return PaidRequestService.updateStatut(id, request.getStatut());
        
 
 	}

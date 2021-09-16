@@ -6,25 +6,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.example.demo.dto.SoldeDTO;
 import com.example.demo.model.Solde;
 import com.example.demo.repository.SoldeRepository;
+import com.example.demo.transformer.SoldeTranformer;
 @Service
 public class SoldeService {
 	@Autowired
 	SoldeRepository SoldeRepository;
-
-	public Collection<Solde> getAll() {
-		  return SoldeRepository.findAll();
+	
+	SoldeTranformer soldeTranformer = new SoldeTranformer();
+	public Collection<SoldeDTO> getAll() {
+		  return soldeTranformer.entitytransferListToDTO(SoldeRepository.findAll());
 	 }		    
-	public Solde createSolde( Solde A) {
-		return SoldeRepository.save(A);
+	public SoldeDTO createSolde( SoldeDTO A) {
+		return soldeTranformer.entityTranferToDTO(SoldeRepository.save(soldeTranformer.entityTranferFromDTO(A)));
 	}
-	public ResponseEntity<Solde> getSoldeById(Long id) {
+	public ResponseEntity<SoldeDTO> getSoldeById(Long id) {
 		Solde a = SoldeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(" not exist with id :" + id));
-		return ResponseEntity.ok(a);
+		return ResponseEntity.ok(soldeTranformer.entityTranferToDTO(a));
 	}
-	public ResponseEntity<Solde> updateSolde( Long id,  Solde a){
+	public ResponseEntity<SoldeDTO> updateSolde( Long id,  SoldeDTO solde){
+		Solde a=soldeTranformer.entityTranferFromDTO(solde);
 		Solde b = SoldeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("not exist with id :" + id));
 		b.setAnnualBalance(a.getAnnualBalance());
@@ -32,7 +37,7 @@ public class SoldeService {
 		b.setRemainder(a.getRemainder());
 		
 		Solde updatedUser = SoldeRepository.save(b);
-		return ResponseEntity.ok(updatedUser);
+		return ResponseEntity.ok(soldeTranformer.entityTranferToDTO(updatedUser));
 	}
 
 

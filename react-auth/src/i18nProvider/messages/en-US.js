@@ -91,6 +91,7 @@ export default {
     "Type of vacation":"Type of vacation",
     "Add":"Add",
     "Hour":"Hour",
-    "justification":"justification"
+    "justification":"justification",
+    "Holiday":"Holiday"
   },
 };

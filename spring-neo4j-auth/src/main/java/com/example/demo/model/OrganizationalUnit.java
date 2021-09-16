@@ -15,11 +15,13 @@ public class OrganizationalUnit {
 	private Collaborator validator;
 	@Relationship(type = "unit", direction = Relationship.Direction.INCOMING)
 	private ArrayList<Collaborator> collaborators;
+	private String country;
 	
-	public OrganizationalUnit(String name, Collaborator validator, ArrayList<Collaborator> collaborators) {
+	public OrganizationalUnit(String name, Collaborator validator, ArrayList<Collaborator> collaborators ,String country) {
 		this.name = name;
 		this.validator = validator;
 		this.collaborators = collaborators;
+		this.country=country;
 	}
 	
 	public OrganizationalUnit(){}
@@ -62,6 +64,14 @@ public class OrganizationalUnit {
 	}
 	public void setCollaborators(ArrayList<Collaborator> collaborators) {
 		this.collaborators = collaborators;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	
 	

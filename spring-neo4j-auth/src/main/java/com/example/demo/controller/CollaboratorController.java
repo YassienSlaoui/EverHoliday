@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dto.CollaboratorDTO;
 import com.example.demo.model.Collaborator;
 import com.example.demo.service.CollaborateurService;
 @CrossOrigin(origins = "http://localhost:3000")
@@ -57,14 +59,14 @@ public class CollaboratorController{
 		  }
 
 	    @GetMapping("/collaborator")
-	    public Collection<Collaborator> getAll() {
+	    public Collection<CollaboratorDTO> getAll() {
 	    	
 	        return CollaborateurService.getAll();
 	    }
 	    
 		
 		@PostMapping("/collaborator")
-		public Collaborator adduser(@RequestBody Collaborator Collaborator) {
+		public CollaboratorDTO adduser(@RequestBody CollaboratorDTO Collaborator) {
 			return CollaborateurService.createEmployee(Collaborator);
 		}
 		
@@ -80,19 +82,18 @@ public class CollaboratorController{
 		}
 
 		@GetMapping("/collaborator/{id}")
-		public ResponseEntity<Collaborator> getEmployeeById(@PathVariable Long id) {
+		public ResponseEntity<CollaboratorDTO> getEmployeeById(@PathVariable Long id) {
 			return CollaborateurService.getEmployeeById(id);
 		}
 		
 		
 		@PutMapping("/collaborator/{id}")
-		public ResponseEntity<Collaborator> updateEmployee(@PathVariable Long id, @RequestBody Collaborator user){
+		public ResponseEntity<CollaboratorDTO> updateEmployee(@PathVariable Long id, @RequestBody CollaboratorDTO user){
 			
 			return CollaborateurService.updateEmployee(id,user);
 		}
 		@PutMapping("/collaborator/password/{id}")
-		public ResponseEntity<Collaborator> updatePassword(@PathVariable Long id, @RequestBody Collaborator user){
-			System.out.println(user);
+		public ResponseEntity<CollaboratorDTO> updatePassword(@PathVariable Long id, @RequestBody CollaboratorDTO user){
 			return CollaborateurService.updatepassword(id,user.getPassword());
 		}
 		

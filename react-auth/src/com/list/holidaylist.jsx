@@ -69,7 +69,12 @@ class Holidaylist extends Component {
                             </thead>
                             <tbody>
                                 {   
-                                    this.state.holidays.map(
+                                    this.state.holidays.filter(val=>{
+                                        let re = val.country
+                                        console.log(sessionStorage.getItem("country"))
+                                        console.log(re)
+                                        console.log(re===sessionStorage.getItem("country"))
+                                        if(re===sessionStorage.getItem("country")){return val}}).map(
                                         
                                         holiday => 
                                         <tr key = {holiday.id }>

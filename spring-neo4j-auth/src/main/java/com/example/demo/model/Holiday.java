@@ -11,10 +11,12 @@ public class Holiday {
  private String name;
  private String date;
  private String  duration;
-public Holiday(String name, String date, String duration){
+ private String country;
+public Holiday(String name, String date, String duration,String country){
 	this.name = name;
 	this.date = date;
 	this.duration = duration;
+	this.country=country;
 }
 public Holiday(){}
 public Long getId() {
@@ -40,6 +42,12 @@ public String getDuration() {
 }
 public void setDuration(String duration) {
 	this.duration = duration;
+}
+public String getCountry() {
+	return country;
+}
+public void setCountry(String country) {
+	this.country = country;
 }
  
 }

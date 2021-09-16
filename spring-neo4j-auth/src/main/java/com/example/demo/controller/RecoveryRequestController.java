@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.CollaboratorDTO;
+import com.example.demo.dto.RecoveryRequestDTO;
 import com.example.demo.model.Collaborator;
 import com.example.demo.model.RecoveryRequest;
 import com.example.demo.model.UnpaidRequest;
@@ -33,22 +35,22 @@ public class RecoveryRequestController {
 	private ActivitiProcess activitiProcess;
 
     @GetMapping("/RecoveryRequest")
-    public Collection<RecoveryRequest> getAll() {
+    public Collection<RecoveryRequestDTO> getAll() {
     	
         return RecoveryRequestService.getAll();
     }
     
 	
 	@PostMapping("/RecoveryRequest")
-	public RecoveryRequest adduser(@RequestBody RecoveryRequest PaidRequest) {
+	public RecoveryRequestDTO adduser(@RequestBody RecoveryRequestDTO PaidRequest) {
 		
-		return (RecoveryRequest) activitiProcess.startProcess(PaidRequest,"RECOVERY");
+		return RecoveryRequestService.addPaid(PaidRequest);
 		
 	}
 	
 	
 	@GetMapping("/RecoveryRequest/{id}")
-	public ResponseEntity<RecoveryRequest> getEmployeeById(@PathVariable Long id) {
+	public ResponseEntity<RecoveryRequestDTO> getEmployeeById(@PathVariable Long id) {
 		
 		return RecoveryRequestService.getPaidRequestById(id);
 	}
@@ -60,7 +62,7 @@ public class RecoveryRequestController {
 		return RecoveryRequestService.updatePaidRequest(id,user);
 	}
 	@GetMapping("/RecoveryRequest/users")
-	public ResponseEntity<Collection<RecoveryRequest>> getPaidRequestByUser( @RequestBody Collaborator user){
+	public ResponseEntity<Collection<RecoveryRequestDTO>> getPaidRequestByUser( @RequestBody CollaboratorDTO user){
 		return RecoveryRequestService.getPaidRequestByUser(user);
 	}
 	@DeleteMapping("/RecoveryRequest/{id}")
@@ -69,7 +71,7 @@ public class RecoveryRequestController {
 		return RecoveryRequestService.deletePaidRequest(id);
 	}
 	@PutMapping("/RecoveryRequest/statut/{id}")
-	public ResponseEntity<RecoveryRequest> updateStatut(@PathVariable Long id, @RequestBody RecoveryRequest user){
+	public ResponseEntity<RecoveryRequestDTO> updateStatut(@PathVariable Long id, @RequestBody RecoveryRequestDTO user){
 		RecoveryRequestService.updatejustif(id, user.getJustification());
 		return RecoveryRequestService.updateStatut(id,user.getStatut());
 	}
