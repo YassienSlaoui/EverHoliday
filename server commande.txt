@@ -1,0 +1,48 @@
+Nom d’utilisateur: user-client2
+
+Mot de passe: /Hh$KIK?;PeE\o
+
+Nom d’utilisateur : tomcat
+
+Mot de passe : Cm0r_t0mc4t
+
+Xv7Vq3qzDVCgh6zN
+
+https://evermonitor.everis.com/manager/html/
+
+activiti6ui
+
+
+ <plugin> 
+        <groupId>com.microsoft.azure</groupId>  
+        <artifactId>azure-webapp-maven-plugin</artifactId>  
+        <version>1.7.0</version>  
+        <configuration>
+          <schemaVersion>V2</schemaVersion>
+          <resourceGroup>vacanceproject-1633430473572-rg</resourceGroup>
+          <appName>vacanceproject-1633430473572</appName>
+          <pricingTier>P1v2</pricingTier>
+          <region>westeurope</region>
+          <appSettings>
+          	<proprety>
+          		<name>JAVA_OPTS</name>
+          		<value>-Dserver.port=83</value>
+          	</proprety>
+          </appSettings>
+          <runtime>
+            <os>linux</os>
+            <javaVersion>jre8</javaVersion>
+            <webContainer>TOMCAT 8.5</webContainer>
+          </runtime>
+          <deployment>
+            <resources>
+              <resource>
+                <directory>${project.basedir}/target</directory>
+                <includes>
+                  <include>*.war</include>
+                </includes>
+              </resource>
+            </resources>
+          </deployment>
+        </configuration>
+      </plugin> 

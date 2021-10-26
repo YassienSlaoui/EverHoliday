@@ -73,9 +73,9 @@ public class PaidRequestController{
 		return PaidRequestService.deletePaidRequest(id);
 	}
 	@PutMapping("/PaidRequest/statut/{id}")
-	public ResponseEntity<PaidRequestDTO> updateStatut(@PathVariable Long id, @RequestBody PaidRequestDTO request){
+	public PaidRequestDTO updateStatut(@PathVariable Long id, @RequestBody PaidRequestDTO request){
 		
-       return PaidRequestService.updateStatut(id, request.getStatut());
+       return PaidRequestService.updateStatut(id, request);
        
 
 	}

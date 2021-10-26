@@ -1,10 +1,12 @@
 package com.example.demo.controller;
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.CollaboratorDTO;
+import com.example.demo.dto.DateByYearsDTO;
 import com.example.demo.model.Collaborator;
 import com.example.demo.service.CollaborateurService;
 @CrossOrigin(origins = "http://localhost:3000")
@@ -34,16 +37,27 @@ public class CollaboratorController{
 		public void reportCurrentTime() {
 	    	CollaborateurService.UpdateRealation();
 	    	System.out.println("OK");
-		}
+		}*/
 		@Scheduled(cron="0 0 0 1 1/1 *")
-			public void doSomething() {
-			    // something that should execute on 1st day every month @ 00:00
+			public void annuelBalanceIncrease() {
+			Collection<CollaboratorDTO> cols = getAll();
+			for (CollaboratorDTO col :cols) {
+				col.getSolde().setAnnualBalance(col.getSolde().getAnnualBalance()+col.getSolde().getRemainder());
+				updateEmployee(  col.getId(),   col);
+			}
 			}
 		@Scheduled(cron="0 0 0 1 1 *")
-			public void doSomething() {
-			    // something that should execute on 1st day every month @ 00:00
-			}	
-		*/
+			public void balanceByYearsAdd() {
+			Collection<CollaboratorDTO> cols = getAll();
+			for (CollaboratorDTO col :cols) {
+				DateByYearsDTO dateByYearsDTO = new DateByYearsDTO(LocalDate.now().getYear(),col.getSolde().getAnnualBalance());
+				col.getSolde().getCumulativeBances().add(dateByYearsDTO);
+				col.getSolde().setAnnualBalance(col.getSolde().getRemainder());
+				updateEmployee(  col.getId(),   col);
+			}
+			
+		}	
+		
 	    /**
 	     * create Collaborator 
 	     * use BCrypt in password
